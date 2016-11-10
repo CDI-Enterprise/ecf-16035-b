@@ -54,7 +54,7 @@
 	
 	display: inline;
 	width: 100%;
-	height: 50px;
+	height: 100%;
 	margin: 0px;
 	padding: 0px
 	
@@ -64,7 +64,7 @@
 	
 	display: inline;
 	width: 100%;
-	height: 50px;
+	height: 100%;
 	margin: 0px;
 	padding: 0px
 	
@@ -75,7 +75,7 @@
 	list-style: none;
 	display: inline;
 	width: 100%;
-	height: 50px;
+	height: 100%;
 	margin: 0px;
 	padding: 0px
 	
@@ -86,16 +86,31 @@
 	display: inline;
 	list-style: none;
 	width: 127px;
-	height: 50px;
+	height: 100%;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	margin: 0px;
+	padding: 0px
+}
+
+#topMenu li :HOVER {
+	
+	background-color: #A0A0A0;
 	
 }
 
 #topMenu a {
 	
 	display: inline;
-	text-decoration: none;
+	position: relative;
 	width: 127px;
 	height: 50px;
+	top: 15px;
+	text-decoration: none;
+	text-align: center;
+	color: black;
+	margin: 0px;
+	padding: 0px
 }
 
 /* Creation du menu left */
@@ -137,6 +152,13 @@
 	list-style: none;
 	width: 127px;
 	height: 50px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+#leftMenu li :HOVER {
+	
+	background-color: #A0A0A0;
 	
 }
 
@@ -146,4 +168,36 @@
 	text-decoration: none;
 	width: 127px;
 	height: 50px;
+	color: black;
+}
+
+/* Content */
+
+#content table {
+	
+	width: 100%;
+	height: 100%;
+	border: 1px solid black;
+}
+
+#content table th {
+	
+/* 	border-left-width: 1px; */
+/* 	border-left-color: black; */
+/* 	border-left-style: solid; */
+	
+	border-right-width: 1px;
+	border-right-color: black;
+	border-right-style: solid;
+	
+	background-color: #909090;
+}
+
+#content table tr {
+	
+	border-bottom-width: 1px;
+	border-bottom-color: black;
+	border-bottom-style: solid; 
+	width: 100%;
+	height: auto;
 }
