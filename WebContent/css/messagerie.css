@@ -1,1 +1,43 @@
 @CHARSET "ISO-8859-1";
+
+
+#topMenu{
+	
+	position: fixed;
+	top: 50px;
+	left: 100px;
+	width: 100%;
+	height: 50px;
+	background-color: #808080;
+	
+}
+
+#leftMenu{
+	
+	position: fixed;
+	top: 100px;
+	left: 0px;
+	width: 100px;
+	height: 100%;
+	background-color: #808080;
+	
+}
+
+#content{
+	
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	
+}
+
+#recherche{
+	
+	position: fixed;
+	top: 50px;
+	left: 0px;
+	height: 50px;
+	width:  100px;
+	border-color: black;
+	background-color: #808080;
+}
