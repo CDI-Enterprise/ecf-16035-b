@@ -23,7 +23,6 @@ import fr.cdiEnterprise.model.User;
 import fr.cdiEnterprise.service.Users;
 import fr.cdiEnterprise.util.ReadProperties;
 import fr.cdiEnterprise.view.DocumentSizeFilter;
-import javafx.scene.control.ComboBox;
 import net.miginfocom.swing.MigLayout;
 
 /**
