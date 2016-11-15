@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+
+.background{
+	
+	position: fixed;
+	top: 0;
+	left: 0;
+	opacity: 0.4;
+	z-index: -1;
+	
+}
+
+.logo{
+	
+	display: block;
+	margin-top: 10px;
+	margin-left: 45%;
+    margin-right: 50%;
+	width: 100px;
+	height: 100px;
+	
+}
+
+.connexion{
+	
+	display: block;
+	margin-left: 35%;
+    margin-right: 50%;
+    margin-top: 150px;
+	width: 450px;
+	height: 200px;
+	
+}
+
+.enregistrement{
+	
+	display: block;
+	margin-left: 35%;
+    margin-right: 50%;
+    margin-top: 150px;
+	width: 450px;
+	height: 200px;
+}
+
+.bouton{
+	
+	position: relative;
+	display: block;
+	left: 365px;
+	width: 85px;
+}
+
+.textField{
+
+	postion: relative;
+	left: 20px;
+	
+}
+

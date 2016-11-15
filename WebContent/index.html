@@ -2,9 +2,48 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<link rel="stylesheet" href="css/index.css" />
+<script type="text/javascript" src="JavaScript/index.js"></script>
+<title>CDI - Entreprise</title>
 
+</head>
+
+<body onload="backgroundSize()">
+
+	<div class="background">
+		<img alt="background" src="ressource/img/bg.jpg"></img>
+	</div>
+
+	<div class="logo">
+		<img alt="logo" src="ressource/img/star-trek-100-Transparent.png"></img>
+	</div>
+
+<div class="bakcgroundDiv">
+	<div class="connexion">
+		<form name="conexion" action="" onsubmit="VerifAccount();">
+			<h2>Se connecter</h2>
+			<br />
+			<label>Nom d'utilisateur</label>
+			<input class="textField" name="login" type="text" placeholder="Nom d'utilisateur"></input>
+			<br />
+			<label>Mot de passe</label>
+			<input class="textField" name="password" type="password"></input>
+			<br />
+			<input class="bouton" type="submit" value="Connexion"></input>
+			<br />
+			<a href="#">Mot de passe oublié ?</a>
+		</form>
+	</div>	
+</div>
+
+	<div class="enregistrement">
+		<form name="enregistrement" action="" onsubmit="">
+			<h2>S'enregistrer</h2>
+			<p>L'inscription est uniquement accessible aux stagiaires (ancien et actuel) de la formation Conecepteur-Développeur Informatique de l'AFPA, ainsi qu'aux formateurs</p>
+			<input class="bouton" type="submit" value="Inscription"></input>
+		</form>
+	</div>
+		
 </body>
+
 </html>
