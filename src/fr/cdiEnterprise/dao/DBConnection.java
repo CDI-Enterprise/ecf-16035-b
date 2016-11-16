@@ -61,7 +61,7 @@ public class DBConnection {
 	}
 	
 	public static Connection getConnect() {
-
+		
 		return connect;
 	}
 	

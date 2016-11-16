@@ -2,9 +2,57 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
 
+<!-- Import -->
+<link rel="stylesheet" href="css/index.css" />
+<script type="text/javascript" src="JavaScript/index.js"></script>
+
+<!-- Titre -->
+<title>CDI - Entreprise</title>
+</head>
+
+<!-- Body -->
+<body onload="backgroundSize()">
+
+<!-- Image de fond -->
+	<div class="background">
+		<img alt="background" src="ressource/img/bg.jpg"></img>
+	</div>
+
+<!-- Logo entreprise -->
+	<div class="logo">
+		<img alt="logo" src="ressource/img/logo-variant.png" onclick="changeIcone()"></img>
+	</div>
+
+<!-- Div background sers a mettre le background sur tout le long de la fenetre -->
+<div class="backgroundDiv">
+<!-- Div Connexion -->
+	<div class="connexion">
+		<form name="conexion" action="" onsubmit="VerifAccount();">
+			<h2>Se connecter</h2>
+			<br />
+			<label>Nom d'utilisateur :</label>
+			<input id="login" name="login" type="text" placeholder="Nom d'utilisateur"></input>
+			<br />
+			<label>Mot de passe :</label>
+			<input id="password" name="password" type="password"></input>
+			<br />
+			<input class="bouton" type="submit" value="Connexion"></input>
+			<br />
+			<a href="#">Mot de passe oublié ?</a>
+		</form>
+	</div>	
+
+
+<!-- Div Enregistrement -->
+	<div class="enregistrement">
+		<form name="enregistrement" action="" onsubmit="">
+			<h2>S'enregistrer</h2>
+			<p>L'inscription est uniquement accessible aux stagiaires (ancien et actuel) de la formation Conecepteur-Développeur Informatique de l'AFPA, ainsi qu'aux formateurs</p>
+			<input class="bouton" type="submit" value="Inscription"></input>
+		</form>
+	</div>
+</div>
+	
 </body>
 </html>
