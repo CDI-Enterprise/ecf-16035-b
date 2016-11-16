@@ -2,7 +2,7 @@
  * Javascript lié a la page d'index on y trouve les fonction suivante:
  * 
  * backgroundSize(); retaille le background de l'index a la taille de l'ecran
- * 
+ * changeIcone
  */
 
 function backgroundSize(){
