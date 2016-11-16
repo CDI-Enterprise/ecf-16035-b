@@ -7,7 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
+<%@include file="../WEB-INF/menu.html"%>
 <body>
+	<div class="content">
 		<form action="Post">
 		
 		<div>
@@ -15,7 +17,7 @@
 			<p>Vous pouvez vous incrire en remplissant le formulaire ci-dessous</p>
 		</div>
 
-	  	<fieldset style="width: 50%">
+	  	<fieldset style="width: 50%" >
 	    	<legend>Inscription</legend>
 	    	
 	    	<div>
@@ -44,8 +46,8 @@
 	    	<div>
 	    
 			    <p style="margin-left:2em">
-			    <input type="submit" value="S'inscrire"> 
-			    <INPUT TYPE="reset" NAME="nom" VALUE=" Annuler "></p>
+			    <input type="submit" Name ="soumission" value="S'inscrire"> 
+			    <INPUT TYPE="reset" NAME="recommencer" VALUE=" Annuler "></p>
 	  	
 			</div>
 
@@ -55,6 +57,6 @@
 		<div>
 			<p style="margin-right:auto;line-height:2em;text-align:justify;margin-left:2em"> Vous possedez un compte ? <a href="Connexion">Connexion</a></p>
 		</div> 
-	
+	</div>
 </body>
 </html>
