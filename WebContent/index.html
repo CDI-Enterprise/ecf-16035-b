@@ -29,7 +29,9 @@
 <!-- Div Connexion -->
 	<div class="connexion">
 		<form name="conexion" action="" onsubmit="VerifAccount();">
-			<h2>Se connecter</h2>
+			<fieldset>
+			<legend>Se connecter</legend>
+<!-- 			<h2>Se connecter</h2> -->
 			<br />
 			<label>Nom d'utilisateur :</label>
 			<input id="login" name="login" type="text" placeholder="Nom d'utilisateur"></input>
@@ -40,6 +42,7 @@
 			<input class="bouton" type="submit" value="Connexion"></input>
 			<br />
 			<a href="#">Mot de passe oublié ?</a>
+			</fieldset>
 		</form>
 	</div>	
 
@@ -47,9 +50,12 @@
 <!-- Div Enregistrement -->
 	<div class="enregistrement">
 		<form name="enregistrement" action="" onsubmit="">
-			<h2>S'enregistrer</h2>
+		<fieldset>
+		<legend>S'enregistrer</legend>
+<!-- 			<h2>S'enregistrer</h2> -->
 			<p>L'inscription est uniquement accessible aux stagiaires (ancien et actuel) de la formation Conecepteur-Développeur Informatique de l'AFPA, ainsi qu'aux formateurs</p>
 			<input class="bouton" type="submit" value="Inscription"></input>
+		</fieldset>
 		</form>
 	</div>
 </div>
