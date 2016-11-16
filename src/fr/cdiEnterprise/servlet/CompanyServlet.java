@@ -55,7 +55,6 @@ public class CompanyServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(departments);
 		request.setAttribute("departments", departments);
 		request.setAttribute("regions", regions);
 		request.setAttribute("languages", languages);
