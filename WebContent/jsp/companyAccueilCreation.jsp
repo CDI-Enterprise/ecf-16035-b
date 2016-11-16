@@ -15,6 +15,8 @@
 <title>Entreprise - CDI Enterprise</title>
 </head>
 <body>
+	
+	<%@ include file="../WEB-INF/menu.html" %>
 	<h1 class="title">Création d'une fiche entreprise</h1>
 
 	<div>
