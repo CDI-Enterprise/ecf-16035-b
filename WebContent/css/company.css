@@ -1,16 +1,16 @@
 @CHARSET "ISO-8859-1";
 
-body{
-	background-image: url("../ressource/img/bg.jpg");
-	background-repeat:no-repeat;
-	background-position:center center;
-	background-attachment:fixed;
-	font-family: Arial, sans-serif;
-}
-.title{
-	text-align: center;
-	color: blue;
-}
+/* body{ */
+/* 	background-image: url("../ressource/img/bg.jpg"); */
+/* 	background-repeat:no-repeat; */
+/* 	background-position:center center; */
+/* 	background-attachment:fixed; */
+/* 	font-family: Arial, sans-serif; */
+/* } */
+/* .title{ */
+/* 	text-align: center; */
+/* 	color: blue; */
+/* } */
 
 label{
 	display: inline-block;

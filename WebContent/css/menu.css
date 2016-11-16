@@ -1,5 +1,9 @@
 @CHARSET "ISO-8859-1";
 
+body{
+	font-family: Arial, sans-serif;
+}
+
 ul {
 	
     list-style-type: none;
