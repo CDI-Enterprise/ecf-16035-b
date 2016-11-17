@@ -56,3 +56,8 @@ form{
 	padding-left: 20%;
 	padding-right: 25%;
 }
+
+.spanErreur{
+
+	color:red;
+}
