@@ -9,6 +9,21 @@
 	height: 48px;
 	width: 170px;
 	background-color: #0066cc;
+	border: 1px solid black;
+	
+}
+
+#recherche input{
+	
+	visibility: hidden;
+	
+}
+
+#recherche img{
+	
+	position: relative;
+	top: 9px;
+	left: 69px;
 	
 }
 
@@ -58,7 +73,7 @@
 #menuMessagerieLeft{
 	
 	position: absolute;
-	top: 108px;
+	top: 109px;
 	left: 0px;
 	height: 100%;
 	width: 170px;
@@ -73,18 +88,20 @@
 	float: left;
 	margin: 0px;
 	padding: 0px;
+	height: 100%;
 	display: block;
 	list-style-type: none;
-	
+	border: 1px solid black;
 }
 
 #menuMessagerieLeft ul li{
 	
 	float: left;
 	display: block;
+	width: 100%;
 	list-style-type: none;
-	padding: 14px 16px;
-	border-top: 1px solid black;
+	padding: 14px 17px;
+	border-bottom: 1px solid black;
 	
 }
 
