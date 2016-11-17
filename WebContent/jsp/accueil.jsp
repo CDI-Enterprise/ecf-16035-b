@@ -4,7 +4,9 @@
 <html>
 <head>
 <!-- <style> -->
+<link rel="stylesheet" href="../css/general.css"/>
 <link rel="stylesheet" href="../css/accueil.css"/>
+
 <!-- </style>  -->
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Bienvenue sur le site CDI-Enterprise</title>
@@ -12,9 +14,21 @@
 <body>
 <%@ include file="../WEB-INF/menu.html" %>
 
-<div id="bienvenue">
-	Bienvenue sur le site des stagiaires 
+<h1 class="title">	Bienvenue sur le site CDI Enterprise </h1>
 
+<div id ="bienvenue">
+<p>Participez à la création d'une base de données commune de fiches entreprises </p>
+<br/>
+<p>STAGIAIRES, ancien ou nouveau <br/>
+Trouvez les entreprises qui vous conviennent avec le module de recherche avancée <br/>
+Gérez vos entreprises et recherches favorites <br/>
+Dialoguez avec d'autres stagiaires et des anciens de la formations <br/>
+Maintenez un profil public et technique à jour</p>
+<br/>
+<p>FORMATEURS<br/>
+Gardez contact avec vos anciens stagiaires <br/>
+Suivez leur carrière</p>
 </div>
+
 </body>
 </html>

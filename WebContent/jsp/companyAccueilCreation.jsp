@@ -22,13 +22,13 @@
 	<h1 class="title">Création d'une fiche entreprise</h1>
 
 	<div>
-		<form action="http://localhost:8085/ecf-16035-b/Company/Creation/ok" onsubmit="return validate()" onreset="" method="post">
+		<form name= "companyForm" action="http://localhost:8085/ecf-16035-b/Company/Creation/ok" onsubmit= "return validate();" onreset="" method="post">
 			<div class="fieldset">
 			<fieldset id="company" >
 				<legend>Entreprise</legend>
 				<br/>
 				<label for="companyName">Nom de l'entreprise: </label> 
-				<input type="text" name="companyName" class="obligatoire" tabindex="1" required>
+				<input type="text" id="companyName" name="companyName" class="obligatoire" tabindex="1" >
 				<br /><br /> 
 				<label for="companyAdress">Adresse (rue et numéro): </label>
 				<input type="text" name="companyAdress" tabindex="2"> 
@@ -98,7 +98,7 @@
 			</fieldset></div>
 				<br />
 			<div class="button">
-		<input type="submit" name="validate" value="OK" />
+		<input type="submit" name="valid" value="OK" />
 		<input type="reset" name="cancel" value="Annuler">
 </div>
 		</form>
