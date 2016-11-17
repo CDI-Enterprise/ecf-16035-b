@@ -1,58 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>Formulaire</title>
+	<link rel="stylesheet" href="../css/inscription.css"/>
 </head>
 <body>
+
+	<div class ="b">
+		<p><h1>Bienvenue</h1></p>
+		<p><h4>Vous pouvez vous incrire en remplissant le formulaire ci-dessous</h4></p>
+	</div>
+	
 	<form action="Post">
 		
-		<div>
-			<p>Bienvenue</p>
-			<p>Vous pouvez vous incrire en remplissant le formulaire ci-dessous</p>
-		</div>
-
-	  	<fieldset style="width: 50%">
-	    	<legend>Inscription</legend>
+		<fieldset>
+	    	<legend><h3>Inscription</h3></legend>
 	    	
 	    	<div>
-		    	<p style="margin-left:2em">Statut actuel <input type="radio"
+		    	<p>Statut actuel <input type="radio"
 			    name="radio"> Stagiaire <input type="radio" name="radio"> Formateur <input
 			    type="radio" name="radio"> Ancien stagiaire</p>
 	    	</div>
 	    
 	    	<div>
-			    <p style="margin-left:2em"><label>
-			    <input type="text" id="n" name="nom" placeholder="Votre Nom ici" aria-label="nom" maxlength="24"></label></p>
+			    <p><label>
+			    <input type="text" class ="t" name="nom" placeholder="Votre Nom ici" aria-label="nom" maxlength="24"></label></p>
 
-			    <p style="margin-left:2em"><label>
-			    <input type="text" id="p" name="prenom" placeholder="Votre prénom ici" aria-label="prenom" maxlength="24"></label></p>
+			    <p><label>
+			    <input type="text" class ="t" name="prenom" placeholder="Votre prénom ici" aria-label="prenom" maxlength="24"></label></p>
 
-			    <p style="margin-left:2em"><label>
-			    <input type="text" id="e" name="email" placeholder="Votre E-mail ici" aria-label="email" maxlength="34"></label></p>
+			    <p><label>
+			    <input type="text" class ="e" name="email" placeholder="Votre E-mail ici" aria-label="email" maxlength="34"></label></p>
 
-			    <p style="margin-left:2em"><label>
-			    <input type="password" id="pwd" name="motDePasse" placeholder="Votre choix de mot de passe" aria-label="passWord" maxlength="24"> </label></p>
+			    <p><label>
+			    <input type="password" class ="pwd" name="motDePasse" placeholder="Votre choix de mot de passe" aria-label="passWord" maxlength="24"> </label></p>
 
-			    <p style="margin-left:2em"><label>
-			    <input type="password" id="rpwd" name="confirmation" placeholder="Confirmer votre saisie" aria-label="ConfirmerPw" maxlength="24"></label> </p>
+			    <p><label>
+			    <input type="password" class ="pwd" name="confirmation" placeholder="Confirmer votre saisie" aria-label="ConfirmerPw" maxlength="24"></label> </p>
 	    	</div>
 	    
-	    	<div>
-	    
-			    <p style="margin-left:2em">
-			    <input type="submit" value="S'inscrire"> 
-			    <INPUT TYPE="reset" NAME="nom" VALUE=" Annuler "></p>
-	  	
+	    	<div>	    
+			    <p>
+			    <input type="submit" NAME="nom" id="btn" value="S'inscrire"> 
+			    <input type="reset" NAME="nom" id="btn1 value=" Annuler"></p>	  	
 			</div>
+			
+		</fieldset>
+	 </form>
 
-	  </fieldset>
-	</form>
-
-		<div>
-			<p style="margin-right:auto;line-height:2em;text-align:justify;margin-left:2em"> Vous possedez un compte ? <a href="Connexion">Connexion</a></p>
-		</div> 
+	<div class = "nom">
+			<p> Vous possedez un compte ? <a href="Connexion">Connexion</a></p>
+	</div> 
+		
 
 </body>
 </html>
