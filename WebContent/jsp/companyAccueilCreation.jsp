@@ -3,9 +3,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
-@import url(../css/company.css);
-</style>
+<!-- <style> -->
+<link rel="stylesheet" href="../css/company.css" />
+<link rel="stylesheet" href="../css/general.css" />
+<!-- @import url(../css/company.css); -->
+<!-- </style> -->
 <script type="text/javascript" src="../JavaScript/company.js">
 
 </script>
@@ -32,17 +34,17 @@
 				<input type="text" name="companyAdress" tabindex="2"> 
 				<br /><br /> 
 				<label for="companyCity">Ville: </label> 
-				<input type="text" name="companyCity" class="obligatoire" tabindex="3" required> 
+				<input type="text" name="companyCity" class="obligatoire" tabindex="2" required> 
 				<br /><br /> 
 				<label for="companyPostalCode">Code postal: </label> 
-				<input type="text" name="companyPostalCode" class="obligatoire" tabindex="4" required> 
+				<input type="text" name="companyPostalCode" class="obligatoire" tabindex="3" required> 
 				<br /><br /> 
 				<label for="companyDepartment">Département: </label> 
 				<select	name="companyDepartment" id="departments" required>
 					<!-- 	onClick="document.formulaire.codepostal.value=document.formulaire.departements.value;" -->
 					<% Departments departments = (Departments) request.getAttribute("departments"); 
 						for (Department department : departments){%> 
-					<option value = "<%=department%>"><%=department.getDepartmentName()%> </option>
+					<option value = "<%=department.getDepartmentName()%>"><%=department.getDepartmentName()%> </option>
 					<%} %> 
 				</select> 
 				<br /><br /> 
@@ -50,7 +52,7 @@
 				<select	name="companyRegion" id="regions" required>
 				<% Regions regions = (Regions) request.getAttribute("regions"); 
 						for (Region region : regions){%> 
-					<option value = "<%=region%>"><%=region.getRegionName()%> </option>
+					<option value = "<%=region.getRegionName()%>"><%=region.getRegionName()%> </option>
 					<%} %> 
 				</select> 
 				<br /><br />
@@ -61,21 +63,21 @@
 				<input class="btnRadio" type="radio" name="companySize" value="grandeEntreprise" /> Grande entreprise 
 				<br/><br/>
 				<label for="companySector">Secteur d'activité</label>
-				<input type="text" name="companySector" class="obligatoire" tabindex="8" required >
+				<input type="text" name="companySector" class="obligatoire" tabindex="4" required >
 				<br/><br/>
 				<label for="companyLanguages">Langages principalement utilis&eacute;s</label>
-				<select name ="languages" multiple="multiple" size="3"> 
+				<select name ="companyLanguages" size="3"> 
 					<% Languages languages = (Languages) request.getAttribute("languages"); 
 						for (Language language : languages){%> 
-					<option value = "<%=language%>"><%=language.getLanguageName()%> </option>
+					<option value = "<%=language.getLanguageName()%>"><%=language.getLanguageName()%> </option>
 					<%} %> 
 					</select> 
 				<br/><br/>
 				<label for="companyProjects">Principaux projets de l'entreprise</label>
-				<textarea type="text" name="companyProjects" tabindex="9" ></textarea> 
+				<textarea type="text" name="companyProjects" tabindex="5" ></textarea> 
 				<br/><br/>
 				<label for="companyWebSite">Site Web: </label> 
-				<input type="text" name="companyWebSite" class="obligatoire" tabindex="10" required> 
+				<input type="text" name="companyWebSite" class="obligatoire" tabindex="6" required> 
 				<br /><br /> 
 			</fieldset>
 			</div>
@@ -86,13 +88,13 @@
 					<br />
 				<!-- TODO formulaire pour contact -->
 				<label for="contactName">Nom du contact: </label> 
-				<input type="text" name="contactName" tabindex="1">
+				<input type="text" name="contactName" tabindex="7">
 				<br /><br /> 
 				<label for="contactPhone">Numéro de téléphone: </label>
-				<input type="" name="companyAdress" tabindex="2"> 
+				<input type="" name="companyAdress" tabindex="8"> 
 				<br /><br /> 
 				<label for="contactMail">Adresse mail: </label> 
-				<input type="email" name="contactMail" tabindex="3"> 
+				<input type="email" name="contactMail" tabindex="9"> 
 			</fieldset></div>
 				<br />
 			<div class="button">

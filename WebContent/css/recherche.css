@@ -1,0 +1,72 @@
+@CHARSET "ISO-8859-1";
+
+.title{
+	text-align: left;
+	color: blue;
+}
+
+#logo{
+	margin-left: auto;
+    margin-right: auto;	
+}
+
+#blocRech{
+/* 	background-color: rgba(255,0,255,0.6); */
+	display : flex; 
+	width: 90%;
+	margin-left: auto;
+    margin-right: auto;	
+}
+
+.fieldset{
+	background-color: rgba(255,255,255,0.6);
+	width:100%; 
+	padding: 15px;
+	border-width:1px;
+	border-color: black;
+	border-style: solid;
+	margin-left: auto;
+	margin-right:50px;
+}
+
+#favoris{
+	height: 75%;
+}
+
+
+#btnFavoris{
+	width: 25%;
+	margin: 5px;
+	margin-left: 80px;
+	margin-right: auto;
+}
+
+label.rech{
+	display: inline-block;
+    width: 25%; 
+    margin: 5px;
+    vertical-align: center;
+    text-align: right;
+}
+
+label.fav{
+    width: 100%; 
+    margin: 5px;
+    vertical-align: center;
+    text-align: right;
+}
+
+input[type= text]{
+	width: 40%;
+	margin: 5px;
+	padding: 2px;
+    vertical-align: top;
+}
+
+input[type=button]{
+	width: 15%;
+	margin: 5px;
+	margin-left: 80px;
+	margin-right: auto;
+	
+}
