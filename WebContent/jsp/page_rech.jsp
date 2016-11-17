@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import= "fr.cdiEnterprise.service.Regions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,8 +13,11 @@
 
 <body>
 
-
-<img src="../ressource/img/star-trek-100-Transparent.png" alt="image star trek" id="logo">
+<%String utilisateur="Francois"; 
+	Regions listeRegion = (Regions) request.getAttribute("listeRegion");%>
+	
+<header> <%@ include file="../WEB-INF/menu.html" %> </header>
+<img src="../ressource/img/logo.png" alt="logo" id="logo">
 <h1 class="title"> Recherche </h1>
 
 
@@ -29,7 +33,12 @@
 		<label class="rech">Secteur d'activité :</label> <input type="text" name="secteur_comp"/>
 		<br/>
 		
-		<label class="rech">Région :</label> <input type="text" name="region_comp"/>
+		<label class="rech">Région :</label> 
+		<select name="region_comp">
+		<%for (int i=0; i<listeRegion.size(); i++){%>
+			<option value="<%=i%>"> <%=listeRegion.get(i).getRegionName()%> </option>
+		<%}%>
+		</select>
 		<input type="button" name="Enregistrer" value="Enregistrer"/>
 		<br/>
 		
