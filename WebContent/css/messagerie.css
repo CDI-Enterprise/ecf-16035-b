@@ -1,9 +1,94 @@
 @CHARSET "ISO-8859-1";
 
 body{
+	
 	background-image: url("../ressource/img/bg.jpg");
 	background-repeat:no-repeat;
 	background-position:center center;
 	background-attachment:fixed;
 	font-family: Arial, sans-serif;
+}
+
+/* Menu top */
+
+.menuTop {
+	
+	position: fixed;
+	left: 127px;
+	list-style-type: none;
+    margin-left: 0px;
+    margin-right: 100%;
+    padding: 0;
+    overflow: hidden;
+    background-color: #0066cc;
+	
+}
+
+li.menuItemTop{
+	
+	display: inline-block;
+	float: left;
+}
+
+.menuItemTop a{
+	
+	display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    
+}
+
+.menuItemTop:hover , li a:hover{
+	
+	background-color: #003399;
+    
+}
+
+/* Menu left */
+
+.menuLeft{
+	position: fixed;
+	left: 0px;
+	top: 200px;
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #0066cc;
+    width: 125px;
+	
+}
+
+li.menuLeft{
+	
+	display: block;
+	
+}
+
+.menuLeft a{
+	
+	display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    
+}
+
+.menuLeft:hover	 , li a:hover{
+	
+	background-color: #003399;
+    
+}
+
+.content{
+	
+	position: fixed;
+	left: 200px;
+	top: 200px;
+	
 }

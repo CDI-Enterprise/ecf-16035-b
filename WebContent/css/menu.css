@@ -1,75 +1,97 @@
-@CHARSET "ISO-8859-1";
+@CHARSET "UTF-8";
 
-ul {
-	
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #0066cc;
-    
+#mainMenu
+{
+	margin-top:0px;
+	width: 100%;
 }
 
-li {
-	
-    float: left;
-    
+#mainMenu ul
+{
+	list-style:none;
+	position:relative;
+	float:left;
+	/* top right bottom left */
+	margin: 0px 0px 0px 0px;
+	padding: 0px;
+	background-color: #0066cc;
+	width: 100%;
 }
 
-li a, .dropbtn {
-	
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    
-}
-
-li a:hover, .dropdown:hover .dropbtn {
-	
-    background-color: #003399;
-    
-}
-
-li.dropdown {
-	
-    display: inline-block;
-    
-}
-
-.dropdown-content {
-	
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    
-}
-
-.dropdown-content a {
-	
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-    
-}
-
-.dropdown-content a:hover {
-	
-	background-color: #f1f1f1
+#mainMenu ul a
+{
+	display:block;
+	color: white;
+	text-decoration:none;
 	
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
+#mainMenu ul li
+{
+	
+	position:relative;
+	float:left;
+	padding: 14px 16px;
+
 }
 
-.dropdownLast{
-	
+#mainMenu ul li.current-menu-item
+{
+	background: #1177dd;
+}
+
+#mainMenu ul li.last-menu-item
+{
 	float: right;
+	background: #004080;
+}
+
+#mainMenu ul a.last-menu-item
+{
+	float: right;
+	background: #004080;
+}
+
+#mainMenu ul li:hover
+{
+	background: #004080;
+}
+
+#mainMenu ul ul li:hover
+{
+	background: #f1f1f1;
+}
+
+#mainMenu ul ul
+{
+	display:none;
+	position:absolute;
+	top:100%;
+	left:0;
+	width:282px;
+	background-color: #f9f9f9;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	padding:0;
+}
+
+#mainMenu ul ul li
+{
+	float:none;
+	width:250px;
+	padding: 12px 16px;
 	
+}
+
+#mainMenu ul ul a
+{
+	line-height:120%;
+	padding: 12px 16px;
+	width:250px;
+	color: black;
+	
+}
+
+#mainMenu ul li:hover > ul
+{
+	display:block;
 }

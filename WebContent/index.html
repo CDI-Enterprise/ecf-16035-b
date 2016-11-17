@@ -24,20 +24,17 @@
 		<img alt="logo" src="ressource/img/logo-variant.png" onclick="changeIcone()"></img>
 	</div>
 
-<!-- Div background sers a mettre le background sur tout le long de la fenetre -->
-<div class="backgroundDiv">
 <!-- Div Connexion -->
 	<div class="connexion">
 		<form name="conexion" action="" onsubmit="VerifAccount();">
 			<fieldset>
 			<legend>Se connecter</legend>
-<!-- 			<h2>Se connecter</h2> -->
 			<br />
 			<label>Nom d'utilisateur :</label>
 			<input id="login" name="login" type="text" placeholder="Nom d'utilisateur"></input>
 			<br />
 			<label>Mot de passe :</label>
-			<input id="password" name="password" type="password"></input>
+			<input id="password" name="password" type="password" placeholder="Mot de pass"></input>
 			<br />
 			<input class="bouton" type="submit" value="Connexion"></input>
 			<br />
@@ -52,13 +49,11 @@
 		<form name="enregistrement" action="" onsubmit="">
 		<fieldset>
 		<legend>S'enregistrer</legend>
-<!-- 			<h2>S'enregistrer</h2> -->
 			<p>L'inscription est uniquement accessible aux stagiaires (ancien et actuel) de la formation Conecepteur-Développeur Informatique de l'AFPA, ainsi qu'aux formateurs</p>
 			<input class="bouton" type="submit" value="Inscription"></input>
 		</fieldset>
 		</form>
 	</div>
-</div>
 	
 </body>
 </html>
