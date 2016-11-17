@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.cdiEnterprise.dao.RequetesRecherche;
+import fr.cdiEnterprise.service.Companies;
 import fr.cdiEnterprise.service.Regions;
 
 @WebServlet(name= "RechControl", urlPatterns="/Recherche/*")
@@ -31,6 +32,10 @@ public class RechercheServlet extends HttpServlet{
 		RequetesRecherche req= new RequetesRecherche();
 		Regions listeRegions = req.listerRegions();
 		request.setAttribute("listeRegion", listeRegions);
+				
+		Companies listeEntreprises = req.listerEntreprises();
+		request.setAttribute("listeEntreprise", listeEntreprises);
+		
 		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
 		disp.forward(request, response);
 		
