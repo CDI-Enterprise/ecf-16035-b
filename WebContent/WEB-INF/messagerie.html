@@ -1,10 +1,9 @@
 <!-- Import des fichier externe a la page HTML -->
 <link rel="stylesheet" href="../css/messagerie.css" />
 
-<!-- Case de recherche -->
-<div id="recherche">
-	<img alt="Rrechercher" src="../ressource/img/loupe.png" onclick="changeVisibility(this)"/>
-	<input type="search" onblur="changeVisibility(this)" />
+<!-- Case du Compte -->
+<div id="compte">
+	
 </div>
 
 <!-- Menu messagerie top -->
@@ -18,6 +17,12 @@
 	</ul>
 </div>
 
+<!-- Case de recherche -->
+<div id="recherche">
+	<img class="search-logo" alt="Rechercher" src="../ressource/img/loupe.png" onclick="changeFocus(this)"/>
+	<input class="search-bar" type="search" placeholder="Recherche" onkeypress="recherche()" />
+</div>
+		
 <!-- Menu messagerie left -->
 <div id="menuMessagerieLeft">
 	<ul>
@@ -32,7 +37,7 @@
 <!-- Content messagerie -->
 <div id="content">
 	<table>
-  <tr>
+  <tr >
     <th>#</th>
     <th>Source</th>
     <th>Objet</th>

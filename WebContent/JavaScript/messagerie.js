@@ -3,9 +3,17 @@
  * changeVisibility() Switch visibility of search bar and search logo
  */
 
-function changeVisibility(element){
+function changeFocus(element){
 	
-	element.setAttribute('style','visibility: hidden;');
+	console.log(element);
+	
+	if(element.className == 'search-logo'){
+		
+		//
+		element = document.getElementsByClassName('search-bar')[0];
+		element.focus();
+	}
+	
 	
 	
 }

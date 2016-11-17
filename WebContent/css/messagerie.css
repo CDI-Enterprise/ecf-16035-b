@@ -1,7 +1,8 @@
 @CHARSET "UTF-8";
 
-/* ============================== Recherche ============================== */
-#recherche{
+/* ============================== Compte ============================== */
+
+#compte{
 	
 	position: absolute;
 	top: 60px;
@@ -13,9 +14,17 @@
 	
 }
 
-#recherche input{
+/* ============================== Recherche ============================== */
+
+#recherche{
 	
-	visibility: hidden;
+	position: absolute;
+	top: 61px;
+	left: 1010px;
+	height: 48px;
+	width: 100%;
+	background-color: #0066cc;
+	
 	
 }
 
@@ -23,11 +32,21 @@
 	
 	position: relative;
 	top: 9px;
-	left: 69px;
+	left: 5px;
+	
+}
+
+#recherche input{
+	
+	position: relative;
+	top: -3px;
+	left: 20px;
+	width: 500px;
 	
 }
 
 /* ============================== Menu Top ============================== */
+
 #menuMessagerieTop{
 	
 	position: absolute;
@@ -61,6 +80,11 @@
 	border-right: 1px solid black;
 }
 
+#menuMessagerieTop ul li:hover{
+	
+	background-color: #004080;
+}
+
 #menuMessagerieTop ul li a{
 	
 	color: white;
@@ -69,7 +93,9 @@
 	
 }
 
+
 /* ============================== Menu Left  ============================== */
+
 #menuMessagerieLeft{
 	
 	position: absolute;
@@ -105,6 +131,11 @@
 	
 }
 
+#menuMessagerieLeft ul li:hover{
+	
+	background-color: #004080;
+}
+
 #menuMessagerieLeft ul li a{
 	
 	color: white;
@@ -113,6 +144,7 @@
 }
 
 /*  ============================== Content message ============================== */
+
 #content{
 	
 	position: absolute;
@@ -123,4 +155,10 @@
 	height: 100%;
 	background-color: white;
 	
+}
+
+#content tr{
+	
+	background-color: #595959;
+	width: 1480px;
 }
