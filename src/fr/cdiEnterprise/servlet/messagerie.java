@@ -67,22 +67,16 @@ public class messagerie extends HttpServlet {
 //Test de l'url pour renvoyer au action desiré
 		if(path.equalsIgnoreCase(MESSAGERIE)){
 			
-			try {
-				
-				/* Instanciation de Items pour recupération de tout les Item lié au login puis ajout au request 
-				 * pour affichage sur la page de messagerie
-				 */
-				Items items = new Items();
-				items = MessageDao.getAllItems(session.getAttribute("login").toString());
-				session.setAttribute("message", items);
-				request.setAttribute("message", items);
-				
-				
-			} catch (SQLException e) {
-				// TODO Page erreur SQL
-				e.printStackTrace();
-			}
 			
+				
+			/* Instanciation de Items pour recupération de tout les Item lié au login puis ajout au request 
+			 * pour affichage sur la page de messagerie
+			 */
+			Items items = new Items();
+			items = MessageDao.getAllItems(session.getAttribute("login").toString(),false);
+			session.setAttribute("message", items);
+			request.setAttribute("message", items);
+
 			RequestDispatcher dispatch = request.getRequestDispatcher(PATH_MESSAGERIE);
 			dispatch.forward(request, response);
 		}

@@ -19,7 +19,6 @@
 <!-- Content messagerie -->
 
 <div id="content">
-
 	<table>
 		<tr>
 			<th>#</th>
@@ -29,18 +28,19 @@
 			<th>Date Reception</th>
 			<th>Piece jointe</th>
 		</tr>
+		
 		<%Items items = (Items) request.getAttribute("message"); %>
+
 		<%for(int i = 0; i < items.size(); i++){%>
-		<tr>
-			<th><%= items.get(i).getId() %></th>
-			<th><%= items.get(i).getSender() %></th>
-			<th><%= items.get(i).getReceiver() %></th>
-			<th><%= items.get(i).getObject() %></th>
-			<th><%= items.get(i).getTimeStamp() %></th>
-		</tr><%}%>
+			<tr onclick="afficheMessage(this);">
+				<th><%= items.get(i).getId() %></th>
+				<th><%= items.get(i).getSender() %></th>
+				<th><%= items.get(i).getReceiver() %></th>
+				<th><%= items.get(i).getObject() %></th>
+				<th><%= items.get(i).getTimeStamp() %></th>
+			</tr>
+		<%}%>
 	</table>
-	
-	
 </div> 
 
 </body>
