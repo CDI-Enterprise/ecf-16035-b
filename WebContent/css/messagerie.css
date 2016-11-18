@@ -159,6 +159,12 @@
 
 #content tr{
 	
-	background-color: #595959;
-	width: 1480px;
+	
+	border-spacing: 0px;
+}
+
+#content th{
+	
+	
+	border-spacing: 0px;
 }
