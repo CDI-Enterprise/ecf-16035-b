@@ -26,12 +26,22 @@ input[type =radio] {
     width: 30px;
     padding: 30px;
     vertical-align: top;
+  	border: 1px solid gray;
+    
 }
 
 input[type= text]{
 	width: 200px;
     padding: 4px;
     vertical-align: top;
+    border: 1px solid gray;
+}
+
+input[type= email]{
+	width: 200px;
+    padding: 4px;
+    vertical-align: top;
+    border: 1px solid gray;
 }
 
 option {

@@ -3,6 +3,7 @@ package fr.cdiEnterprise.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ import fr.cdiEnterprise.model.Region;
 /**
  * Servlet implementation class CompanyCreationServlet
  */
-@WebServlet("/Company/Creation/ok")
+@WebServlet("/Company/Creation/CompanyCreate")
 public class CompanyCreationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -62,7 +63,7 @@ public class CompanyCreationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 		doPost(request, response);
 	
 	}
@@ -117,8 +118,10 @@ public class CompanyCreationServlet extends HttpServlet {
 			System.out.println("-------PROBLEME--------");
 			e2.printStackTrace();
 		}
-		
-		response.sendRedirect( request.getContextPath() + "/jsp/accueil.jsp" );
+		request.setAttribute("company", company);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/CompanyCreate.jsp");
+		dispatcher.forward(request, response);
+//		response.sendRedirect( request.getContextPath() + "/jsp/accueil.jsp" );
 	}
 
 }
