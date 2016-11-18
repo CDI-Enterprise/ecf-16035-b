@@ -3,6 +3,7 @@
 #mainMenu
 {
 	position: fixed;
+	display: block;
 	top: 0px;
 	left: 0px;
 	margin-top:0px;
@@ -15,6 +16,7 @@
 	list-style:none;
 	position:relative;
 	float:left;
+	display: block;
 	/* top right bottom left */
 	margin: 0px 0px 0px 0px;
 	padding: 0px;
