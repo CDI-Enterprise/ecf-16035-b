@@ -29,7 +29,7 @@ public class CompanyServlet extends HttpServlet {
 	private Languages languages;
 	
 	public void init() {
-		DBConnection.getConnect();
+//		DBConnection.getConnect();
 	}
 
 	/**
@@ -47,17 +47,17 @@ public class CompanyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("--- in the doPost method ---");
-		try {
-			departments = DataBaseCompany.getDepartmentListData();
-			regions = DataBaseCompany.getRegionsListData();
-			languages = DataBaseCompany.getLanguagesListData();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		request.setAttribute("departments", departments);
-		request.setAttribute("regions", regions);
-		request.setAttribute("languages", languages);
+//		try {
+//			departments = DataBaseCompany.getDepartmentListData();
+//			regions = DataBaseCompany.getRegionsListData();
+//			languages = DataBaseCompany.getLanguagesListData();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		request.setAttribute("departments", departments);
+//		request.setAttribute("regions", regions);
+//		request.setAttribute("languages", languages);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/companyCreation.jsp");
 		dispatcher.forward(request, response);

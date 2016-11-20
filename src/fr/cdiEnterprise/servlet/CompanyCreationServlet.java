@@ -54,7 +54,7 @@ public class CompanyCreationServlet extends HttpServlet {
     
     //Méthode init pour initialiser la base de données
     public void init() {
-		DBConnection.getConnect();
+//		DBConnection.getConnect();
 	}
 
     
@@ -92,11 +92,11 @@ public class CompanyCreationServlet extends HttpServlet {
 		
 		//Récupération objet department
 		try {
-			companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
-			System.out.println(companyDepartment);
-			companyRegion = DataBaseCompany.getRegionId(regionName);
-			companyLanguage = DataBaseCompany.getLanguageId(languageName);
-			System.out.println(languageName);
+//			companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
+//			System.out.println(companyDepartment);
+//			companyRegion = DataBaseCompany.getRegionId(regionName);
+//			companyLanguage = DataBaseCompany.getLanguageId(languageName);
+//			System.out.println(languageName);
 		//Création d'un objet contact
 			//Récupération du dernier id de la base de données
 				idContact = DataBaseCompany.getIdMax("contact");
@@ -111,7 +111,7 @@ public class CompanyCreationServlet extends HttpServlet {
 				companyDepartment, companyRegion, companySize, companySector, companyLanguage, companyProjects,
 				companyWebSite, contact);
 		System.out.println(company);
-		DataBaseCompany.insertCompanyData(company, contact);
+//		DataBaseCompany.insertCompanyData(company, contact);
 			
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block

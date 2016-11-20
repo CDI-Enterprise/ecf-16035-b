@@ -5,62 +5,34 @@
 function validate() {
 	// On commence par effacer tous les spanErreur de la page (s'ils existent)
 	deleteAllError();
+	console.log('----Entrée dans validate---');
 
+	// Initialisation de la valeur de retour
 	var retour = false;
-	var companyNameForm = document.companyForm.companyName.value;
-	var companyCityForm = document.companyForm.companyCity.value;
-	var companyPostalCodeForm = document.companyForm.companyPostalCode.value;
-	var companySectorForm = document.companyForm.companySector.value;
 
-	console.log('Nom entreprise: ' + companyNameForm);
-	console.log('Ville: ' + companyCityForm);
-	// console.log('Code postal: ' + companyPostalCodeForm);
-	// console.log(pseudo);
-
-	if (companyNameForm == null || companyNameForm == '') {
-		document.getElementById("companyName").setAttribute("style",
-				"border:1px solid red");
-		messErreur("companyName", "  Champ obligatoire!!");
+	if (verifCompanyName() || verifCompanyCity() || verifPostalCode()
+			|| verifDepartment() || verifRegion() || verifSecteur()
+			|| verifSiteWeb()) {
 		retour = false;
-	} else {
-		retour = true;
-	}
-	if (companyCityForm == null || companyCityForm == '') {
-		document.getElementById("companyCity").setAttribute("style",
-				"border:1px solid red");
-		messErreur("companyCity", "  Champ obligatoire!!");
-		retour = false;
-	}
-	if (companyPostalCodeForm == null || companyPostalCodeForm == '') {
-		document.getElementById("companyPostalCode").setAttribute("style",
-				"border:1px solid red");
-		messErreur("companyPostalCode", "  Champ obligatoire!!");
-		retour = false;
-	} else if (!verifPostalCode(companyPostalCodeForm)) {
-		// messErreur("companyPostalCode", " Le code postal n'est pas au bon
-		// format (5 chiffres)");
-		retour = false;
-	}
-	if (companySectorForm == null || companySector == '') {
-		document.getElementById("companySector").setAttribute('style',
-				'border:1px solid red');
 	}
 	console.log(retour);
-	return retour;
-
+	return false;
 }
 
 /**
  * Permet de vérifier que le nom de l'entreprise est bien renseigné
  * 
- * @param name
  * @returns boolean
  */
-function verifCompanyName(companyNameForm) {
+function verifCompanyName() {
+	// Récupération du nom de l'entreprise à partir du formulaire
+	var companyNameForm = document.companyForm.companyName.value;
+	// Test pour vérifier que le nom a bien été récupéré
+	//	console.log('Nom entreprise: ' + companyNameForm);
 	if (companyNameForm == null || companyNameForm == '') {
 		document.getElementById("companyName").setAttribute("style",
 				"border:1px solid red");
-		messErreur("companyName", "  Champ obligatoire!");
+		messErreur("companyName", "  Veuillez renseigner ce champ");
 		return false;
 	} else {
 		return true;
@@ -70,15 +42,21 @@ function verifCompanyName(companyNameForm) {
 /**
  * Permet de vérifier si la ville de l'entreprise a bien été renseignée
  * 
- * @param city
  * @return boolean
  * 
  */
-function verifCompanyCity(companyCityForm) {
+function verifCompanyCity() {
+	// Récupération du nom de la ville à partir du formulaire
+	var companyCityForm = document.companyForm.companyCity.value;
+	//Test pour la récupération de la ville
+	//	console.log('Ville: ' + companyCityForm);
 	if (companyCityForm == null || companyCityForm == '') {
 		document.getElementById("companyCity").setAttribute("style",
 				"border:1px solid red");
-		messErreur("companyCity", "  Champ obligatoire!!");
+		messErreur("companyCity", "  Veuillez renseigner ce champ");
+
+		return false;
+	} else {
 		return false;
 	}
 }
@@ -87,18 +65,23 @@ function verifCompanyCity(companyCityForm) {
  * Vérification du code postal : s'il est renseigné et si son format est bien de
  * la forme 5 chiffres de 0 à 9 (avec prise en compte des département corses)
  * 
- * @param companyPostalCodeForm
  * @returns {Boolean}
  */
 
-function verifPostalCode(companyPostalCodeForm) {
+function verifPostalCode() {
+	// Récupération de la valeur du code postal à partir du formulaire
+	var companyPostalCodeForm = document.companyForm.companyPostalCode.value;
+	//Test pour vérification récupération code postal
+	// 	console.log('Code postal: ' + companyPostalCodeForm);
+	// Définition d'une expression régulière pour vérifier le code postal
 	var regex = /^((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B))[0-9]{3}$/;
-	// if (companyPostalCodeForm == null || companyPostalCodeForm == ''){
-	// document.getElementById("companyPostalCode").setAttribute("style",
-	// "border:1px solid red");
-	// messErreur("companyPostalCode", " Champ obligatoire!!");
-	// return false;
-	if (!regex.test(companyPostalCodeForm)) {
+
+	if (companyPostalCodeForm == null || companyPostalCodeForm == '') {
+		document.getElementById("companyPostalCode").setAttribute("style",
+				"border:1px solid red");
+		messErreur("companyPostalCode", " Champ obligatoire!!");
+		return false;
+	} else if (!regex.test(companyPostalCodeForm)) {
 		messErreur("companyPostalCode",
 				"  Le code postal n'est pas au bon format (5 chiffres)");
 		return false;
@@ -107,8 +90,103 @@ function verifPostalCode(companyPostalCodeForm) {
 	}
 }
 
-/***
- * Permet de supprimer tous les spanErreurs de la page 
+/**
+ * Vérifie que le département a bien été reseigné
+ * 
+ * @returns
+ */
+
+function verifDepartment() {
+	var selectElmt = document.getElementById("departments");
+	var department = selectElmt.options[selectElmt.selectedIndex].value;
+	if(department == "" || department == null ){
+		document.getElementById("companyDepartment").setAttribute("style",
+		"border:1px solid red");
+		messErreur("companyDepartment", " Veuillez renseigner un département");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+/**
+ * Vérifie que la région a bien été renseignée
+ * 
+ * @returns
+ */
+function verifRegion() {
+	var selectElmt = document.getElementById("regions");
+	var region = selectElmt.options[selectElmt.selectedIndex].value;
+	if(region == "" || region == null ){
+		document.getElementById("regions").setAttribute("style",
+		"border:1px solid red");
+		messErreur("companyRegion", " Veuillez renseigner la région");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+/**
+ * Vérifie qu'un langage a bien été renseignée
+ * 
+ * @returns
+ */
+function verifLangage() {
+	var selectElmt = document.getElementById("languages");
+	var language = selectElmt.options[selectElmt.selectedIndex].value;
+	if(language == "" || language == null ){
+		document.getElementById("languages").setAttribute("style",
+		"border:1px solid red");
+		messErreur("companyLanguages", " Veuillez renseigner la région");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+
+/**
+ * Vérifie que le secteur a bien été renseigné
+ * 
+ * @returns
+ */
+function verifSecteur() {
+	// Récupération du secteur renseigné dans le formulaire
+	var companySectorForm = document.companyForm.companySector.value;
+
+	if (companySectorForm == null || companySectorForm == '') {
+		document.getElementById("companySector").setAttribute('style',
+				'border:1px solid red');
+		messErreur("companySector", "   Veuillez renseigner ce champ")
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/**
+ * Vérifie que le site web est bien renseigné et est valide
+ * 
+ * @returns
+ */
+function verifSiteWeb() {
+	// Récupération du site Web renseigné dans le formulaire
+	var companyWebSiteForm = document.companyForm.companyWebSite.value;
+	// Test pour vérifier que l'on a bien récupérer le site Web
+	// console.log("site web: " + companyWebSiteForm);
+	if (companyWebSiteForm == null || companyWebSiteForm == '') {
+		document.getElementById("companyWebSite").setAttribute('style',
+				'border:1px solid red');
+		messErreur("companyWebSite", "   Veuillez renseigner ce champ")
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/**
+ * Permet de supprimer tous les spanErreurs de la page
  */
 function deleteAllError() {
 	var link = document.querySelectorAll('.spanErreur');
@@ -121,8 +199,9 @@ function deleteAllError() {
 }
 
 /**
- * Fonction qui permet de supprimer le span erreur associée à l'élement passé en entrée
- * Elle est utilisée lors de la perte de focus du champ en paramètre
+ * Fonction qui permet de supprimer le span erreur associée à l'élement passé en
+ * entrée Elle est utilisée lors de la perte de focus du champ en paramètre
+ * 
  * @param element
  */
 function changeElement(element) {
@@ -137,6 +216,13 @@ function changeElement(element) {
 	elem.setAttribute("style", "border:1px solid");
 }
 
+/**
+ * Permet d'indiquer les champs manquants à l'utilisateur (coloration de la bordure de l'élément passé en paramètre
+ * et le texte à afficher)
+ * @param idElement
+ * @param text
+ * @returns
+ */
 function messErreur(idElement, text) {
 	var afficheErreur = document.createElement('span');
 	afficheErreur.setAttribute('class', 'spanErreur')
@@ -147,7 +233,11 @@ function messErreur(idElement, text) {
 	nodeParent.parentNode.insertBefore(afficheErreur, nodeParent.nextSibling);
 }
 
+/**
+ * Pour reset le formulaire
+ * @returns
+ */
 function reset() {
 	deleteAllError();
 }
-//TODO méthode pour reset le formulaire
+// TODO méthode pour reset le formulaire
