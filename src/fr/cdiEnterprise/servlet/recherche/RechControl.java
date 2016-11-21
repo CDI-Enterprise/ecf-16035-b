@@ -1,4 +1,4 @@
-package fr.cdiEnterprise.servlet;
+package fr.cdiEnterprise.servlet.recherche;
 
 import java.io.IOException;
 
@@ -13,15 +13,27 @@ import fr.cdiEnterprise.dao.RequetesRecherche;
 import fr.cdiEnterprise.service.Companies;
 import fr.cdiEnterprise.service.Regions;
 
-@WebServlet(name= "RechControl", urlPatterns="/Recherche/*")
-public class RechercheServlet extends HttpServlet{
+@WebServlet(name= "RechControl", urlPatterns= {"/Recherche/*", "/Recherche"})
+public class RechControl extends HttpServlet{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response){
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String path = request.getPathInfo();
+		System.out.println("methode doPost, path = "+path);
+		
+		RequetesRecherche req= new RequetesRecherche();
+		Regions listeRegions = req.listerRegions();
+		request.setAttribute("listeRegion", listeRegions);
+				
+		Companies listeEntreprises = req.listerEntreprises();
+		request.setAttribute("listeEntreprise", listeEntreprises);
+		
+		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
+		disp.forward(request, response);
 		
 	}
 

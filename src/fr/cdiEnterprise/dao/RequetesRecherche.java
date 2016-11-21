@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import fr.cdiEnterprise.model.Company;
+import fr.cdiEnterprise.model.Contact;
 import fr.cdiEnterprise.model.Department;
+import fr.cdiEnterprise.model.Language;
 import fr.cdiEnterprise.model.Region;
 import fr.cdiEnterprise.service.Companies;
 import fr.cdiEnterprise.service.Regions;
@@ -48,9 +50,13 @@ public class RequetesRecherche {
 			while (res.next()){
 				Department departement = recupDept(res.getInt("companyId"));
 				Region region = recupRegion(res.getInt("companyId"));
+				Language langage =null;
+				Contact contact = null;
 			
-				Company entreprise = new Company(res.getInt("companyid"), res.getString("companyname"), res.getString("companyadress"), res.getString("companycodepostal"), 
-						res.getString("companycity"), departement, region);
+				Company entreprise = new Company(res.getInt("companyid"), res.getString("companyname"), res.getString("companyadress"), 
+						res.getString("companycodepostal"), res.getString("companycity"), departement, region, 
+						res.getString("companysize"), res.getString("companysector"), langage, res.getString("companyprojects"), 
+						res.getString("companyweb"), contact);
 				listeEntreprises.add(entreprise);
 			}
 			

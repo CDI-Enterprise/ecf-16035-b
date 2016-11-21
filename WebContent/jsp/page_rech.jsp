@@ -74,6 +74,7 @@
 				<th>Code postal</th>
 				<th>Ville</th>
 				<th>Secteur</th>
+				<th>Projets</th>
 				<th>Site Web</th>
 			</tr>
 			<% for (int i=0; i<listeEntreprise.size(); i++){ %>
@@ -83,6 +84,7 @@
 				<td><%=listeEntreprise.get(i).getPostalCode() 	%></td>
 				<td><%=listeEntreprise.get(i).getCity() 		%></td>
 				<td><%=listeEntreprise.get(i).getSector() 		%></td>
+				<td><%=listeEntreprise.get(i).getProjets()	 	%></td>
 				<td><%=listeEntreprise.get(i).getWebSite()	 	%></td>
 			</tr>
 			<%}%>	
