@@ -21,7 +21,7 @@ import fr.cdiEnterprise.model.Region;
 /**
  * Servlet implementation class CompanyCreationServlet
  */
-@WebServlet("/Company/Creation/CompanyCreate")
+@WebServlet("/Company/CreationCreate")
 public class CompanyCreationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

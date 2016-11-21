@@ -1,6 +1,7 @@
 package fr.cdiEnterprise.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,16 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.cdiEnterprise.dao.DataBaseCompany;
+import fr.cdiEnterprise.service.Departments;
+import fr.cdiEnterprise.service.Languages;
+import fr.cdiEnterprise.service.Regions;
+
 /**
  * Servlet implementation class Company
  */
-@WebServlet(name= "CompanyControl", urlPatterns="/Company/*")
+@WebServlet(name= "CompanyControl", urlPatterns={"/Company/*"})
 
 public class Company extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+     
 	private RequestDispatcher 	disp;
-
+	private Departments departments;
+	private Regions regions;
+	private Languages languages;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// recuperation de l'url (à partir du chemin relatif à la servlet application cad après /bb)
 		String path = request.getPathInfo();
@@ -46,16 +55,16 @@ public class Company extends HttpServlet {
 			doAccueil(request, response);
 		}
 		
-		System.out.println("** Fin Controleur");
+		System.out.println("** Fin Controleur**");
 	}
-//
-//	/**
-//	 * Affichage de la page d'accueil du site
-//	 * @param request
-//	 * @param response
-//	 * @throws ServletException
-//	 * @throws IOException
-//	 */
+
+	/**
+	 * Affichage de la page d'accueil du site
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void doAccueil(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
@@ -77,9 +86,13 @@ public class Company extends HttpServlet {
 	private void goCreation(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		disp = request.getRequestDispatcher("/jsp/companyCreation.jsp");
-		System.out.println(disp);
-		disp.forward(request,response);		
+		System.out.println("--- in the goCreation method ---");
+		System.out.println(request.getPathInfo());
+//		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/action/Creation");
+		System.out.println(dispatcher);
+		dispatcher.forward(request, response);
+
 	}
 	
 	/**
@@ -93,7 +106,7 @@ public class Company extends HttpServlet {
 	private void goUpdateCompany(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 	
-		disp = request.getRequestDispatcher("/ModifSuppr"); 
+		disp = request.getRequestDispatcher("/action/ModifSuppr"); 
 		disp.forward(request,response);
 		
 	}

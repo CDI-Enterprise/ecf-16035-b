@@ -3,21 +3,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@ page import= "fr.cdiEnterprise.model.Company, fr.cdiEnterprise.service.Companies" %>
 <link rel="stylesheet" type="text/css" href="../css/company.css" />
 <link rel="stylesheet" href="../css/general.css" />
-<script type="text/javascript" src="../JavaScript/company.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<%@ page import= "fr.cdiEnterprise.dao.DataBaseCompany, fr.cdiEnterprise.service.Departments,fr.cdiEnterprise.service.Languages,
-  fr.cdiEnterprise.service.Regions, fr.cdiEnterprise.model.Department, fr.cdiEnterprise.model.Region, fr.cdiEnterprise.model.Language" %> 
-<title>Entreprise - CDI Enterprise</title>
+<title>Modification - Suppression fiche entreprise</title>
 </head>
 <body>
-	<%@ include file="../WEB-INF/menu.html" %>
+<%@ include file="../WEB-INF/menu.html" %>
 	<br/><br/><br/>
-	<img src="../ressource/img/logo.png" alt="logo" id="logo">
-	<h1 class="title">Création d'une fiche entreprise</h1>
+<img src="../ressource/img/logo.png" alt="logo" id="logo">
+<h1 class="title">Modification ou suppression d'une fiche entreprise</h1>
+<br />
+	
+	<form id= "selectCompany" name= "selectCompany" action="<%=request.getContextPath()%>/Company/ModifSuppr" 
+		onsubmit= "return validate();" onreset="reset();" method="post">
+		<div class = "fieldset">
+		<fieldset id="company" >
+				<legend>Liste des fiches entreprises</legend>
+				<br/>
+		<label for="companies">Veuillez sélectionner une entreprise: </label> 
+<!-- 				<select	name="companies" id="companies" > -->
+<%-- 					<% Companies companies = (Companies) request.getAttribute("companies");  --%>
+<%--  						for (Company company : companies){%>  --%>
+<%-- 					<option value = "<%=company.getCompanyName()%>"><%=company.getCompanyName()%> </option> --%>
+<%-- 					<%} %>  --%>
+<!-- 				</select>  -->
+	</fieldset>
+		</div>
+	</form> 
+	<br/>
 	<div>
-		<form id= "companyForm" name= "companyForm" action="<%=request.getContextPath()%>/Company/Creation/CompanyCreate" 
+		<form id= "companyForm" name= "companyForm" action="" 
 		onsubmit= "return validate();" onreset="reset();" method="post">
 			<div class="fieldset">
 			<fieldset id="company" >
@@ -36,38 +53,19 @@
 				<input type="text" name="companyPostalCode" id="companyPostalCode" tabindex="3" onchange="changeElement(companyPostalCode);" > 
 				<br /><br /> 
 				<label for="companyDepartment">Département: </label> 
-				<select	name="companyDepartment" id="departments" >
-					<!-- 	onClick="document.formulaire.codepostal.value=document.formulaire.departements.value;" -->
-					<% Departments departments = (Departments) request.getAttribute("departments"); 
- 						for (Department department : departments){%> 
-					<option value = "<%=department.getDepartmentName()%>"><%=department.getDepartmentName()%> </option>
-					<%} %> 
-				</select> 
+				<input type = "text" name="companyDepartment" id="departments" > 
 				<br /><br /> 
 				<label for="companyRegion">Région: </label> 
-				<select	name="companyRegion" id="regions" >
-				<% Regions regions = (Regions) request.getAttribute("regions"); 
-						for (Region region : regions){%>
-					<option value = "<%=region.getRegionName()%>"><%=region.getRegionName()%> </option>
-					<%} %> 
-				</select> 
+				<input type="text"	name="companyRegion" id="regions" > 
 				<br /><br />
 				<label for="companySize">Taille de l'entreprise</label>
-				<input class="btnRadio" type="radio" name="companySize" value="micro-entreprise" checked /> MicroEntreprise (&lsaquo;10)
-				<input class="btnRadio" type="radio" name="companySize" value="PME" /> PME (&lsaquo;250) 
-				<input class="btnRadio" type="radio" name="companySize" value="ETI" /> ETI (&rsaquo;250 et &lsaquo;5000) 
-				<input class="btnRadio" type="radio" name="companySize" value="grandeEntreprise" /> Grande entreprise 
+				<input type ="text" name="companySize" id = "companySize"/>
 				<br/><br/>
 				<label for="companySector">Secteur d'activité</label>
 				<input type="text" name="companySector" id="companySector" tabindex="4" onchange="changeElement(companySector);" >
 				<br/><br/>
 				<label for="companyLanguages">Langages principalement utilis&eacute;s</label>
-				<select name ="companyLanguages" id="languages" size="3"> 
-					<% Languages languages = (Languages) request.getAttribute("languages"); 
-						for (Language language : languages){%> 
-					<option value = "<%=language.getLanguageName()%>"><%=language.getLanguageName()%> </option>
-					<%} %> 
-					</select> 
+				<input type="text" name ="companyLanguages" id="languages" >  
 				<br/><br/>
 				<label for="companyProjects">Principaux projets de l'entreprise</label>
 				<textarea type="text" name="companyProjects" tabindex="5" ></textarea> 
@@ -98,8 +96,9 @@
 		<input type="reset" name="cancel" value="Annuler">
 </div>
 		</form>
-
-
-	</div>
+			
+<footer>
+		<a href= "<%=request.getContextPath()%>/jsp/accueil.jsp">Retour à l'accueil </a>
+</footer>
 </body>
 </html>
