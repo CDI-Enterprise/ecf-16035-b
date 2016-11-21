@@ -22,35 +22,49 @@ public class RechControl extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String path = request.getPathInfo();
-		System.out.println("methode doPost, path = "+path);
+//		RequestDispatcher disp;
+//		String path = request.getPathInfo();
+//		System.out.println("methode doGet, path = "+path);
+//		
+//		if (path.equals("/")){
+//			disp = request.getRequestDispatcher("/RechAffichageNew");
+//			disp.forward(request, response);	
+//		} else {System.out.println("erreur ecriture path");}
 		
-		RequetesRecherche req= new RequetesRecherche();
-		Regions listeRegions = req.listerRegions();
-		request.setAttribute("listeRegion", listeRegions);
-				
-		Companies listeEntreprises = req.listerEntreprises();
-		request.setAttribute("listeEntreprise", listeEntreprises);
-		
-		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
-		disp.forward(request, response);
+		doPost(request, response);
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		RequestDispatcher disp;
 		String path = request.getPathInfo();
-		System.out.println("methode doPost, path = "+path);
+		System.out.println("methode doPost Controleur, path = "+path);
 		
-		RequetesRecherche req= new RequetesRecherche();
-		Regions listeRegions = req.listerRegions();
-		request.setAttribute("listeRegion", listeRegions);
-				
-		Companies listeEntreprises = req.listerEntreprises();
-		request.setAttribute("listeEntreprise", listeEntreprises);
+		if (path.equals("/")){
+			disp = request.getRequestDispatcher("/RechAffichageNew");
+			disp.forward(request, response);	
+		} 
 		
-		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
-		disp.forward(request, response);
+		if (path.equals("/RechControl/RechListe")) {
+			disp = request.getRequestDispatcher("/RechListe");
+			disp.forward(request, response);
+		}
 		
+		if (path.equals("/RechControl/EnregistrerRech")) {
+			disp = request.getRequestDispatcher("/RechEnregistrer");
+			disp.forward(request, response);
+		}
+		
+		if (path.equals("/RechControl/VoirRechFav")) {
+			disp = request.getRequestDispatcher("/RechFavAfficher");
+			disp.forward(request, response);
+		}
+		
+		if (path.equals("/RechControl/SupprRechFav")) {
+			disp = request.getRequestDispatcher("/RechSupprAfficher");
+			disp.forward(request, response);
+		}
+
 	}
 
 }

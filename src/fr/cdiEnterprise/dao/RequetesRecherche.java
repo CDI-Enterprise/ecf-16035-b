@@ -37,7 +37,7 @@ public class RequetesRecherche {
 		return listeRegion;
 	}
 
-	public Companies listerEntreprises(){
+	public Companies listAllCompanies(){
 		Connection connect = DBConnection.getConnect();
 		String req = "Select companyid, companyname, companyadress, companycodepostal, companycity"
 				+ ",companysize, companysector, companyprojects, companyweb from company";
@@ -66,7 +66,38 @@ public class RequetesRecherche {
 		}
 		return listeEntreprises;
 	}
+
+	//Methode de recherche d'une liste d'entreprises selon les critères
+	public Companies listCompanies(String nom, String secteur, String ville, String regionId){
+		Connection connect = DBConnection.getConnect();
+		String req = "Select companyid, companyname, companyadress, companycodepostal, companycity"
+				+ ",companysize, companysector, companyprojects, companyweb from company";
+		Companies listeEntreprises = new Companies();
 		
+		try {
+			Statement stmt = connect.createStatement();
+			ResultSet res = stmt.executeQuery(req);
+			
+			while (res.next()){
+				Department departement = recupDept(res.getInt("companyId"));
+				Region region = recupRegion(res.getInt("companyId"));
+				Language langage =null;
+				Contact contact = null;
+			
+				Company entreprise = new Company(res.getInt("companyid"), res.getString("companyname"), res.getString("companyadress"), 
+						res.getString("companycodepostal"), res.getString("companycity"), departement, region, 
+						res.getString("companysize"), res.getString("companysector"), langage, res.getString("companyprojects"), 
+						res.getString("companyweb"), contact);
+				listeEntreprises.add(entreprise);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listeEntreprises;
+	}
+	
 	public Department recupDept(int companyId) {
 		int number = 0;
 		String name = "";
@@ -110,7 +141,7 @@ public class RequetesRecherche {
 		
 			while (res.next()){
 				number = res.getInt("regionid");
-				String reqDept = "Select regionname from regionss where regionid= '"+number+"'";
+				String reqDept = "Select regionname from regions where regionid= '"+number+"'";
 				Statement stmt2 = connect.createStatement();
 				ResultSet res2 = stmt2.executeQuery(reqDept);
 				while (res2.next()){

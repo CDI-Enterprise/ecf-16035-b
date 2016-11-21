@@ -23,11 +23,11 @@
 
 
 <div id="blocRech">
-	<form class="fieldset" action="RechControl" method="post">
+	<form class="fieldset" name="FormRecherche" action="RechControl" method="post">
 		<fieldset id="recherche" >
 		<legend>Recherche</legend>
 			<label class="rech">Nom de l'entreprise :</label> <input type="text" name="nom_comp"/>
-			<input type="button" name="rechercher" value="Rechercher"/>
+			<input type="submit" name="rechercher" value="Rechercher" formaction="RechControl/RechListe"/>
 			<br/>
 		
 			<label class="rech">Secteur d'activité :</label> <input type="text" name="secteur_comp"/>
@@ -39,15 +39,16 @@
 				<option value="<%=i%>"> <%=listeRegion.get(i).getRegionName()%> </option>
 			<%}%>
 			</select>
-			<input type="button" name="Enregistrer" value="Enregistrer"/>
+			<input type="submit" name="Enregistrer" value="Enregistrer" formaction="RechControl/EnregistrerRech"/>
 			<br/>
 			
 			<label class="rech">Ville :</label> <input type="text" name="ville_comp"/>
-			<input type="button" name="Reset" value="Reinitialiser"/>
+			<input type="reset" name="Reset" value="Reinitialiser"/>
 		</fieldset>
 	</form>
 	
-	<div class="fieldset">
+<!-- 	<div class="fieldset"> -->
+	<form class="fieldset" name="FormFavoris" action="RechControl" method="post">
 		<fieldset id="favoris" > <legend>Recherches Enregistrées</legend>
 			<div id="listeFavoris">
 				<input type="radio" name="radioRech"/> <label class="fav">Ma recherche</label> 
@@ -58,10 +59,11 @@
 		</fieldset>
 		
 		<span id="btnFavoris">
-			<input type="button" name="voir_rech" value="Voir"/>
-			<input type="button" name="suppr_rech" value="Supprimer"/>
+			<input type="submit" name="voir_rech" value="Voir" formaction="RechControl/VoirRechFav"/>
+			<input type="submit" name="suppr_rech" value="Supprimer" formaction="RechControl/SupprRechFav"/>
 		</span>
-	</div>
+<!-- 	</div> -->
+	</form>
 </div>
 
 <div class="listeEntreprises">
@@ -73,6 +75,8 @@
 				<th>Adresse</th>
 				<th>Code postal</th>
 				<th>Ville</th>
+				<th>Région</th>
+				<th>Departement</th>
 				<th>Secteur</th>
 				<th>Projets</th>
 				<th>Site Web</th>
@@ -83,6 +87,8 @@
 				<td><%=listeEntreprise.get(i).getAdress() 		%></td>
 				<td><%=listeEntreprise.get(i).getPostalCode() 	%></td>
 				<td><%=listeEntreprise.get(i).getCity() 		%></td>
+				<td><%=listeEntreprise.get(i).getRegion()		%></td>
+				<td><%=listeEntreprise.get(i).getDepartment()	%></td>
 				<td><%=listeEntreprise.get(i).getSector() 		%></td>
 				<td><%=listeEntreprise.get(i).getProjets()	 	%></td>
 				<td><%=listeEntreprise.get(i).getWebSite()	 	%></td>
