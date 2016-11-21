@@ -13,7 +13,7 @@
 
 <%@include file="../WEB-INF/menu.html" %>
 </head>
-<body onload="/messagerie">
+<body onload="../messagerie">
 <%@include file="../WEB-INF/messagerie.html" %>
 
 <!-- Content messagerie -->
@@ -21,22 +21,22 @@
 <div id="content">
 	<table>
 		<tr>
-			<th>#</th>
-			<th>Source</th>
-			<th>Destination</th>
-			<th>Objet</th>
-			<th>Date Reception</th>
-			<th>Piece jointe</th>
+			<th id="select">#</th>
+			<th id="source">Source</th>
+			<th id="destination">Destination</th>
+			<th id="objet">Objet</th>
+			<th id="date">Date Reception</th>
+			<th id="piece jointe">Piece jointe</th>
 		</tr>
 		
 		<%Items items = (Items) request.getAttribute("message"); %>
 
 		<%for(int i = 0; i < items.size(); i++){%>
-			<tr onclick="afficheMessage(this);">
-				<th><%= items.get(i).getId() %></th>
+			<tr class="<%= items.get(i).getId() %>" >
+				<th><input type="checkbox" /></th>
 				<th><%= items.get(i).getSender() %></th>
 				<th><%= items.get(i).getReceiver() %></th>
-				<th><%= items.get(i).getObject() %></th>
+				<th><a href="messagerie/affiche_id=<%= items.get(i).getId() %>" > <%= items.get(i).getObject() %> </a></th>
 				<th><%= items.get(i).getTimeStamp() %></th>
 			</tr>
 		<%}%>

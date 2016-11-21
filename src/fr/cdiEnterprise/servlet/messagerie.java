@@ -21,10 +21,14 @@ import fr.cdiEnterprise.service.Items;
  */
 @WebServlet(
 		
-		name="Messagerie",
-		urlPatterns = { "/messagerie"
+	name="Messagerie",
+	urlPatterns = {
+			
+	"/messagerie",
+	"/messagerie/affiche_id=*"
 		
 })
+
 public class messagerie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,6 +41,7 @@ public class messagerie extends HttpServlet {
     }
 
 	/**
+	 * Récupérer les requete get et renvoi l'utilisateur a la page demander avec les elements neccessaires a la construction de la page.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,15 +49,17 @@ public class messagerie extends HttpServlet {
 //Syso de controle
 		System.out.println("get");
 		System.out.println("getRequestURI" + request.getRequestURI());
+		System.out.println("Info path : " + request.getPathInfo());
+		System.out.println("" + request.getServletPath());
 		
 //Recuperation de l'uri demander
 		String path = request.getRequestURI();
 		System.out.println("path" + path);
 		
-//Declaration des constante a testé TODO les passé en enum
+//Declaration des constante a testé TODO a passé en enum
 		final String MESSAGERIE = "/ecf-16035-b/messagerie";
 		
-//Declaration des constante TODO les passé en enum
+//Declaration des constante TODO a passé en enum
 		final String PATH_MESSAGERIE = "/jsp/messagerie.jsp";
 		
 //Recupération de la session TODO a modifier pour qu'il ne la creer par mais envoie a une page de connexion si elle hesiste pas
@@ -67,8 +74,6 @@ public class messagerie extends HttpServlet {
 //Test de l'url pour renvoyer au action desiré
 		if(path.equalsIgnoreCase(MESSAGERIE)){
 			
-			
-				
 			/* Instanciation de Items pour recupération de tout les Item lié au login puis ajout au request 
 			 * pour affichage sur la page de messagerie
 			 */
@@ -84,6 +89,7 @@ public class messagerie extends HttpServlet {
 	}
 
 	/**
+	 * Récupere et renvoie l'utilisateur a la page demander avec une inscription dans la base de données des données entrer par l'utilisateur.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
