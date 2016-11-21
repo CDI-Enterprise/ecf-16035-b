@@ -27,8 +27,8 @@ import fr.cdiEnterprise.service.Items;
 	urlPatterns = {
 			
 	"/messagerie",
-	"/messagerie/*"
-		
+	"/messagerie/*",
+	
 })
 
 public class messagerie extends HttpServlet {
@@ -64,6 +64,7 @@ public class messagerie extends HttpServlet {
 //Declaration des constante a testé TODO a passé en enum
 		final String MESSAGERIE = "/ecf-16035-b/messagerie";
 		final String AFFICHAGE = "/ecf-16035-b/messagerie/affichage";
+		final String NOUVEAU = "/ecf-16035-b/messagerie/nouveau";
 		
 //Declaration des constante TODO a passé en enum
 		
@@ -75,11 +76,13 @@ public class messagerie extends HttpServlet {
 
 			afficheMail(request,response);
 			
+		}else if(path.equalsIgnoreCase(NOUVEAU)){
+
+			nouveauMail(request,response);
+			
 		}
 
 	}
-
-	
 
 	/**
 	 * Récupere et renvoie l'utilisateur a la page demander avec une inscription dans la base de données des données entrer par l'utilisateur.
@@ -90,6 +93,14 @@ public class messagerie extends HttpServlet {
 		System.out.println("post");
 		
 	}
+	
+	
+
+	private void nouveauMail(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 	/**
 	 * Recupere l'id du mail qui a etait selectionné par le mail et affiche son contennu grace {@link MessageDao}	
@@ -104,7 +115,12 @@ public class messagerie extends HttpServlet {
 		
 		String ref = request.getParameter("ref");
 		MessageDao dao = new MessageDao();
+		
 		Item item = dao.getItemByRef(ref);
+		
+		System.out.println(item.getBody());
+		System.out.println(item.getSender());
+		System.out.println(item.getObject());
 		request.setAttribute("message", item);
 		RequestDispatcher dispatch = request.getRequestDispatcher(PATH_AFFICHAGE);
 		dispatch.forward(request, response);

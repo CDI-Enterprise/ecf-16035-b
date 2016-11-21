@@ -125,12 +125,11 @@ public class MessageDao {
 		String object = null;
 		String body = null;
 		String date = null;
-		int draftMess = 0;
 
 		String createStatement = null;
 		
 			createStatement = String.format("select %s, %s  , %s ,%s , %s ,%s from %s WHERE %s = '%s'",
-					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", TABLE_NAME, "ref",
+					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", TABLE_NAME, "identity",
 					ref);
 
 			resultSet = statement.executeQuery(createStatement);
@@ -150,7 +149,7 @@ public class MessageDao {
 				
 			}
 		} catch (SQLException e1) {
-			System.out.println("[GET] an issue happen with the SQL to getAll items");
+			System.out.println("[GET] an issue happen with the SQL to getItemByRef");
 			e1.printStackTrace();
 		}
 		
