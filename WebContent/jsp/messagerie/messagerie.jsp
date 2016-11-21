@@ -11,10 +11,12 @@
 
 <%@ page import="fr.cdiEnterprise.model.Item, fr.cdiEnterprise.service.Items" %>
 
-<%@include file="../WEB-INF/menu.html" %>
+<%@include file="../../WEB-INF/menu.html" %>
 </head>
+
+<!-- ============================================= BODY ============================================= -->
 <body onload="../messagerie">
-<%@include file="../WEB-INF/messagerie.html" %>
+<%@include file="../../WEB-INF/messagerie.html" %>
 
 <!-- Content messagerie -->
 
@@ -36,7 +38,7 @@
 				<th><input type="checkbox" /></th>
 				<th><%= items.get(i).getSender() %></th>
 				<th><%= items.get(i).getReceiver() %></th>
-				<th><a href="messagerie/affiche_id=<%= items.get(i).getId() %>" > <%= items.get(i).getObject() %> </a></th>
+				<th><a href="messagerie/affichage?ref=<%= items.get(i).getId() %>" > <%= items.get(i).getObject() %> </a></th>
 				<th><%= items.get(i).getTimeStamp() %></th>
 			</tr>
 		<%}%>
