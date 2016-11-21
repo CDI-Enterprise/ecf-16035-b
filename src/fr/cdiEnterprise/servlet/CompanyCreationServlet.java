@@ -3,6 +3,7 @@ package fr.cdiEnterprise.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ import fr.cdiEnterprise.model.Region;
 /**
  * Servlet implementation class CompanyCreationServlet
  */
-@WebServlet("/Company/Creation/ok")
+@WebServlet("/Company/Creation/CompanyCreate")
 public class CompanyCreationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -53,7 +54,7 @@ public class CompanyCreationServlet extends HttpServlet {
     
     //Méthode init pour initialiser la base de données
     public void init() {
-		DBConnection.getConnect();
+//		DBConnection.getConnect();
 	}
 
     
@@ -62,7 +63,7 @@ public class CompanyCreationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 		doPost(request, response);
 	
 	}
@@ -91,11 +92,11 @@ public class CompanyCreationServlet extends HttpServlet {
 		
 		//Récupération objet department
 		try {
-			companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
-			System.out.println(companyDepartment);
-			companyRegion = DataBaseCompany.getRegionId(regionName);
-			companyLanguage = DataBaseCompany.getLanguageId(languageName);
-			System.out.println(languageName);
+//			companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
+//			System.out.println(companyDepartment);
+//			companyRegion = DataBaseCompany.getRegionId(regionName);
+//			companyLanguage = DataBaseCompany.getLanguageId(languageName);
+//			System.out.println(languageName);
 		//Création d'un objet contact
 			//Récupération du dernier id de la base de données
 				idContact = DataBaseCompany.getIdMax("contact");
@@ -110,15 +111,17 @@ public class CompanyCreationServlet extends HttpServlet {
 				companyDepartment, companyRegion, companySize, companySector, companyLanguage, companyProjects,
 				companyWebSite, contact);
 		System.out.println(company);
-		DataBaseCompany.insertCompanyData(company, contact);
+//		DataBaseCompany.insertCompanyData(company, contact);
 			
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			System.out.println("-------PROBLEME--------");
 			e2.printStackTrace();
 		}
-		
-		response.sendRedirect( request.getContextPath() + "/jsp/accueil.jsp" );
+		request.setAttribute("company", company);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/CompanyCreate.jsp");
+		dispatcher.forward(request, response);
+//		response.sendRedirect( request.getContextPath() + "/jsp/accueil.jsp" );
 	}
 
 }

@@ -11,13 +11,13 @@
 <title>Page de recherche</title>
 </head>
 
-<body>
-
-<%String utilisateur="Francois"; 
+<%	String utilisateur="Francois"; 
 	Regions listeRegion = (Regions) request.getAttribute("listeRegion");
 	Companies listeEntreprise = (Companies) request.getAttribute("listeEntreprise");%>
 	
-<header> <%@ include file="../WEB-INF/menu.html" %> </header>
+	
+<body>	
+<%@ include file="../WEB-INF/menu.html" %> 
 <img src="../ressource/img/logo.png" alt="logo" id="logo">
 <h1 class="title"> Recherche </h1>
 
@@ -74,6 +74,7 @@
 				<th>Code postal</th>
 				<th>Ville</th>
 				<th>Secteur</th>
+				<th>Site Web</th>
 			</tr>
 			<% for (int i=0; i<listeEntreprise.size(); i++){ %>
 			<tr>
@@ -82,6 +83,7 @@
 				<td><%=listeEntreprise.get(i).getPostalCode() 	%></td>
 				<td><%=listeEntreprise.get(i).getCity() 		%></td>
 				<td><%=listeEntreprise.get(i).getSector() 		%></td>
+				<td><%=listeEntreprise.get(i).getWebSite()	 	%></td>
 			</tr>
 			<%}%>	
 		</table>

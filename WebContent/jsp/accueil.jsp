@@ -13,10 +13,14 @@
 </head>
 <body>
 <%@ include file="../WEB-INF/menu.html" %>
-
+<br/><br/>
 <h1 class="title">	Bienvenue sur le site CDI Enterprise </h1>
-
-<div id ="bienvenue">
+<br/>
+<div id="bienvenue">
+<div id="divLogo">
+<img src="../ressource/img/star-trek.png" alt="logo" id="logo">
+</div>
+<div id ="texte">
 <p>Participez à la création d'une base de données commune de fiches entreprises </p>
 <br/>
 <p>STAGIAIRES, ancien ou nouveau <br/>
@@ -29,6 +33,9 @@ Maintenez un profil public et technique à jour</p>
 Gardez contact avec vos anciens stagiaires <br/>
 Suivez leur carrière</p>
 </div>
+</div>
+<footer>
 
+</footer>
 </body>
 </html>
