@@ -124,7 +124,7 @@
 	
 	float: left;
 	display: block;
-	width: 100%;
+	width: 135px;
 	list-style-type: none;
 	padding: 14px 17px;
 	border-bottom: 1px solid black;
@@ -139,6 +139,8 @@
 #menuMessagerieLeft ul li a{
 	
 	color: white;
+	width: 169px;
+	height: 49px;
 	text-decoration: none;
 	
 }

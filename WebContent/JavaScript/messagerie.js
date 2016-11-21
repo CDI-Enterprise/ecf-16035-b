@@ -17,3 +17,9 @@ function changeFocus(element){
 	
 	
 }
+
+function afficheMessage(element){
+	
+	console.log(element.className);
+	
+}
