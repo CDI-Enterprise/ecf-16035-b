@@ -5,6 +5,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css/Inscription.css" />
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Inscription</title>
 </head>
@@ -15,7 +16,7 @@
 		<p><h4>Vous pouvez vous incrire en remplissant le formulaire ci-dessous</h4></p>
 	</div>
 	
-	<form action="Post">
+	<form action="../inscription"  method="post" onsubmit="controleInscription(this)">
 		
 		<fieldset>
 	    	<legend><h3>Inscription</h3></legend>
@@ -28,13 +29,13 @@
 	    
 	    	<div>
 			    <p><label>
-			    <input type="text" class ="t" name="nom" placeholder="Votre Nom ici" aria-label="nom" maxlength="24"></label></p>
+			    <input type="text" class ="saisie" name="nom" placeholder="Votre Nom ici" aria-label="nom" maxlength="24"></label></p>
 
 			    <p><label>
-			    <input type="text" class ="t" name="prenom" placeholder="Votre prénom ici" aria-label="prenom" maxlength="24"></label></p>
+			    <input type="text" class ="saisie" name="prenom" placeholder="Votre prénom ici" aria-label="prenom" maxlength="24"></label></p>
 
 			    <p><label>
-			    <input type="text" class ="e" name="email" placeholder="Votre E-mail ici" aria-label="email" maxlength="34"></label></p>
+			    <input type="email" class ="saisie" name="email" placeholder="Votre E-mail ici" aria-label="email" maxlength="34"></label></p>
 
 			    <p><label>
 			    <input type="password" class ="pwd" name="motDePasse" placeholder="Votre choix de mot de passe" aria-label="passWord" maxlength="24"> </label></p>

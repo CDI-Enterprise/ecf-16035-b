@@ -1,6 +1,14 @@
 
 
 
+body{
+	background-image: url("../ressource/img/bg.jpg");
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-attachment:fixed;
+	font-family: Arial, sans-serif;
+}
+
 form{
 	padding-left: 20%;
 	padding-right: 20%;
@@ -11,6 +19,9 @@ input[type=text] {
     width: 70%;
 }
 input[type=password] {
+	width: 70%;
+}
+input[type=email]{
 	width: 70%;
 }
 
