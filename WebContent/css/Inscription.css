@@ -16,12 +16,10 @@ input[type=password] {
 
 p{
 	text-align: center;
+	
 }
 
 .b{
 	text-align: center;
-}
-
-background{
-	color: blue;
+	padding-top: 35px;
 }
