@@ -1,6 +1,7 @@
 package fr.cdiEnterprise.servlet.messagerie;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import fr.cdiEnterprise.dao.MessageDao;
 import fr.cdiEnterprise.model.Item;
 import fr.cdiEnterprise.service.Items;
+import fr.cdiEnterprise.util.MpClientV2;
 
 /**
  * Servlet implementation class messagerie
@@ -28,7 +30,6 @@ import fr.cdiEnterprise.service.Items;
 			
 	"/messagerie",
 	"/messagerie/*",
-	"/messagerie/affichage",
 	
 })
 
@@ -53,10 +54,6 @@ public class messagerie extends HttpServlet {
 //Syso de controle
 		System.out.println("get");
 		System.out.println("getRequestURI :" + request.getRequestURI());
-		System.out.println("Info path : " + request.getPathInfo());
-		System.out.println("servlet path :" + request.getServletPath());
-		System.out.println("Trasnlated " + request.getPathTranslated());
-		System.out.println("URL " + request.getRequestURL());
 		
 //Recuperation de l'uri demander
 		String path = request.getRequestURI();
@@ -81,7 +78,12 @@ public class messagerie extends HttpServlet {
 			
 		}else if(path.equalsIgnoreCase(NOUVEAU)){
 
-			nouveauMail(request,response);
+			try {
+				nouveauMail(request,response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 
@@ -105,13 +107,23 @@ public class messagerie extends HttpServlet {
 	 * @param response
 	 * @throws IOException 
 	 * @throws ServletException 
+	 * @throws SQLException 
 	 */
-	private void nouveauMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void nouveauMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		
-		final String PATH_MESSAGERIE = "http://localhost:8085/ecf-16035-b/jsp/messagerie/messagerie.jsp";
+		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_NOUVEAU = "../../WEB-INF/messagerie/nouveau.jsp";
 		
+		//TODO a supprimer SIMULATION SESSION UTILISATEUR
+		HttpSession session = request.getSession(true);
+		String box = "oracle";
+		session.setAttribute("login",box);	
+		
+		MpClientV2 mpclient = new MpClientV2(session.getAttribute("login").toString());
+		System.out.println(mpclient.getNewID());
+		
 		request.setAttribute("url", PATH_NOUVEAU);
+		request.setAttribute("id", mpclient.getNewID());
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher(PATH_MESSAGERIE);
 		dispatch.forward(request, response);
@@ -153,7 +165,7 @@ public class messagerie extends HttpServlet {
 	 */
 	private void constructMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		final String PATH_MESSAGERIE = "jsp/messagerie/messagerie.jsp";
+		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_BOITE_RECEPTION = "../../WEB-INF/messagerie/boite_reception.jsp";
 
 		//TODO supression de la SIMULATION SESSION
@@ -164,13 +176,11 @@ public class messagerie extends HttpServlet {
 		Items items = new Items();
 		items = MessageDao.getAllItems(session.getAttribute("login").toString(),false);
 		
-		//session.setAttribute("message", items);
 		request.setAttribute("message", items);
-		
 		request.setAttribute("url", PATH_BOITE_RECEPTION);
-		
-		RequestDispatcher dispatch = request.getRequestDispatcher(PATH_MESSAGERIE);
-		dispatch.forward(request, response);
+	
+		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
+		disp.forward(request,response);
 		
 	}
 
