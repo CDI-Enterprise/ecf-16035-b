@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.cdiEnterprise.dao.RequetesRecherche;
 import fr.cdiEnterprise.model.Recherche;
+import fr.cdiEnterprise.service.Companies;
+import fr.cdiEnterprise.service.RecherchesFav;
+import fr.cdiEnterprise.service.Regions;
 
 /**
  * Servlet implementation class RechFavAfficher
@@ -36,13 +39,21 @@ public class RechFavAfficher extends HttpServlet {
 		System.out.println("doPost d'afficher recherche favorite");
 		RequetesRecherche req= new RequetesRecherche();
 		
-		String idUser="francois";
+		String idUser= (String) request.getAttribute("idUser");
 		String rechOpt = request.getParameter("radioRech");
 		
-			
+		Regions listeRegions = req.listerRegions();
+		request.setAttribute("listeRegion", listeRegions);
+		
+		RecherchesFav listeRechFav = req.listeRech(idUser);
+		request.setAttribute("listeRechFav", listeRechFav);
+		
 		if (rechOpt != null){
 			Recherche recherche = req.recupRechFav(rechOpt, idUser);
 			request.setAttribute("RechFavSelect", recherche);
+			
+			Companies listeEntreprises = req.listAllCompanies();
+			request.setAttribute("listeEntreprises", listeEntreprises);
 		} else {
 			System.out.println("pas de radio bouton selectionné");
 		}

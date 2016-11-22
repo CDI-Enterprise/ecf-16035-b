@@ -95,7 +95,7 @@ public class RequetesRecherche {
 						res.getString("companyweb"), contact);
 				listeEntreprises.add(entreprise);
 			}
-			
+						
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,6 +122,7 @@ public class RequetesRecherche {
 													res.getString("sector_rech"), region, res.getString("city_rech"));
 				listeRech.add(recherche);
 			}
+		
 			return listeRech;
 			
 		} catch (SQLException e) {
@@ -153,6 +154,7 @@ public class RequetesRecherche {
 				recherche = new Recherche (res.getInt("id_rech"), res.getString("user_id"), res.getString("nom_rech"), res.getString("comp_rech"),
 													res.getString("sector_rech"), region, res.getString("city_rech"));
 			}
+		
 			return recherche;	
 			
 		} catch (SQLException e) {
@@ -163,7 +165,65 @@ public class RequetesRecherche {
 		
 		
 	}
+	
+	//methode pour enregistrer une recherche dans les favoris
+	public void enregistrerRech(Recherche rech) {
+		Connection connect = DBConnection.getConnect();
+		//rechercher le numero de region qui correspond a la string region
+		PreparedStatement prepStmt;
+		String req = "insert into rech_fav values (?, ?, ?, ?, ?, ?, ?)";
 		
+		try {
+			int idRegion =0;
+			if (rech.getRegionRech() != null){
+				idRegion = rech.getRegionRech().getCodeRegion();
+			}
+			
+			prepStmt = connect.prepareStatement(req);
+			prepStmt.setInt(1, rech.getIdRech());
+			prepStmt.setString(2, rech.getIdUser());
+			prepStmt.setString(3, rech.getNomRech());
+			prepStmt.setString(4, rech.getCompRech());
+			prepStmt.setString(5, rech.getSectorRech());
+			prepStmt.setInt(6, idRegion);
+			prepStmt.setString(7, rech.getCityRech());
+			ResultSet res= prepStmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	//methode qui recherche l'indice le plus haut de la table de recherches favorites
+	public int indexRechFav() {
+		Connection connect = DBConnection.getConnect();
+		int index=0;
+		
+		String req = "select id_rech from rech_fav";
+		Statement stmt;
+		
+		
+		try {
+			stmt = connect.createStatement();
+			ResultSet res = stmt.executeQuery(req);
+			while (res.next()){
+				if(res.getInt("id_rech")>index){
+					index=res.getInt("id_rech");
+					System.out.println(index);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return index+1;
+		
+		
+		
+	}
+	
 	//Methode de recherche de departement
 	public Department recupDept(int companyId) {
 		int number = 0;
@@ -186,6 +246,7 @@ public class RequetesRecherche {
 					name = res2.getString("departmentname");
 				}
 			}
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -215,6 +276,7 @@ public class RequetesRecherche {
 					name = res2.getString("regionname");
 				}
 			}
+	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -223,6 +285,34 @@ public class RequetesRecherche {
 		Region region = new Region(name, number);
 		return region;
 	}
+
+	public Region regionByName(String nomRegion) {
+		Connection connect = DBConnection.getConnect();
+		String reqDeptId = "Select regionid from regions where regionname= ?";
+		Region region = null;
+		
+		PreparedStatement prepStmt;
+		try {
+			prepStmt = connect.prepareStatement(reqDeptId);
+			prepStmt.setString(1, nomRegion);
+			ResultSet res= prepStmt.executeQuery();
+			
+			while (res.next()){
+				region= new Region(nomRegion, res.getInt("regionid"));
+			}
+	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		return region;
+	
+	}
+
+
+	
 
 
 }
