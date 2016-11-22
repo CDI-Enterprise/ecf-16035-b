@@ -2,13 +2,16 @@ package fr.cdiEnterprise.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import fr.cdiEnterprise.model.Inscription;
 
 public class AccesBaseInscrit {
 	
 	private final static String strNomDriver = "oracle.jdbc.driver.OracleDriver";
-	private final static String dbURL = "jdbc:oracle:thin:stag15/stag15pw@junon:1521:AFPA";
+	private final static String dbURL = "jdbc:oracle:thin:cdi_enterprise/stagpw@junon:1521:AFPA";
 	
 	private Connection connexion; 
 	private Statement stmt;
@@ -31,31 +34,49 @@ public class AccesBaseInscrit {
 		
 	}
 	
-	/*
 	
-	public void inscription(int reference, String statut, String nom, String prenom, String email, String motDePasse, String confirmerPasse){
-		
-		int reference = 0;
-		String statut = "";
-		String nom = "";
-		String prenom = "";
-		String email = "";
-		String motDePasse = "";
-		String confirmerPasse = "";     
-		
-		String reqSql = "insert into inscription values(" + reference + "','" + statut + "','" + nom + "','" + prenom + "','" + email + "','" + motDePasse + "','" + confirmerPasse +"')";
 	
+	public void inscription(Inscription exemple){
+		
+		
+		int reference = exemple.getReference();
+		String statut = exemple.getStatut();
+		String nom = exemple.getNom();
+		String prenom = exemple.getPrenom();
+		String email = exemple.getEmail();
+		String motDePasse = exemple.getMotDePasse();
+		String confirmation = exemple.getConfirmation();     
+		
+		
+		//String reqSql = "insert into inscription values(" + 03 + ",'" + statut + "','" + nom + "','" + prenom + "','" + email + "','" + motDePasse + "','" + confirmation +"')";
+		String sql = "insert into inscription values(?,?,?,?,?,?,?)";
+		
+		
 		try {
-			stmt.executeUpdate(reqSql);
+			
+			PreparedStatement update = connexion.prepareStatement(sql);
+			update.setInt(1, reference);
+			update.setString(2, statut);
+			update.setString(3, nom);
+			update.setString(4, prenom);
+			update.setString(5, email);
+			update.setString(6, motDePasse);
+			update.setString(7, confirmation);
+			
+		update.executeUpdate();
 			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+			
 	}
 	
+/*
 	public void desinscription(){
 		
-		String reqSql = "delete from inscription where reference =" + Inscription.getReference();
+		String reqSql = "delete from inscription where reference =" + fr.cdiEnterprise.model.Inscription.getReference();
 		
 		try {
 			stmt.executeUpdate(reqSql);
@@ -82,6 +103,6 @@ public class AccesBaseInscrit {
 		
 	}
 	
-	public 
 	*/
+	
 }
