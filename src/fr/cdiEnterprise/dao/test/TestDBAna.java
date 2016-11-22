@@ -35,8 +35,8 @@ public class TestDBAna {
 //		dept = DataBaseCompany.getDepartmentId("Ain");
 //		System.out.println(dept);
 		
-		
-		DataBaseCompany.deleteCompanyData(6);
+		DataBaseCompany.getCompaniesData();
+//		DataBaseCompany.deleteCompanyData(6);
 //		DataBaseCompany.updateCompanyData(6, "rue des oiseaux");
 }
 }
