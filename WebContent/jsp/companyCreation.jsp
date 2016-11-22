@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css/company.css" />
@@ -17,8 +17,8 @@
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">
 	<h1 class="title">Création d'une fiche entreprise</h1>
 	<div>
-		<form id= "companyForm" name= "companyForm" action="<%=request.getContextPath()%>/Company/Creation/CompanyCreate" 
-		onsubmit= "return validate();" onreset="reset();" method="post">
+		<form id= "companyForm" name= "companyForm" action="<%=request.getContextPath()%>/Company/CompanyCreate" 
+		onsubmit= "return ecrire();" onreset="reset();" method="post">
 			<div class="fieldset">
 			<fieldset id="company" >
 				<legend>Entreprise</legend>
@@ -37,7 +37,6 @@
 				<br /><br /> 
 				<label for="companyDepartment">Département: </label> 
 				<select	name="companyDepartment" id="departments" >
-					<!-- 	onClick="document.formulaire.codepostal.value=document.formulaire.departements.value;" -->
 					<% Departments departments = (Departments) request.getAttribute("departments"); 
  						for (Department department : departments){%> 
 					<option value = "<%=department.getDepartmentName()%>"><%=department.getDepartmentName()%> </option>

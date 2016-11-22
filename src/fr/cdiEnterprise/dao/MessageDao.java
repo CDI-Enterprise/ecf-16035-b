@@ -96,7 +96,66 @@ public class MessageDao {
 		}
 
 	}
+	
+	/**
+	 * Recupere le mail grace a la reference dans la base de donnée SQL
+	 * 
+	 * @param ref reference email/base de données
+	 * 
+	 * @author Aurélien
+	 * @version 1
+	 * @since 21/11/2016
+	 */
+	public Item getItemByRef(String ref){
+		
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		Item item = new Item();
 
+		connection = DBConnection.getConnect();
+		
+		try {
+			
+			statement = connection.createStatement();
+			
+		int ident = 0;
+		String sender = null;
+		String receiver = null;
+		String object = null;
+		String body = null;
+		String date = null;
+
+		String createStatement = null;
+		
+			createStatement = String.format("select %s, %s  , %s ,%s , %s ,%s from %s WHERE %s = '%s'",
+					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", TABLE_NAME, "identity",
+					ref);
+
+			resultSet = statement.executeQuery(createStatement);
+			connection.commit();
+
+			while (resultSet.next()) {
+
+				ident 	= resultSet.getInt("identity");
+				sender 	= resultSet.getString("sender");
+				receiver= resultSet.getString("receiver");
+				object 	= resultSet.getString("subject");
+				body 	= resultSet.getString("messBody");
+				date = resultSet.getString("timeStamp");
+				
+
+				item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date), false);
+				
+			}
+		} catch (SQLException e1) {
+			System.out.println("[GET] an issue happen with the SQL to getItemByRef");
+			e1.printStackTrace();
+		}
+		
+		return item;
+		
+	}
 
 	/**
 	 * This method is going to return the email for a particular user mailbox or

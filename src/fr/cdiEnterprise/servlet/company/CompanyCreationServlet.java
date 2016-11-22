@@ -1,4 +1,4 @@
-package fr.cdiEnterprise.servlet;
+package fr.cdiEnterprise.servlet.company;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ import fr.cdiEnterprise.service.Regions;
  * Servlet implementation class CompanyServlet
  */
 @WebServlet("/action/Creation")
-public class CompanyServlet extends HttpServlet {
+public class CompanyCreationServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 		

@@ -1,22 +1,14 @@
 package fr.cdiEnterprise.util;
 
-
-
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-
-
+import javax.sound.midi.SysexMessage;
 
 import fr.cdiEnterprise.dao.MessageDao;
 import fr.cdiEnterprise.exceptions.CustomMessagingException;
 import fr.cdiEnterprise.model.Item;
 import fr.cdiEnterprise.service.Items;
-
-
-
-
-
 
 /**
  * This class is going to give you the control over sending, receiving , editing and removing messages.
@@ -33,17 +25,12 @@ import fr.cdiEnterprise.service.Items;
  *
  */
 public class MpClientV2 {
-	
-	
-	
+
 	private static final int CONST_ZERO = 0;
 	private static final int CONST_ONE = 1;
 	private static int ID_NUMBER = CONST_ZERO;
 	  
-
-	
 	private String box;
-
 
 	private Items myMessages;
 	
@@ -55,13 +42,11 @@ public class MpClientV2 {
 	 *  @throws SQLException exception venant de la class DAO
 	 */
 	public MpClientV2(String usr) throws SQLException   {
+		
 		box = usr;
 		this.myMessages = new Items();
 		myMessages 	= getMaxItems(false);
 		getMaxItems(true);
-
-		
-		
 
 	}
 
@@ -71,20 +56,26 @@ public class MpClientV2 {
 	 */
 	private Items getMaxItems(boolean all) throws SQLException   {
 		Items items = null;
-		if(ID_NUMBER == CONST_ZERO)
-		{
+		if(ID_NUMBER == CONST_ZERO){
+			
 			int max = CONST_ZERO;
+			
 			if(all) {
+				
 				items = getAllMessages();
+				
 				for(Item current : items){
+					
 					System.out.println(current.getId());
+					
 					if(current.getId() > max) {
+						
 						max = current.getId();
 						ID_NUMBER = max;
 						System.out.println("max " +ID_NUMBER);
+						
 					}
 				}
-			
 			}else {
 				items = getMessages(false);
 			}
@@ -118,23 +109,20 @@ public class MpClientV2 {
 		int idNumber = CONST_ZERO;
 		if(from != null && to != null && object != null && body != null) {
 			if(!to.isEmpty() && !object.isEmpty()) {
+				
 				ID_NUMBER = ID_NUMBER + CONST_ONE;
 				LocalDateTime timeStamp = LocalDateTime.now();
 				idNumber = ID_NUMBER;
 				Item itm = new Item(from, to, object, body, timeStamp);
 				itm.setId(idNumber);
 				MessageDao.insertItem(itm);
+				
 			} else {
 				throw new CustomMessagingException("le Destinataire ou le sujet sont vide.");
 			}
 			
 		}
-		
-		
-		
 
-			
-		
 	}
 	
 	/**
@@ -179,8 +167,6 @@ public class MpClientV2 {
 				
 				
 				MessageDao.insertItem(repliedItem);
-				
-
 
 			}
 			}else {
@@ -329,8 +315,39 @@ public class MpClientV2 {
 		return myMessages;
 	}
 
-	public static int getID_NUMBER() {
+	public int getID_NUMBER() {
 		return ID_NUMBER;
+	}
+	
+	/**
+	 * Renvoie un ID genérée a partir du dernier ID en ajoutant 1 a celui ci
+	 * @return newID un int qui est le dernier ID + 1
+	 */
+	public int getNewID(){
+		
+		int newID = 0;
+		Items items = null;
+		int max = 0;
+		
+		try {
+			items = getAllMessages();
+		} catch (SQLException e) {
+			System.err.println("[GET] Erreur SQL dans getNewID" + e);
+			e.printStackTrace();
+		}
+
+			for(Item current : items){
+				if(current.getId() > max) {
+					
+					max = current.getId();
+					ID_NUMBER = max;
+					
+						
+					}
+				}
+			newID = ID_NUMBER + 1;
+		
+		return newID;
 	}
 //	
 //	

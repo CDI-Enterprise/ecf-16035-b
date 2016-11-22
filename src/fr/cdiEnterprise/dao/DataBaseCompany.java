@@ -452,13 +452,17 @@ public class DataBaseCompany {
 			String city = rs.getString("companyCity");
 			String departmentN = rs.getString("departmentName");
 			String regionN = rs.getString("regionName");
+			String sector = rs.getString("companySector");
+			String size = rs.getString("companySize");
+			String webSite = rs.getString("companyWeb");
 
 			Department department = DataBaseCompany.getDepartmentId(departmentN);
 			Region region = DataBaseCompany.getRegionId(regionN);
 
-			companies.add(new Company(companyId, companyName, companyAdress, postalcode, city, department, region));
+			companies.add(new Company(companyId, companyName, companyAdress, postalcode, city, department, region, sector, size, webSite));
 
 		}
+		
 		stmt.close();
 		return companies;
 	}
@@ -667,11 +671,14 @@ public class DataBaseCompany {
 			String city = rs.getString("companyCity");
 			String departmentN = rs.getString("departmentName");
 			String regionN = rs.getString("regionName");
+			String sector = rs.getString("companySector");
+			String size = rs.getString("companySize");
+			String webSite = rs.getString("companyWeb");
 
 			Department department = DataBaseCompany.getDepartmentId(departmentN);
 			Region region = DataBaseCompany.getRegionId(regionN);
 
-			company = new Company(companyId, companyName, companyAdress, postalcode, city, department, region);
+			company = new Company(companyId, companyName, companyAdress, postalcode, city, department, region, sector, size, webSite);
 		}
 		stmt.close();
 
