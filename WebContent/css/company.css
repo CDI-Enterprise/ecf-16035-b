@@ -67,7 +67,42 @@ form{
 	padding-right: 25%;
 }
 
-.spanErreur{
+.info{
+	background-color: rgba(255,255,255,0.6);
+	width:500px;
+	padding: 15px;
+	border-width:1px;
+	border-color: black;
+	border-style: solid;
+	text-align: center;
+	margin-left: 35%;
+/* 	margin-right: 50%; */
+}
 
+.companiesList{
+	width : 90%;
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+th {
+	text-align: center;
+	border: 1px solid white;
+}
+
+td {
+	text-align: center;
+	border: 1px solid white;
+	padding: 2px;
+}
+
+#list{
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: rgba(255,255,255,0.6);
+}
+.spanErreur{
 	color:red;
 }

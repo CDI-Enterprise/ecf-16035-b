@@ -53,11 +53,10 @@ public class CompanyUpdate extends HttpServlet {
 				System.out.println(company);
 				request.setAttribute("company", company);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			request.setAttribute("company", company);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/CompanyUpdate.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyUpdate.jsp");
 			dispatcher.forward(request, response);
 		}
 
