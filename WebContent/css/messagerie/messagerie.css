@@ -157,6 +157,14 @@
 	height: 100%;
 	background-color: white;
 	
+	
+}
+
+#content h1{
+	
+	color: blue;
+	
+	
 }
 
 #content tr{
@@ -169,4 +177,25 @@
 	
 	
 	border-spacing: 0px;
+}
+
+#destination{
+	display: block;
+	width: 500px;
+	height: 30px;
+	background-color:  #ebebe0;
+}
+
+#objet{
+	display: block;
+	width: 500px;
+	height: 30px;
+	background-color:  #ebebe0;
+}
+
+#content textarea{
+	display: block;
+	width: 800px;
+	height: 425px;
+	background-color:  #ebebe0;
 }
