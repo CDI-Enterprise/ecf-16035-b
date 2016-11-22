@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class RechSupprAfficher
  */
-@WebServlet("/RechSupprAfficher")
+@WebServlet(name="RechSupprFavori", urlPatterns= {"/RechSupprAfficher/*", "/RechSupprAfficher"})
 public class RechSupprAfficher extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

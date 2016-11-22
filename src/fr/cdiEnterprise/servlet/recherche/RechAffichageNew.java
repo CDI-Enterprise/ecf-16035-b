@@ -11,45 +11,46 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.cdiEnterprise.dao.RequetesRecherche;
 import fr.cdiEnterprise.service.Companies;
+import fr.cdiEnterprise.service.RecherchesFav;
 import fr.cdiEnterprise.service.Regions;
 
 /**
  * Servlet implementation class RechAffichageNew
  */
 
-@WebServlet("/RechAffichageNew")
+@WebServlet(name="RechAffichage", urlPatterns = {"/RechAffichageNew", "/RechAffichageNew/*"})
 public class RechAffichageNew extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RechAffichageNew() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
+  
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequetesRecherche req= new RequetesRecherche();
+		System.out.println("doGetaffichagenew");
+		
+//		String idUser="francois";
+//		request.setAttribute ("idUser", idUser);
+		String idUser= (String) request.getAttribute("idUser");
+		
 		Regions listeRegions = req.listerRegions();
 		request.setAttribute("listeRegion", listeRegions);
 				
 		Companies listeEntreprises = req.listAllCompanies();
-		request.setAttribute("listeEntreprise", listeEntreprises);
+		request.setAttribute("listeEntreprises", listeEntreprises);
+		
+		RecherchesFav listeRechFav = req.listeRech(idUser);
+		request.setAttribute("listeRechFav", listeRechFav);
 		
 		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
-		disp.forward(request, response);		
+		disp.include(request, response);		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		System.out.println("doPost affichagenew");
 	}
 
 }

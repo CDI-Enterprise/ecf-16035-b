@@ -1,21 +1,25 @@
 package fr.cdiEnterprise.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import fr.cdiEnterprise.model.Company;
 import fr.cdiEnterprise.model.Contact;
 import fr.cdiEnterprise.model.Department;
 import fr.cdiEnterprise.model.Language;
+import fr.cdiEnterprise.model.Recherche;
 import fr.cdiEnterprise.model.Region;
 import fr.cdiEnterprise.service.Companies;
+import fr.cdiEnterprise.service.RecherchesFav;
 import fr.cdiEnterprise.service.Regions;
 
 public class RequetesRecherche {
 	
-	
+	//methode de recherche de toutes les regions de la bdd
 	public Regions listerRegions(){
 		Connection connect = DBConnection.getConnect();
 		String req = "Select regionname, regionid from regions";
@@ -30,13 +34,14 @@ public class RequetesRecherche {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("La requete de demande de la liste des régions n'a pas pu aboutir");
 			e.printStackTrace();
 		}
 		
 		return listeRegion;
 	}
 
+	//methode de recherche de toutes les entreprises de la bdd
 	public Companies listAllCompanies(){
 		Connection connect = DBConnection.getConnect();
 		String req = "Select companyid, companyname, companyadress, companycodepostal, companycity"
@@ -98,6 +103,68 @@ public class RequetesRecherche {
 		return listeEntreprises;
 	}
 	
+	//Methode de recuperation des recherches favorites de l'utilisateur
+	public RecherchesFav listeRech(String idUser){
+		Connection connect = DBConnection.getConnect();
+		String req = "Select id_rech, user_id, nom_rech, comp_rech, sector_rech, region_rech, city_rech from RECH_FAV where USER_ID= ?";
+		PreparedStatement prepStmt;
+		
+		RecherchesFav listeRech = new RecherchesFav();
+		
+		try {
+			prepStmt = connect.prepareStatement(req);
+			prepStmt.setString(1, idUser);
+			ResultSet res= prepStmt.executeQuery();
+			
+			while (res.next()){
+				Region region = recupRegion(res.getInt("region_rech"));
+				Recherche recherche = new Recherche (res.getInt("id_rech"), res.getString("user_id"), res.getString("nom_rech"), res.getString("comp_rech"),
+													res.getString("sector_rech"), region, res.getString("city_rech"));
+				listeRech.add(recherche);
+			}
+			return listeRech;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	//Methode de recuperation d'une recherche favorite
+	public Recherche recupRechFav(String rechOpt, String idUser) {
+		Connection connect = DBConnection.getConnect();
+		String req = "Select id_rech, user_id, nom_rech, comp_rech, sector_rech, region_rech, city_rech from RECH_FAV where nom_rech= ? and user_id= ?";
+		PreparedStatement prepStmt;
+		
+		
+		
+		try {
+			Recherche recherche = null;
+			prepStmt = connect.prepareStatement(req);
+			prepStmt.setString(1, rechOpt);
+			prepStmt.setString(2, idUser);
+			ResultSet res= prepStmt.executeQuery();
+			
+			while (res.next()){
+				
+				Region region = recupRegion(res.getInt("region_rech"));
+				recherche = new Recherche (res.getInt("id_rech"), res.getString("user_id"), res.getString("nom_rech"), res.getString("comp_rech"),
+													res.getString("sector_rech"), region, res.getString("city_rech"));
+			}
+			return recherche;	
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+		
+	//Methode de recherche de departement
 	public Department recupDept(int companyId) {
 		int number = 0;
 		String name = "";
@@ -156,4 +223,6 @@ public class RequetesRecherche {
 		Region region = new Region(name, number);
 		return region;
 	}
+
+
 }
