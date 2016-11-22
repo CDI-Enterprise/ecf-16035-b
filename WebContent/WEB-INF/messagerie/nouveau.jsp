@@ -4,7 +4,7 @@
 <%int id = (int) request.getAttribute("id"); %>
 <div id="content">
 	<h1>Nouveau Message</h1><hr /><br />
-	<form method="post" action="../../messagerie/nouveau?id=<%= id %>" onsubmit="controleNouveauMail(this)">
+	<form method="post" action="../../ecf-16035-b/messagerie/nouveau?ref=<%= id %>" onsubmit="controleNouveauMail(this)">
 		<legend>Boite de destination :</legend>
 		<input id="destination" type="text" name="receiver" placeholder="Destination" />
 		<legend>Objet du mail : </legend>

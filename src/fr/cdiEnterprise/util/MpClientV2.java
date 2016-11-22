@@ -3,8 +3,7 @@ package fr.cdiEnterprise.util;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-
-
+import javax.sound.midi.SysexMessage;
 
 import fr.cdiEnterprise.dao.MessageDao;
 import fr.cdiEnterprise.exceptions.CustomMessagingException;
@@ -321,35 +320,33 @@ public class MpClientV2 {
 	}
 	
 	/**
-	 * 
-	 * @return newID the new id for set it to my html
+	 * Renvoie un ID genérée a partir du dernier ID en ajoutant 1 a celui ci
+	 * @return newID un int qui est le dernier ID + 1
 	 */
 	public int getNewID(){
 		
 		int newID = 0;
 		Items items = null;
+		int max = 0;
 		
-		if(ID_NUMBER == CONST_ZERO){
-			
-			int max = CONST_ZERO;
-			try {
-				items = getAllMessages();
-			} catch (SQLException e) {
-				System.err.println("Erreur getNewID" + e);
-				
-			}
-				
+		try {
+			items = getAllMessages();
+		} catch (SQLException e) {
+			System.err.println("[GET] Erreur SQL dans getNewID" + e);
+			e.printStackTrace();
+		}
+
 			for(Item current : items){
 				if(current.getId() > max) {
 					
 					max = current.getId();
 					ID_NUMBER = max;
-					System.out.println("max " +ID_NUMBER);
+					
 						
 					}
 				}
-			newID = max + 1;
-		}
+			newID = ID_NUMBER + 1;
+		
 		return newID;
 	}
 //	
