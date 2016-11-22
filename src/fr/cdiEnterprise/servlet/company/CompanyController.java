@@ -25,39 +25,40 @@ public class CompanyController extends HttpServlet {
 		String path = request.getPathInfo();
 		System.out.println("================  dans Controleur path=" + path);
 		System.out.println("================  dans Controleur path=" + request.getContextPath());
-
-		if (path.equals("/Creation")) {
-			// affichage formulaire gestion des bonbons
-			goCreation(request, response);
-		} 
-		else if (path.equals("/CompanyCreate")) {
-			// affichage formulaire gestion des bonbons
-			goCreate(request, response);
-		} 
-		else if (path.equals("/ModifSuppr")) {
-			// affichage page pour modifier supprimer une fiche entreprise
-			goUpDeleteCompany(request, response);
-		} 
-		else if (path.equals("/AffRecher")) {
-			// affichage page pour afficher et rechercher des fiches entreprises
-			goSearchList(request, response);
-		} 
-		else if (path.equals("/Affichage")) {
-			// affichage page pour afficher et rechercher des fiches entreprises
-			goList(request, response);
-		} 
-		else if (path.equals("/Modifier")) {
-			goUpdateCompany(request, response);
-		} 
-		else if (path.equals("/Supprimer")) {
-			goDeleteCompany(request, response);
-		} 
-		else if (path.equals("/FicheModifiee")) {
-			goCompanyUpdated(request, response);
-		} 
-		else {
-			System.out.println("Adresse non valide");
-			doAccueil(request, response);
+		switch(path){
+			case "/Creation":
+				// affichage formulaire gestion des bonbons
+				goCreation(request, response);
+				break;
+			case "/CompanyCreate":
+				// affichage formulaire gestion des bonbons
+				goCreate(request, response);
+				break;
+			case "/ModifSuppr":
+				// affichage page pour modifier supprimer une fiche entreprise
+				goUpDeleteCompany(request, response);
+				break;
+			case "/AffRecher":
+				// affichage page pour afficher et rechercher des fiches entreprises
+				goSearchList(request, response);
+				break;
+			case "/Affichage":
+				// affichage page pour afficher et rechercher des fiches entreprises
+				goList(request, response);
+				break;
+			case "/Modifier":
+				goUpdateCompany(request, response);
+				break;
+			case "/Supprimer":
+				goDeleteCompany(request, response);
+				break;
+			case "/FicheModifiee":
+				goCompanyUpdated(request, response);
+				break;
+			default:
+				System.out.println("Adresse non valide");
+				doAccueil(request, response);
+				break;
 		}
 
 		System.out.println("** Fin Controleur**");
