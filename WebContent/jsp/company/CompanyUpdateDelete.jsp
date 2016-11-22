@@ -12,7 +12,7 @@
 <title>Modification - Suppression fiche entreprise</title>
 </head>
 <body>
-	<%@ include file="../WEB-INF/menu.html"%>
+	<%@ include file="../../WEB-INF/menu.html"%>
 	<br />
 	<br />
 	<br />

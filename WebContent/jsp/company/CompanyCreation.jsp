@@ -12,13 +12,13 @@
 <title>Entreprise - CDI Enterprise</title>
 </head>
 <body>
-	<%@ include file="../WEB-INF/menu.html" %>
+	<%@ include file="../../WEB-INF/menu.html" %>
 	<br/><br/><br/>
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">
 	<h1 class="title">Création d'une fiche entreprise</h1>
 	<div>
 		<form id= "companyForm" name= "companyForm" action="<%=request.getContextPath()%>/Company/CompanyCreate" 
-		onsubmit= "return ecrire();" onreset="reset();" method="post">
+		onsubmit= "return validate();" onreset="reset();" method="post">
 			<div class="fieldset">
 			<fieldset id="company" >
 				<legend>Entreprise</legend>
