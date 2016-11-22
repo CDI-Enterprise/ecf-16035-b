@@ -48,7 +48,7 @@
 
 			
 <footer>
-		<a href= "<%=request.getContextPath()%>/jsp/accueil.jsp">Retour à l'accueil </a>
+		<a href= "<%=request.getContextPath()%>/jsp/Accueil.jsp">Retour à l'accueil </a>
 </footer>
 
 </body>

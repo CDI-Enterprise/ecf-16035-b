@@ -27,32 +27,17 @@ public class DataBaseCompany {
 	 * @throws SQLException
 	 */
 	public static void insertDepartmentData(Department department) throws SQLException {
-		// Statement stmt = null;
 		Connection connexion = null;
-		// String reqSql = null;
 		int res;
-
+		
 		connexion = DBConnection.getConnect();
-		// stmt = connexion.createStatement();
-		//
-		// reqSql = "insert into departments values(" +
-		// department.getDepartmentNumber() + ",'"
-		// + department.getDepartmentName() + "')";
-		// System.out.println(reqSql);
-		// stmt.executeUpdate(reqSql);
-		// connexion.commit();
-		// stmt.close();
-
 		PreparedStatement insertDepartment = connexion.prepareStatement("insert into departments values (?,?)");
-
 		insertDepartment.setInt(1, department.getDepartmentNumber());
 		insertDepartment.setString(2, department.getDepartmentName());
 
 		res = insertDepartment.executeUpdate();
 		System.out.println(res);
 		connexion.commit();
-		// stmt.close();
-
 	}
 
 	/**
@@ -435,14 +420,12 @@ public class DataBaseCompany {
 		stmt = connexion.createStatement();
 
 		rs = stmt.executeQuery("select company.companyId, companyName,companyAdress, companyCODEPOSTAL, companyCity, "
-				+ "companySize , companySector , companyProjects , companyWeb, departmentname, regionName, languagename "
-				+ "from company, language, departments, regions, companydepartment, companyregion, companylanguage "
+				+ "companySize , companySector , companyProjects , companyWeb, departmentname, regionName "
+				+ "from company, departments, regions, companydepartment, companyregion "
 				+ "where company.companyId = companyregion.companyId "
 				+ "and company.companyId = companydepartment.companyId "
-				+ "and company.companyId = companyLanguage.companyId "
 				+ "and departments.departmentNumber = companydepartment.departmentNumber "
-				+ "and regions.regionId = companyregion.regionId "
-				+ "and language.languageId = companylanguage.LANGUAGEID");
+				+ "and regions.regionId = companyregion.regionId");
 
 		while (rs.next()) {
 			int companyId = rs.getInt("companyId");
@@ -706,7 +689,6 @@ public class DataBaseCompany {
 
 		while (rsMax.next())
 			idMax = rsMax.getInt(1);
-
 		return idMax;
 	}
 

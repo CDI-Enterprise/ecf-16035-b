@@ -9,13 +9,14 @@ function validate() {
 
 	// Initialisation de la valeur de retour
 	var retour = false;
-
-	if (verifCompanyName() || verifCompanyCity() || verifPostalCode()
-			|| verifSecteur()
-			|| verifSiteWeb()) {
+//	verifCompanyName() || verifCompanyCity() || verifPostalCode() || verifSecteur()	|| verifSiteWeb() || 
+//	||verifLangage() || verifRegion()
+	if (verifDepartment()
+			) {
 		retour = true;
+	}else{
+		retour =false;
 	}
-	console.log(retour);
 	return retour;
 }
 
@@ -79,7 +80,7 @@ function verifPostalCode() {
 	if (companyPostalCodeForm == null || companyPostalCodeForm == '') {
 		document.getElementById("companyPostalCode").setAttribute("style",
 				"border:1px solid red");
-		messErreur("companyPostalCode", " Champ obligatoire!!");
+		messErreur("companyPostalCode", " Veuillez renseigner ce champ!");
 		return false;
 	} else if (!regex.test(companyPostalCodeForm)) {
 		messErreur("companyPostalCode",
