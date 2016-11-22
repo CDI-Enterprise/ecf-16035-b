@@ -15,35 +15,14 @@
 </head>
 
 <!-- ============================================= BODY ============================================= -->
-<body onload="../messagerie">
-<%@include file="../../WEB-INF/messagerie.html" %>
+<body>
+<%@include file="../../WEB-INF/messagerie/messagerie.html" %>
 
-<!-- Content messagerie -->
+<!-- Include des JSP messagerie -->
 
-<div id="content">
-	<table>
-		<tr>
-			<th id="select">#</th>
-			<th id="source">Source</th>
-			<th id="destination">Destination</th>
-			<th id="objet">Objet</th>
-			<th id="date">Date Reception</th>
-			<th id="piece jointe">Piece jointe</th>
-		</tr>
-		
-		<%Items items = (Items) request.getAttribute("message"); %>
+<% String url = (String) request.getAttribute("url"); %>
+<jsp:include page="<%= url %>"></jsp:include>
 
-		<%for(int i = 0; i < items.size(); i++){%>
-			<tr class="<%= items.get(i).getId() %>" >
-				<th><input type="checkbox" /></th>
-				<th><%= items.get(i).getSender() %></th>
-				<th><%= items.get(i).getReceiver() %></th>
-				<th><a href="messagerie/affichage?ref=<%= items.get(i).getId() %>" > <%= items.get(i).getObject() %> </a></th>
-				<th><%= items.get(i).getTimeStamp() %></th>
-			</tr>
-		<%}%>
-	</table>
-</div> 
 
 </body>
 </html>

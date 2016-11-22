@@ -28,6 +28,7 @@ import fr.cdiEnterprise.service.Items;
 			
 	"/messagerie",
 	"/messagerie/*",
+	"/messagerie/affichage",
 	
 })
 
@@ -59,15 +60,17 @@ public class messagerie extends HttpServlet {
 		
 //Recuperation de l'uri demander
 		String path = request.getRequestURI();
-		System.out.println("path" + path);
+		System.out.println("path " + path);
 		
 //Declaration des constante a testé TODO a passé en enum
 		final String MESSAGERIE = "/ecf-16035-b/messagerie";
 		final String AFFICHAGE = "/ecf-16035-b/messagerie/affichage";
 		final String NOUVEAU = "/ecf-16035-b/messagerie/nouveau";
 		
-//Declaration des constante TODO a passé en enum
 		
+		
+//Declaration des constante TODO a passé en enum
+
 		if(path.equalsIgnoreCase(MESSAGERIE)){
 			
 			constructMail(request,response);
@@ -95,10 +98,23 @@ public class messagerie extends HttpServlet {
 	}
 	
 	
-
-	private void nouveauMail(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	/**
+	 * Envoie sur la fenetre de nouveau message en generant un ID/ref/identity au mail.
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void nouveauMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		final String PATH_MESSAGERIE = "http://localhost:8085/ecf-16035-b/jsp/messagerie/messagerie.jsp";
+		final String PATH_NOUVEAU = "../../WEB-INF/messagerie/nouveau.jsp";
+		
+		request.setAttribute("url", PATH_NOUVEAU);
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher(PATH_MESSAGERIE);
+		dispatch.forward(request, response);
 	}
 	
 	
@@ -111,18 +127,18 @@ public class messagerie extends HttpServlet {
 	 */
 	private void afficheMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		final String PATH_AFFICHAGE = "/jsp/messagerie/messagerie_affichage.jsp";
+		final String PATH_MESSAGERIE =  "/jsp/messagerie/messagerie.jsp";
+		final String PATH_AFFICHAGE = "../../WEB-INF/messagerie/un_message.jsp";
 		
 		String ref = request.getParameter("ref");
 		MessageDao dao = new MessageDao();
 		
 		Item item = dao.getItemByRef(ref);
 		
-		System.out.println(item.getBody());
-		System.out.println(item.getSender());
-		System.out.println(item.getObject());
+		request.setAttribute("url", PATH_AFFICHAGE);
 		request.setAttribute("message", item);
-		RequestDispatcher dispatch = request.getRequestDispatcher(PATH_AFFICHAGE);
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher(PATH_MESSAGERIE);
 		dispatch.forward(request, response);
 		
 	}
@@ -137,31 +153,22 @@ public class messagerie extends HttpServlet {
 	 */
 	private void constructMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
-		
+		final String PATH_MESSAGERIE = "jsp/messagerie/messagerie.jsp";
+		final String PATH_BOITE_RECEPTION = "../../WEB-INF/messagerie/boite_reception.jsp";
+
 		//TODO supression de la SIMULATION SESSION
-		
-		//Recupération de la session
-		
 		HttpSession session = request.getSession(true);
-				
-		//Declaration en dur du login
-		
 		String box = "oracle";
-				
-		//Ajout du login a la session
-		
 		session.setAttribute("login",box);
 							
-		
-		/* Instanciation de Items pour recupération de tout les Item lié au login puis ajout au request 
-		 * pour affichage sur la page de messagerie
-		 */
 		Items items = new Items();
 		items = MessageDao.getAllItems(session.getAttribute("login").toString(),false);
-		session.setAttribute("message", items);
+		
+		//session.setAttribute("message", items);
 		request.setAttribute("message", items);
-
+		
+		request.setAttribute("url", PATH_BOITE_RECEPTION);
+		
 		RequestDispatcher dispatch = request.getRequestDispatcher(PATH_MESSAGERIE);
 		dispatch.forward(request, response);
 		
