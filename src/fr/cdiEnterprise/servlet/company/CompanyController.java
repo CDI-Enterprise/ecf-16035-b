@@ -1,8 +1,6 @@
-package fr.cdiEnterprise.servlet;
+package fr.cdiEnterprise.servlet.company;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,46 +8,44 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.cdiEnterprise.dao.DataBaseCompany;
-import fr.cdiEnterprise.service.Departments;
-import fr.cdiEnterprise.service.Languages;
-import fr.cdiEnterprise.service.Regions;
 
 /**
  * Servlet implementation class Company
  */
 @WebServlet(name= "CompanyControl", urlPatterns={"/Company/*"})
 
-public class Company extends HttpServlet {
+public class CompanyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      
 	private RequestDispatcher 	disp;
-	private Departments departments;
-	private Regions regions;
-	private Languages languages;
+
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// recuperation de l'url (à partir du chemin relatif à la servlet application cad après /bb)
 		String path = request.getPathInfo();
 		System.out.println("================  dans Controleur path=" + path );
 		System.out.println("================  dans Controleur path=" + request.getContextPath() );
-		
-//		if (path == null || path.equals("/")) {
-//			doAccueil(request, response);
-//		}
+				
 		if (path.equals("/Creation")) {
 			// affichage formulaire gestion des bonbons
 			goCreation(request, response);
 		}
+		else if (path.equals("/CompanyCreate")) {
+			// affichage formulaire gestion des bonbons
+			goCreate(request, response);
+		}
 		else if (path.equals("/ModifSuppr")) {
 			// affichage page pour modifier supprimer une fiche entreprise
-			goUpdateCompany(request, response);
+			goUpDeleteCompany(request, response);
 		}
 		else if (path.equals("/AffRecher")) {
 			// affichage page pour afficher et rechercher des fiches entreprises
 			goSearchList(request, response);
 		}
-		else {
+		else if (path.equals("/Modifier")){
+			goUpdateCompany(request, response);
+		}
+		else{
 			System.out.println("BETISE");
 			request.setAttribute("msgErreur", "Vous avez tripatouill&eacute; l'url!!! ");
 			doAccueil(request, response);
@@ -95,9 +91,31 @@ public class Company extends HttpServlet {
 
 	}
 	
+	private void goCreate(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		System.out.println("--- in the goCreate method ---");
+		System.out.println(request.getPathInfo());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/action/CompanyCreate");
+		System.out.println(dispatcher);
+		dispatcher.forward(request, response);
+	}
+	
 	/**
 	 * Modification - Suppression d'une fiche entreprise
-	 * redirige vers ControlGestion.class
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void goUpDeleteCompany(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		disp = request.getRequestDispatcher("/action/ModifSuppr"); 
+		disp.forward(request,response);
+	}
+	
+	/**
+	 * Redirige vers la servlet permettant l'affichage de la page pour modifier une fiche entreprise
 	 * @param request
 	 * @param response
 	 * @throws ServletException
@@ -105,10 +123,8 @@ public class Company extends HttpServlet {
 	 */
 	private void goUpdateCompany(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-	
-		disp = request.getRequestDispatcher("/action/ModifSuppr"); 
+		disp = request.getRequestDispatcher("/action/Modifier"); 
 		disp.forward(request,response);
-		
 	}
 	
 	/**

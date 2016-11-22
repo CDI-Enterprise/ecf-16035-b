@@ -100,26 +100,21 @@ public class Company {
 		this.companyId = companyId;
 	}
 
-	// public Company(int idEntreprise,String companyName, String adress, String
-	// postalCode, String city, Department department, Region region, String
-	// size,
-	// String sector, Language language,String projets, String webSite, Contact
-	// contact) {
-	//
-	// this.companyName = companyName;
-	// this.adress = adress;
-	// this.postalCode = postalCode;
-	// this.city = city;
-	// this.department = department;
-	// this.region = region;
-	// this.sector = sector;
-	// this.size = size;
-	// this.setLanguage(language);
-	// this.projets=projets;
-	// this.webSite = webSite;
-	// this.contact = contact;
-	// this.idEnterprise = idEntreprise;
-	// }
+	 public Company(int idEntreprise,String companyName, String adress, String postalCode, 
+			 String city, Department department, Region region, String size, String sector, String webSite) {
+	
+	 this.companyName = companyName;
+	 this.adress = adress;
+	 this.postalCode = postalCode;
+	 this.city = city;
+	 this.department = department;
+	 this.region = region;
+	 this.sector = sector;
+	 this.size = size;
+	 this.webSite = webSite;
+	 this.companyId = idEntreprise;
+	 }
+	 
 	/**
 	 * Ensemble des getters de la clase Company
 	 */

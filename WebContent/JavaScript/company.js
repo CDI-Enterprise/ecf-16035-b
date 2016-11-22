@@ -11,12 +11,12 @@ function validate() {
 	var retour = false;
 
 	if (verifCompanyName() || verifCompanyCity() || verifPostalCode()
-			|| verifDepartment() || verifRegion() || verifSecteur()
+			|| verifSecteur()
 			|| verifSiteWeb()) {
-		retour = false;
+		retour = true;
 	}
 	console.log(retour);
-	return false;
+	return retour;
 }
 
 /**
@@ -57,7 +57,7 @@ function verifCompanyCity() {
 
 		return false;
 	} else {
-		return false;
+		return true;
 	}
 }
 
@@ -185,6 +185,14 @@ function verifSiteWeb() {
 	}
 }
 
+
+function selectCompany(){
+	console.log("---- Dans méthode --- ");
+	var selectElmt = document.getElementById("companiesSelec");
+	var company = selectElmt.options[selectElmt.selectedIndex].value;
+	console.log(company);
+	return company;
+}
 /**
  * Permet de supprimer tous les spanErreurs de la page
  */
