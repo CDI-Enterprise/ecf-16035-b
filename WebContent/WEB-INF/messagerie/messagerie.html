@@ -1,6 +1,6 @@
 <!-- Import des fichier externe a la page HTML -->
-<link rel="stylesheet" href="http://localhost:8085/ecf-16035-b/css/messagerie/messagerie.css" />
-<script type="text/javascript" src="http://localhost:8085/ecf-16035-b/JavaScript/messagerie/messagerie.js"></script>
+<link rel="stylesheet" href="../../ecf-16035-b/css/messagerie/messagerie.css" />
+<script type="text/javascript" src="../../ecf-16035-b/JavaScript/messagerie/messagerie.js"></script>
 
 <!-- Case du Compte -->
 <div id="compte">
@@ -11,16 +11,16 @@
 <div id="menuMessagerieTop">
 	<ul>
 		<li><a href="/ecf-16035-b/messagerie/nouveau" onclick="">Nouveau message</a></li>
-		<li><a href="#" onclick="">R&eacute;pondre</a></li>
-		<li><a href="#" onclick="">Supprimer</a></li>
-		<li><a href="#" onclick="">D&eacute;plac&eacute;</a></li>
-		<li><a href="#" onclick="">R&eacute;gle</a></li>
+		<li><a href="/ecf-16035-b/messagerie/repondre" onclick="">R&eacute;pondre</a></li>
+		<li><a href="/ecf-16035-b/messagerie/supprimer" onclick="">Supprimer</a></li>
+		<li><a href="/ecf-16035-b/messagerie/deplacer" onclick="">D&eacute;plac&eacute;</a></li>
+		<li><a href="#/ecf-16035-b/messagerie/regle" onclick="">R&eacute;gle</a></li>
 	</ul>
 </div>
 
 <!-- Case de recherche -->
 <div id="recherche">
-	<img class="search-logo" alt="Rechercher" src="http://localhost:8085/ecf-16035-b/ressource/img/loupe.png" onclick="changeFocus(this)"/>
+	<img class="search-logo" alt="Rechercher" src="../../ecf-16035-b/ressource/img/loupe.png" onclick="changeFocus(this)"/>
 	<input class="search-bar" type="search" placeholder="Recherche" onkeypress="recherche()" />
 </div>
 		
@@ -28,10 +28,10 @@
 <div id="menuMessagerieLeft">
 	<ul>
 		<li><a href="/ecf-16035-b/messagerie" onclick="">Boite de reception</a></li>
-		<li><a href="#" onclick="">Brouillon</a></li>
-		<li><a href="#" onclick="">&Eacute;l&eacute;ments envoy&eacute;s</a></li>
-		<li><a href="#" onclick="">&Eacute;l&eacute;ments supprimer</a></li>
-		<li><a href="#" onclick="">Archive</a></li>
+		<li><a href="/ecf-16035-b/brouillon" onclick="">Brouillon</a></li>
+		<li><a href="/ecf-16035-b/envoyer" onclick="">&Eacute;l&eacute;ments envoy&eacute;s</a></li>
+		<li><a href="/ecf-16035-b/supprimer" onclick="">&Eacute;l&eacute;ments supprimer</a></li>
+		<li><a href="/ecf-16035-b/archive" onclick="">Archive</a></li>
 	</ul>
 </div>
  

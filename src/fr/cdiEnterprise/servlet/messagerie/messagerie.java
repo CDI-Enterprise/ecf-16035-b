@@ -35,6 +35,7 @@ import fr.cdiEnterprise.util.MpClientV2;
 	urlPatterns = {
 			
 	"/messagerie",
+	"/brouillon",
 	"/messagerie/*",
 	
 })
@@ -62,7 +63,14 @@ public class messagerie extends HttpServlet {
 		System.out.println("getRequestURI :" + request.getRequestURI());
 		
 //Declaration des constante a testé TODO a passé en enum
+		//Dossier
 		final String MESSAGERIE = "/ecf-16035-b/messagerie";
+		final String BROUILLON = "/ecf-16035-b/brouillon";
+		final String ENVOYER = "/ecf-16035-b/envoyer";
+		final String SUPPRIMER = "/ecf-16035-b/supprimer";
+		final String ARCHIVE = "/ecf-16035-b/archive";
+		
+		//Action
 		final String AFFICHAGE = "/ecf-16035-b/messagerie/affichage";
 		final String NOUVEAU = "/ecf-16035-b/messagerie/nouveau";
 		
@@ -77,6 +85,10 @@ public class messagerie extends HttpServlet {
 		if(path.equalsIgnoreCase(MESSAGERIE)){
 			
 			constructMail(request,response);
+			
+		}else if(path.equalsIgnoreCase(BROUILLON)){
+			
+			constructBrouillon(request,response);
 			
 		}else if(path.equalsIgnoreCase(AFFICHAGE)){
 
@@ -132,6 +144,7 @@ public class messagerie extends HttpServlet {
 		
 		
 		int ref = Integer.parseInt(request.getParameter("ref"));
+		
 		String sender = "oracle"; //TODO a supprimer SIMULATION DE SESSION
 		String receiver = request.getParameter("receiver");
 		String object = request.getParameter("objet");
@@ -240,6 +253,35 @@ public class messagerie extends HttpServlet {
 		
 		request.setAttribute("message", items);
 		request.setAttribute("url", PATH_BOITE_RECEPTION);
+	
+		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
+		disp.forward(request,response);
+		
+	}
+	
+	/**
+	 * Demande la liste d'{@link Items} a la base de données grace a la classe {@link MessageDao} et la renvoie a la page messagerie.jsp
+	 * 
+	 * @param response 
+	 * @param request 
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void constructBrouillon(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
+		final String PATH_BOITE_BROUILLON = "../../WEB-INF/messagerie/brouillon.jsp";
+
+		//TODO supression de la SIMULATION SESSION
+		HttpSession session = request.getSession(true);
+		String box = "oracle";
+		session.setAttribute("login",box);
+							
+		Items items = new Items();
+		items = MessageDao.getAllItems(session.getAttribute("login").toString(),true);
+		
+		request.setAttribute("message", items);
+		request.setAttribute("url", PATH_BOITE_BROUILLON);
 	
 		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
 		disp.forward(request,response);

@@ -26,11 +26,10 @@ public class RechAffichageNew extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequetesRecherche req= new RequetesRecherche();
 		System.out.println("doGetaffichagenew");
 		
-//		String idUser="francois";
-//		request.setAttribute ("idUser", idUser);
+		RequetesRecherche req= new RequetesRecherche();
+		
 		String idUser= (String) request.getAttribute("idUser");
 		
 		Regions listeRegions = req.listerRegions();
@@ -44,6 +43,7 @@ public class RechAffichageNew extends HttpServlet {
 		
 		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
 		disp.include(request, response);		
+			
 	}
 
 	/**
@@ -51,6 +51,25 @@ public class RechAffichageNew extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doPost affichagenew");
+		
+		RequetesRecherche req= new RequetesRecherche();
+		
+		String idUser= (String) request.getAttribute("idUser");
+		
+		Regions listeRegions = req.listerRegions();
+		request.setAttribute("listeRegion", listeRegions);
+				
+		Companies listeEntreprises = req.listAllCompanies();
+		request.setAttribute("listeEntreprises", listeEntreprises);
+		
+		RecherchesFav listeRechFav = req.listeRech(idUser);
+		request.setAttribute("listeRechFav", listeRechFav);
+		
+		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
+		disp.forward(request, response);		
+			
+		
+		
 	}
 
 }

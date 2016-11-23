@@ -52,7 +52,7 @@
 			
 			<%if (listeRegion != null) {
 				for (int i=0; i<listeRegion.size(); i++){%>
-					<option value="<%=i%>"> <%=listeRegion.get(i).getRegionName()%> </option>
+					<option value="<%=listeRegion.get(i).getRegionName()%>"> <%=listeRegion.get(i).getRegionName()%> </option>
 				<%}
 			}%>
 			</select>
@@ -65,6 +65,11 @@
 						value="<%= RechFav.getCityRech() %>"
 				<%}%>
 			/>
+			<br/>
+			
+			<label class="rech" style="font-size:12px">Nom d'enregistrement de recherche : </label> 
+			<input type="text" name="nom_rech"/>
+			
 			<input type="reset" name="Reset" value="Reinitialiser"/>
 			
 		</fieldset>

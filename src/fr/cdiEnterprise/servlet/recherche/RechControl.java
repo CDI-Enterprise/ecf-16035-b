@@ -38,12 +38,12 @@ public class RechControl extends HttpServlet{
 		} 
 		
 		else if (path.equals("/RechListe")) {
-			disp = request.getRequestDispatcher("../RechListe");
+			disp = request.getRequestDispatcher("/RechListe");
 			disp.forward(request, response);
 		}
 		
 		else if (path.equals("/RechControl/EnregistrerRech")) {
-			disp = request.getRequestDispatcher("../RechEnregistrer");
+			disp = request.getRequestDispatcher("/RechEnregistrer");
 			disp.forward(request, response);
 		}
 		
@@ -53,12 +53,12 @@ public class RechControl extends HttpServlet{
 		}
 		
 		else if (path.equals("/RechControl/SupprRechFav")) {
-			disp = request.getRequestDispatcher("../RechSupprAfficher");
+			disp = request.getRequestDispatcher("/RechSupprAfficher");
 			disp.forward(request, response);
 		}
 		
 		else {
-			disp = request.getRequestDispatcher("../RechAffichageNew");
+			disp = request.getRequestDispatcher("/RechAffichageNew");
 			disp.forward(request, response);	
 		}
 	}

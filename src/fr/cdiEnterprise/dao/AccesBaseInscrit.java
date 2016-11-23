@@ -11,19 +11,17 @@ import fr.cdiEnterprise.model.Inscription;
 public class AccesBaseInscrit {
 	
 	private final static String strNomDriver = "oracle.jdbc.driver.OracleDriver";
-	private final static String dbURL = "jdbc:oracle:thin:cdi_enterprise/stagpw@junon:1521:AFPA";
+	private final static String dbURL = "jdbc:oracle:thin:stag15/stag15pw@localhost:1521:xe";
 	
 	private Connection connexion; 
-	private Statement stmt;
-		
+	Statement stmt;
 	
 	public AccesBaseInscrit(){
-		
-				
+					
 		try {
 			Class.forName(strNomDriver);
 			connexion = DriverManager.getConnection(dbURL);
-			stmt = connexion.createStatement();
+			connexion.createStatement();
 			
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -50,11 +48,12 @@ public class AccesBaseInscrit {
 		
 		//String reqSql = "insert into inscription values(" + 03 + ",'" + statut + "','" + nom + "','" + prenom + "','" + email + "','" + motDePasse + "','" + confirmation +"')";
 		String sql = "insert into inscription values(?,?,?,?,?,?,?)";
-		
-		
+				
 		try {
 			
-			PreparedStatement update = connexion.prepareStatement(sql);
+			PreparedStatement update;
+			update = connexion.prepareStatement(sql);
+			
 			update.setInt(1, reference);
 			update.setString(2, statut);
 			update.setString(3, nom);
@@ -73,18 +72,27 @@ public class AccesBaseInscrit {
 			
 	}
 	
-/*
-	public void desinscription(){
+	/*
+	public void desinscription(Inscription exemple) throws SQLException{
 		
-		String reqSql = "delete from inscription where reference =" + fr.cdiEnterprise.model.Inscription.getReference();
+		String nom = exemple.getNom();
+		
+		String reqSup = "delete from inscription where reference =" + nom ;
+		
+		Statement stmt;
+		stmt = connexion.createStatement();
+		
+		
 		
 		try {
-			stmt.executeUpdate(reqSql);
+			stmt.executeUpdate(reqSup);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public  Object listeInscrit(Arraylist<Inscription>inscription){
 		
