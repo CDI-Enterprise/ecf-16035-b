@@ -59,6 +59,7 @@ public class CompanyCreationServlet extends HttpServlet {
 		request.setAttribute("languages", languages);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreation.jsp");
+		System.out.println(request.getContextPath());
 		dispatcher.forward(request, response);
 	}
 

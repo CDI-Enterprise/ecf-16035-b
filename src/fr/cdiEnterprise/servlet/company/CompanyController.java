@@ -75,7 +75,7 @@ public class CompanyController extends HttpServlet {
 	private void doAccueil(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		disp = request.getRequestDispatcher("/jsp/Accueil.jsp");
+		disp = request.getRequestDispatcher("/jsp/accueil.jsp");
 		disp.forward(request, response);
 
 	}
