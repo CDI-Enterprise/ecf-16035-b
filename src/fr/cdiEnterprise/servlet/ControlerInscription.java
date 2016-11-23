@@ -44,7 +44,8 @@ public class ControlerInscription extends HttpServlet {
 		
 		// Récupération des variables depuis le formulaire Inscription.jsp
 		// récupération possible car adresse indiquée dans le formulaire Inscription.jsp
-		int reference = 0;
+		
+		
 		String statut = request.getParameter("radio");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -53,20 +54,21 @@ public class ControlerInscription extends HttpServlet {
 		String confirmation = request.getParameter("confirmation");
 		
 		// Instanciation d' un objet de type Inscription
-		Inscription exemple = new Inscription(reference, statut, nom, prenom, email, motDePasse, confirmation);
+		Inscription exemple = new Inscription(statut, nom, prenom, email, motDePasse, confirmation);
 		
 		// Instanciation d' un objet de type AccesBaseInscrit
 		AccesBaseInscrit base = new AccesBaseInscrit();
 		
 		// Application de la méthode inscription de AccesBaseInscrit en lui donnant en paramètre l' objet exemple
-		base.inscription(exemple);
+		base.desinscription(exemple);
 		
 		// essai d' envoi de la réponse vers une page html.
-		response.sendRedirect("../InscriptionReussie.html");
+		// response.sendRedirect("../Recapitulatif.jsp");
 		
-		// essai pour générer un récapitulatif de l' inscription.
+		// essai pour générer un récapitulatif de l'inscription.
 		request.setAttribute("inscription", exemple);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("../Recapitulatif.jsp");
+		request.setAttribute("reussite", "OK");
+		request.getRequestDispatcher("/jsp/Recapitulatif.jsp").forward(request, response);
 		
 		
 		

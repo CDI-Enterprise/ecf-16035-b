@@ -33,11 +33,8 @@ public class AccesBaseInscrit {
 			}
 		
 	}
-	
-	
-	
+	/*
 	public void inscription(Inscription exemple){
-		
 		
 		int reference = exemple.getReference();
 		String statut = exemple.getStatut();
@@ -50,8 +47,7 @@ public class AccesBaseInscrit {
 		
 		//String reqSql = "insert into inscription values(" + 03 + ",'" + statut + "','" + nom + "','" + prenom + "','" + email + "','" + motDePasse + "','" + confirmation +"')";
 		String sql = "insert into inscription values(?,?,?,?,?,?,?)";
-		
-		
+				
 		try {
 			
 			PreparedStatement update = connexion.prepareStatement(sql);
@@ -72,20 +68,43 @@ public class AccesBaseInscrit {
 		
 			
 	}
-	
-/*
-	public void desinscription(){
+	*/
+
+	public void desinscription(Inscription exemple){
 		
-		String reqSql = "delete from inscription where reference =" + fr.cdiEnterprise.model.Inscription.getReference();
 		
-		try {
-			stmt.executeUpdate(reqSql);
+		String statut = exemple.getStatut();
+		String nom = exemple.getNom();
+		String prenom = exemple.getPrenom();
+		String email = exemple.getEmail();
+		String motDePasse = exemple.getMotDePasse();
+		String confirmation = exemple.getConfirmation();  
+		
+		
+			try {
+				
+			String reqSql = "delete from inscription where( statut= ?, nom=?, prenom=?, email=?, motDePasse=?, confirmation=?)"; 
+			PreparedStatement update = connexion.prepareStatement(reqSql);
+			//update.setInt(1, 0);
+			update.setString(2, statut);
+			update.setString(3, nom);
+			update.setString(4, prenom);
+			update.setString(5, email);
+			update.setString(6, motDePasse);
+			update.setString(7, confirmation);
 			
+			update.executeUpdate(reqSql);
+								
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
+  	
+	/*
 	public  Object listeInscrit(Arraylist<Inscription>inscription){
 		
 		String reqSql = "select * from inscription";
