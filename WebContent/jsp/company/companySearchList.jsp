@@ -16,7 +16,7 @@
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">
 	<h1 class="title"> Recherche ou affichage des fiches entreprises</h1>
 
-	<form id="companyForm" name="companyForm" action="<%=request.getContextPath()%>/Company/Affichage" method="post" onsubmit="return verifCompanyName();">
+	<form id="companyForm" name="companyForm" action="<%=request.getContextPath()%>/Company/Affichage" method="post" >
 		<div class="fieldset">
 		Veuillez choisir l'action à réaliser:
 		<p>Pour afficher la liste complète des fiches entreprises</p>
@@ -26,7 +26,7 @@
 		<label for="companyName">Nom de l'entreprise: </label> 
 		<input type="text" id="companyName" name="companyName" tabindex="1" onchange="changeElement(companyName);" >
 		<br />
-		<input type="submit" name="search" value="Rechercher" formaction="<%=request.getContextPath()%>/Company/Rechercher" />
+		<input type="button" name="search" value="Rechercher" formaction="<%=request.getContextPath()%>/Company/Rechercher" onclick="return verifCompanyName();"/>
 	</div>
 	</form>
 	<br /> 
