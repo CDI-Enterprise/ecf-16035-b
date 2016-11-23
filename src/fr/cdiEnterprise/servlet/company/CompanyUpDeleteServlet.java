@@ -55,7 +55,7 @@ public class CompanyUpDeleteServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("companies", companies);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyUpdateDelete.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdateDelete.jsp");
 		dispatcher.forward(request, response);
 	}
 }

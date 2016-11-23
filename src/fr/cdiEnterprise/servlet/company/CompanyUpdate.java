@@ -56,7 +56,7 @@ public class CompanyUpdate extends HttpServlet {
 				e.printStackTrace();
 			}
 			request.setAttribute("company", company);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyUpdate.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdate.jsp");
 			dispatcher.forward(request, response);
 		}
 

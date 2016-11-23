@@ -118,7 +118,7 @@ public class CompanyCreateServlet extends HttpServlet {
 			e2.printStackTrace();
 		}
 		request.setAttribute("company", company);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyCreate.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreate.jsp");
 		dispatcher.forward(request, response);
 		// response.sendRedirect( request.getContextPath() + "/jsp/accueil.jsp"
 		// );

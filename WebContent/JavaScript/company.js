@@ -95,6 +95,7 @@ function verifPostalCode() {
  * 
  * @returns
  */
+
 function verifLangage() {
 	var selectElmt = document.getElementById("languages");
 	var element = selectElmt.options.lenght;

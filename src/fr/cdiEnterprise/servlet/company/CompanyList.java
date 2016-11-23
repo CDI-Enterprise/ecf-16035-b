@@ -51,7 +51,7 @@ public class CompanyList extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("companies", companies);		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyList.jsp");
 		dispatcher.forward(request, response);
 	}
 
