@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ page import="fr.cdiEnterprise.model.Item, fr.cdiEnterprise.service.Items ,fr.cdiEnterprise.util.MpClientV2" %>
 <%int id = (int) request.getAttribute("id"); %>
-<div id="content">
+<div id="content" onunload="mailToDraf()">
 	<h1>Nouveau Message</h1><hr /><br />
-	<form method="post" action="../../ecf-16035-b/messagerie/nouveau?ref=<%= id %>" onsubmit="controleNouveauMail(this)">
+	<form method="post" action="../../ecf-16035-b/messagerie/nouveau?ref=<%= id %>" onsubmit="return controleNouveauMail()">
 		<legend>Boite de destination :</legend>
 		<input id="destination" type="text" name="receiver" placeholder="Destination" />
 		<legend>Objet du mail : </legend>

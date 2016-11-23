@@ -1,8 +1,14 @@
 package fr.cdiEnterprise.servlet.messagerie;
 
+import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -73,6 +79,7 @@ public class messagerie extends HttpServlet {
 		//Action
 		final String AFFICHAGE = "/ecf-16035-b/messagerie/affichage";
 		final String NOUVEAU = "/ecf-16035-b/messagerie/nouveau";
+		final String SUPPRESSION = "/ecf-16035-b/messagerie/supprimer";
 		
 //Recuperation de l'uri demander
 		String path = request.getRequestURI();
@@ -103,8 +110,30 @@ public class messagerie extends HttpServlet {
 				e.printStackTrace();
 			}
 			
+		}else if(path.equalsIgnoreCase(SUPPRESSION)){
+			supprimerMail(request,response);
 		}
 
+	}
+	/**
+	 * recupere l'id des mail selectionnée par l'utilisateur et les supprime de la base de donnée
+	 * @param response 
+	 * @param request 
+	 * 
+	 */
+	private void supprimerMail(HttpServletRequest request, HttpServletResponse response) {
+
+		int i= 0;
+		Enumeration<String> parameterName = request.getParameterNames();
+		ArrayList<String> id = new ArrayList<String>();
+		
+			while(parameterName.hasMoreElements()){
+				
+				id.add(request.getParameter(parameterName.nextElement()));
+				i++;
+
+			}
+		
 	}
 
 	/**
@@ -151,8 +180,9 @@ public class messagerie extends HttpServlet {
 		String body = request.getParameter("body");
 		LocalDateTime date = LocalDateTime.now();
 		boolean draft = false; //false car non un draft
+		boolean deleted = false; //false car non deleted
 		
-		Item item = new Item(ref,sender,receiver,object,body,date,draft);
+		Item item = new Item(ref,sender,receiver,object,body,date,draft,deleted);
 		
 		try {
 			MessageDao.insertItem(item);
@@ -220,7 +250,8 @@ public class messagerie extends HttpServlet {
 		String ref = request.getParameter("ref");
 		MessageDao dao = new MessageDao();
 		
-		Item item = dao.getItemByRef(ref);
+		//1 false = draft | 2 false = deleted les deux a false car on est dans la boite de recepetion
+		Item item = dao.getItemByRef(ref,false,false);
 		
 		request.setAttribute("url", PATH_AFFICHAGE);
 		request.setAttribute("message", item);

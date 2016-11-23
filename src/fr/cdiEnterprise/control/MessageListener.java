@@ -349,8 +349,8 @@ public class MessageListener implements ActionListener, MouseListener {
 							.getItemAt(panelMod.getCboReceiver().getSelectedIndex());
 					
 					
-
-					Item draftToSend = new Item(identity, alias,receiver, panelMod.getTxtObject().getText(),panelMod.getTxtMessage().getText(), null, true);
+					//TODO aurelien MODIF faite le 23/11/2016 pour sauvegarder le message en brouille false ajouter a l'item pour le status de supression
+					Item draftToSend = new Item(identity, alias,receiver, panelMod.getTxtObject().getText(),panelMod.getTxtMessage().getText(), null, true,false);
 					System.out.println(panelMod.getTxtMessage().getText());
 					
 					try {

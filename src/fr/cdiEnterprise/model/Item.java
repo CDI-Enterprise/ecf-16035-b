@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
  *
  */
 public class Item {
-	
+
+
 	private int id;
 	private String sender;
 	private String receiver;
@@ -25,7 +26,7 @@ public class Item {
 	private String body;
 	private LocalDateTime  timeStamp;
 	private boolean draftEmail;
-	
+	private boolean deletedEmail;
 	
 
 	/**
@@ -58,7 +59,7 @@ public class Item {
 	 * @param body the body represent the message, should be limited to 1500 caracters.
 	 * @param timeStamp is the time when message has been sent.
 	 */
-	public Item(int id, String sender, String receiver, String object, String body, LocalDateTime timeStamp, boolean draft) {
+	public Item(int id, String sender, String receiver, String object, String body, LocalDateTime timeStamp, boolean draft, boolean deleted) {
 		super();
 		this.id = id;
 		this.sender = sender;
@@ -67,6 +68,7 @@ public class Item {
 		this.body = body;
 		this.timeStamp = timeStamp;
 		this.draftEmail = draft;
+		this.deletedEmail = deleted;
 	}
 	
 	/**
@@ -81,7 +83,8 @@ public class Item {
 	    this.body = itm.body;
 	    this.timeStamp = itm.timeStamp;
 	    this.draftEmail = itm.draftEmail;// you can access  
-	  }
+	    this.deletedEmail = itm.deletedEmail;
+	}
 	
 
 
@@ -145,6 +148,14 @@ public class Item {
 		this.timeStamp = timeStamp;
 	}
 
+	public boolean isDeletedEmail() {
+		return deletedEmail;
+	}
+
+	public void setDeletedEmail(boolean deletedEmail) {
+		this.deletedEmail = deletedEmail;
+	}
+	
 	@Override
 	public String toString() {
 		return "mpItem [id=" + id + ", sender=" + sender + ", receiver=" + receiver + ", object=" + object + ", timeStamp=" + timeStamp + ", draftEmail=" + draftEmail + "]";
