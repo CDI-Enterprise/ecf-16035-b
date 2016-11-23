@@ -65,4 +65,16 @@ public class DBConnection {
 		return connect;
 	}
 	
+	public static void disconnect(){
+		
+		try {
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Page Erreur SQL
+			System.err.println("Probleme lors de la fermeture de la connexion SQL");
+			e.printStackTrace();
+		}
+		
+	}
+	
 }
