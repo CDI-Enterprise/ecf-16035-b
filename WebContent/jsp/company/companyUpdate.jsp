@@ -17,7 +17,7 @@
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">
 	<h1 class="title">Modification d'une fiche entreprise</h1>
 <% Company company = (Company) request.getAttribute("company"); %> 
-		<form id= "companyForm" name= "companyForm" action="<%=request.getContextPath()%>/Company/FicheModifiee"  onreset="reset();" method="post">
+		<form id= "companyForm" name= "companyForm" action="<%=request.getContextPath()%>/Company/FicheModifiee" method="post">
 			<div class="fieldset">
 			<fieldset id="company" >
 				<legend>Entreprise</legend>
@@ -61,7 +61,7 @@
 				<br />
 			<div class="button">
 		<input type="submit" name="validate" value="OK" />
-		<input type="reset" name="cancel" value= "Annuler"/>
+		<input type="submit" name="cancel" value= "Annuler" formaction="<%=request.getContextPath()%>/jsp/accueil.jsp"/>
 </div>
 		</form>
 </body>

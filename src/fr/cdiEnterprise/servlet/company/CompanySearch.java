@@ -9,35 +9,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.cdiEnterprise.control.MethodsForListeners;
 import fr.cdiEnterprise.dao.DBConnection;
 import fr.cdiEnterprise.dao.DataBaseCompany;
-import fr.cdiEnterprise.service.Departments;
-import fr.cdiEnterprise.service.Languages;
-import fr.cdiEnterprise.service.Regions;
-
+import fr.cdiEnterprise.model.Company;
 
 /**
- * Servlet implementation class CompanyServlet
+ * Servlet implementation class CompanySearch
  */
-@WebServlet("/action/Creation")
-public class CompanyCreationServlet extends HttpServlet {
-	
+@WebServlet("/action/Rechercher")
+public class CompanySearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-		
-	private Departments departments;
-	private Regions regions;
-	private Languages languages;
-	
+    private Company company;
+    private String companyName;
+    
+	/**
+	 * Permet d'initialiser la base de données
+	 * 
+	 */
 	public void init() {
 		DBConnection.getConnect();
 	}
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("--- in the doGet method ---");
-		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
 
@@ -45,20 +44,18 @@ public class CompanyCreationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("--- in the doPost method SERVLET CompanyCreation---");
+		System.out.println("----Dans method post -----");
+		companyName = request.getParameter("companyName");
+		companyName = companyName.toUpperCase().trim();
+		MethodsForListeners.nullField(companyName);
+		System.out.println(companyName);
 		try {
-			departments = DataBaseCompany.getDepartmentListData();
-			regions = DataBaseCompany.getRegionsListData();
-			languages = DataBaseCompany.getLanguagesListData();
+			company = DataBaseCompany.getCompaniesId(companyName);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("departments", departments);
-		request.setAttribute("regions", regions);
-		request.setAttribute("languages", languages);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreation.jsp");
+		request.setAttribute("company", company);		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companySearch.jsp");
 		dispatcher.forward(request, response);
 	}
 

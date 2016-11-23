@@ -16,7 +16,6 @@
 	<h1 class="title"> Recherche et affichage des listes entreprises</h1>
 
 <%	Companies companies= (Companies) request.getAttribute("companies");%>
-	
 <%	if(!companies.isEmpty()){
 %>
  
@@ -29,6 +28,7 @@
 			<TH>Code postal</TH>
 			<TH>Département</TH>
 			<TH>Région</TH>
+			<TH>Langage</TH>
 			<TH>Secteur d'activité</TH>
 			<TH>Taille</TH>
 			<TH>Site Web</TH>
@@ -42,18 +42,22 @@
 			<TD><%= company.getPostalCode()%></TD>
 			<TD><%= company.getDepartment().getDepartmentName()%></TD>
 			<TD><%= company.getRegion().getRegionName()%></TD>
+			<TD><%= company.getLanguage().getLanguageName()%></TD>
 			<TD><%= company.getSector()%></TD>
 			<TD><%= company.getSize()%></TD>
 			<TD><%= company.getWebSite()%></TD>
 			</TR>
 			<% } %>
 			</TABLE>
-	<% }else{ %>
+
+		<% }else{ %>	
 <p>Aucune fiche entreprise n'a été trouvée</p>
 			<%} %>
 </div>
 
-
+<footer>
+<a href= "<%=request.getContextPath()%>/jsp/accueil.jsp">Retour à l'accueil </a>
+</footer>
 
 </body>
 </html>

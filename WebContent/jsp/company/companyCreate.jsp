@@ -15,7 +15,7 @@
 <h1 class="title">Fiche entreprise créée</h1>
 <br /><br />
 	<% Company company = (Company) request.getAttribute("company"); %>
-	<%=company %>
+	<div class= "fieldset">
 	Nom de l'entreprise: <%=company.getCompanyName() %>
 	<br /><br />
 	Adresse: <%=company.getAdress() %>
@@ -38,15 +38,8 @@
 	<br/><br/>
 	Site Web: <%=company.getWebSite() %> 
 	<br /><br /> 
-	Contact
-	<br/><br/>
-	Nom du contact: <%=company.getContact().getName() %>
-	<br /><br /> 
-	Numéro de téléphone: <%=company.getContact().getPhoneNumber() %>
-	<br /><br /> 
-	Adresse mail: <%=company.getContact().getEmail() %> 
-
-			
+</div>
+<br /><br /> 
 <footer>
 		<a href= "<%=request.getContextPath()%>/jsp/accueil.jsp">Retour à l'accueil </a>
 </footer>
