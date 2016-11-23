@@ -19,7 +19,7 @@
 	
 <%	if(!companies.isEmpty()){
 %>
-
+ 
 <div id="list">
 <TABLE class= "companiesList">
 			<TR>

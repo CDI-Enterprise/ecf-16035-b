@@ -9,7 +9,7 @@
 <title>Fiche entreprise modifiée</title>
 </head>
 <body>
-
+ 
 	<br/><br/><br/>
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">
 	<h1 class="title">Fiche entreprise modifiée</h1>
