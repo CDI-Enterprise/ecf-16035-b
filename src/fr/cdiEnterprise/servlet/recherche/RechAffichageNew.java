@@ -66,7 +66,7 @@ public class RechAffichageNew extends HttpServlet {
 		request.setAttribute("listeRechFav", listeRechFav);
 		
 		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
-		disp.include(request, response);		
+		disp.forward(request, response);		
 			
 		
 		

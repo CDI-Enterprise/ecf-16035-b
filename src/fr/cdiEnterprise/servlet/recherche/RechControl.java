@@ -38,7 +38,7 @@ public class RechControl extends HttpServlet{
 		} 
 		
 		else if (path.equals("/RechListe")) {
-			disp = request.getRequestDispatcher("../RechListe");
+			disp = request.getRequestDispatcher("/RechListe");
 			disp.forward(request, response);
 		}
 		
@@ -53,7 +53,7 @@ public class RechControl extends HttpServlet{
 		}
 		
 		else if (path.equals("/RechControl/SupprRechFav")) {
-			disp = request.getRequestDispatcher("../RechSupprAfficher");
+			disp = request.getRequestDispatcher("/RechSupprAfficher");
 			disp.forward(request, response);
 		}
 		

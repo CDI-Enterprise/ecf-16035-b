@@ -1,6 +1,8 @@
 package fr.cdiEnterprise.servlet.recherche;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,6 +62,9 @@ public class RechEnregistrer extends HttpServlet {
 		}
 		
 		response.sendRedirect(request.getContextPath()+"/Recherche/");
+		
+		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
+		disp.forward(request, response);
 	}
 
 }

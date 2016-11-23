@@ -68,11 +68,7 @@
 			<br/>
 			
 			<label class="rech" style="font-size:12px">Nom d'enregistrement de recherche : </label> 
-			<input type="text" name="nom_rech"
-			<% if (RechFav != null && RechFav.getCityRech()!= null) {%>
-						value="<%= RechFav.getCityRech() %>"
-				<%}%>
-			/>
+			<input type="text" name="nom_rech"/>
 			
 			<input type="reset" name="Reset" value="Reinitialiser"/>
 			

@@ -73,11 +73,37 @@ public class RequetesRecherche {
 	}
 
 	//Methode de recherche d'une liste d'entreprises selon les critères
-	public Companies listCompanies(String nom, String secteur, String ville, String regionId){
+	public Companies listCompanies(String nom, String secteur, String ville/*, String regionId*/){
 		Connection connect = DBConnection.getConnect();
 		String req = "Select companyid, companyname, companyadress, companycodepostal, companycity"
-				+ ",companysize, companysector, companyprojects, companyweb from company";
+				+ ",companysize, companysector, companyprojects, companyweb from company where ";
 		Companies listeEntreprises = new Companies();
+		int param = 0;
+		
+		if (nom != null){
+			req = req + "companyname = '"+nom+"' ";
+			param++;
+		}
+		
+		if (secteur != null){
+			if (param == 0) { req = req + "companysector ='"+secteur+"' ";}
+			else {req = req + "and companysector ='"+secteur+"' ";}
+			param++;
+		}
+		
+		if (ville != null){
+			if (param == 0) { req = req + "companycity ='"+ville+"' ";}
+			else {req = req + "and companycity ='"+ville+"' ";}
+			param++;
+		}
+		
+//		if (regionId != null){
+//			if (param == 0) { req = req + "companycity ='"+ville+"' ";}
+//			else {req = req + "and companycity ='"+ville+"' ";}
+//			param++;
+//		}
+		
+		System.out.println(req);
 		
 		try {
 			Statement stmt = connect.createStatement();
@@ -195,6 +221,25 @@ public class RequetesRecherche {
 	}
 	
 	
+	public void SupprRechFav(String rechOpt, String idUser) {
+		Connection connect = DBConnection.getConnect();
+		PreparedStatement prepStmt;
+		String req = "delete RECH_FAV where user_id= ? and nom_rech= ?";
+
+		try {
+			prepStmt = connect.prepareStatement(req);
+			prepStmt.setString(1, idUser);
+			prepStmt.setString(2, rechOpt);
+			prepStmt.executeUpdate();
+			System.out.println("fav deleted");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	//methode qui recherche l'indice le plus haut de la table de recherches favorites
 	public int indexRechFav() {
 		Connection connect = DBConnection.getConnect();
@@ -219,9 +264,6 @@ public class RequetesRecherche {
 		}
 		
 		return index+1;
-		
-		
-		
 	}
 	
 	//Methode de recherche de departement
@@ -310,6 +352,8 @@ public class RequetesRecherche {
 		return region;
 	
 	}
+
+	
 
 
 	
