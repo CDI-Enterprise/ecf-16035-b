@@ -11,7 +11,7 @@
 <%@ page import= "fr.cdiEnterprise.dao.DataBaseCompany, fr.cdiEnterprise.model.Company" %> 
 <title>Modifier une fiche entreprise </title>
 </head>
-<body>
+<body>  
 <%@ include file="../../WEB-INF/menu.html" %>
 	<br/><br/><br/>
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">

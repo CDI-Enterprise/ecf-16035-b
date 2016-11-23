@@ -28,7 +28,7 @@
 		<input type="submit" name="search" value="Rechercher" formaction="<%=request.getContextPath()%>/Company/Rechercher" />
 		</div>
 	</form>
-	<br />
+	<br /> 
 
 
 	<footer>

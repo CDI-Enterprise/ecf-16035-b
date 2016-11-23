@@ -8,7 +8,7 @@
 
 <%@ page import= "fr.cdiEnterprise.model.Company" %>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+ 
 <title>Fiche entreprise créée</title>
 </head>
 <body>
