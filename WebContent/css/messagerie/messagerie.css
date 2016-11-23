@@ -199,3 +199,15 @@
 	height: 425px;
 	background-color:  #ebebe0;
 }
+
+#repondre{
+ visibility: hidden;	
+}
+
+#supprimer{
+	 visibility: hidden;
+}
+
+#deplace{
+	 visibility: hidden;
+}

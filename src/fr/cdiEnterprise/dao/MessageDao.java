@@ -38,11 +38,19 @@ public class MessageDao {
 	private static final String MESSBODY = "MESSBODY";
 	private static final String TIMESTAMP  = "TIMESTAMP";
 	private static final String DRAFT  = "DRAFT";
+	private static final String DELETED  = "DELETED";
 	
 	/**
 	 * This class is going to insert new message in the table.
 	 * @param item represent the item to insert.
 	 * @throws SQLException 
+	 * @author Nicolas Tarral
+	 * @version 19-10-2016
+	 * 
+	 * 
+	 * Modifié pour inclure le status de suppression
+	 * @since 23/11/2016
+	 * @author Aurélien
 	 */
 	public static void insertItem(Item item) throws SQLException {
 
@@ -61,20 +69,23 @@ public class MessageDao {
 			String body = null;
 			String date = null;
 			int draft = 0; // 0 for draft
-
+			int deleted = 0; // 0 pour non deleted 1 pour deleted lors de l'insertion l'email ne peux etre supprimer
+			
 			ref = item.getId();
 			sender = item.getSender();
 			receiver = item.getReceiver();
 			object = item.getObject();
 			body = item.getBody();
 			draft = booleanToInt(item.isDraftEmail());
-			//System.out.println(item.isDraftEmail()+ " "+ draft);
+			deleted = booleanToInt(item.isDeletedEmail());
+			
+			//Ajout de la date meme au message supprimer.
 			if (draft == 0) {
 				date = localDateToString(item.getTimeStamp());
 			}
 			
 			statement = connection
-					.prepareStatement("insert into mailbox (IDENTITY, SENDER, RECEIVER, SUBJECT, MESSBODY, TIMESTAMP, DRAFT) values (?, ?, ?, ?, ?, ?, ?)");
+					.prepareStatement("insert into mailbox (IDENTITY, SENDER, RECEIVER, SUBJECT, MESSBODY, TIMESTAMP, DRAFT,DELETED) values (?, ?, ?, ?, ?, ?,?,?)");
 			
 			
 			statement.setInt(1, ref);
@@ -84,6 +95,7 @@ public class MessageDao {
 			statement.setString(5, body);
 			statement.setString(6, date);
 			statement.setInt(7, draft);
+			statement.setInt(8, deleted);
 			statement.executeUpdate();
 			connection.commit();
 
@@ -106,12 +118,14 @@ public class MessageDao {
 	 * @version 1
 	 * @since 21/11/2016
 	 */
-	public Item getItemByRef(String ref){
+	public Item getItemByRef(String ref,boolean draft,boolean deleted){
 		
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
 		Item item = new Item();
+		int iDraft = booleanToInt(draft);
+		int iDeleted = booleanToInt(deleted);
 
 		connection = DBConnection.getConnect();
 		
@@ -125,12 +139,12 @@ public class MessageDao {
 		String object = null;
 		String body = null;
 		String date = null;
-
+	
 		String createStatement = null;
 		
-			createStatement = String.format("select %s, %s  , %s ,%s , %s ,%s from %s WHERE %s = '%s'",
+			createStatement = String.format("select %s, %s  , %s ,%s , %s ,%s from %s WHERE %s = '%s' and %s = %s and %s = %s",
 					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", TABLE_NAME, "identity",
-					ref);
+					ref, "draft",iDraft,"deleted",iDeleted);
 
 			resultSet = statement.executeQuery(createStatement);
 			connection.commit();
@@ -144,8 +158,7 @@ public class MessageDao {
 				body 	= resultSet.getString("messBody");
 				date = resultSet.getString("timeStamp");
 				
-
-				item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date), false);
+				item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date), draft , deleted);
 				
 			}
 		} catch (SQLException e1) {

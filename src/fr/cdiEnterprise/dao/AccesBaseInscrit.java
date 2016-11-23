@@ -31,11 +31,8 @@ public class AccesBaseInscrit {
 			}
 		
 	}
-	
-	
-	
+	/*
 	public void inscription(Inscription exemple){
-		
 		
 		int reference = exemple.getReference();
 		String statut = exemple.getStatut();
@@ -71,10 +68,17 @@ public class AccesBaseInscrit {
 		
 			
 	}
+<<<<<<< HEAD
 	
 	/*
 	public void desinscription(Inscription exemple) throws SQLException{
+=======
+	*/
+
+	public void desinscription(Inscription exemple){
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 		
+<<<<<<< HEAD
 		String nom = exemple.getNom();
 		
 		String reqSup = "delete from inscription where reference =" + nom ;
@@ -83,17 +87,51 @@ public class AccesBaseInscrit {
 		stmt = connexion.createStatement();
 		
 		
+=======
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 		
+<<<<<<< HEAD
 		try {
 			stmt.executeUpdate(reqSup);
+=======
+		String statut = exemple.getStatut();
+		String nom = exemple.getNom();
+		String prenom = exemple.getPrenom();
+		String email = exemple.getEmail();
+		String motDePasse = exemple.getMotDePasse();
+		String confirmation = exemple.getConfirmation();  
+		
+		
+			try {
+				
+			String reqSql = "delete from inscription where( statut= ?, nom=?, prenom=?, email=?, motDePasse=?, confirmation=?)"; 
+			PreparedStatement update = connexion.prepareStatement(reqSql);
+			//update.setInt(1, 0);
+			update.setString(2, statut);
+			update.setString(3, nom);
+			update.setString(4, prenom);
+			update.setString(5, email);
+			update.setString(6, motDePasse);
+			update.setString(7, confirmation);
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 			
+			update.executeUpdate(reqSql);
+								
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
+<<<<<<< HEAD
 	
 	
+=======
+  	
+	/*
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 	public  Object listeInscrit(Arraylist<Inscription>inscription){
 		
 		String reqSql = "select * from inscription";

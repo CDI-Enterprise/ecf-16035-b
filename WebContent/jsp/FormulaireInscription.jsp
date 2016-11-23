@@ -12,7 +12,52 @@
 <%@include file="../WEB-INF/menu.html"%>
 <body>
 	
-	 <%@include file="../html/Formulaire.html" %>
+		<div class ="b">
+		<p><h1>Bienvenue</h1></p>
+		<p><h4>Vous pouvez vous incrire en remplissant le formulaire ci-dessous</h4></p>
+	</div>
+	
+	<form method= "post" action="../inscription">
+		
+		<fieldset>
+	    	<legend><h3>Inscription</h3></legend>
+	    	
+	    	<div>
+		    	<p>Statut actuel <input type="radio"
+			    name="radio" value = "Stagiaire"> Stagiaire <input type="radio" name="radio" value = "Formateur"> Formateur <input
+			    type="radio" name="radio" value = "Ancien Stagiaire"> Ancien stagiaire</p>
+	    	</div>
+	    
+	    	<div>
+			    <p><label>
+			    <input type="text" class ="t" name="nom" placeholder="Votre Nom ici" aria-label="nom" maxlength="24"></label></p>
+
+			    <p><label>
+			    <input type="text" class ="t" name="prenom" placeholder="Votre prénom ici" aria-label="prenom" maxlength="24"></label></p>
+
+			    <p><label>
+			    <input type="text" class ="e" name="email" placeholder="Votre E-mail ici" aria-label="email" maxlength="34"></label></p>
+
+			    <p><label>
+			    <input type="password" class ="pwd" name="motDePasse" placeholder="Votre choix de mot de passe" aria-label="passWord" maxlength="24"> </label></p>
+
+			    <p><label>
+			    <input type="password" class ="pwd" name="confirmation" placeholder="Confirmer votre saisie" aria-label="ConfirmerPw" maxlength="24"></label> </p>
+	    	</div>
+	    
+	    	<div>	    
+			    <p>
+			    <input type="submit" NAME="nom" id="btn" value="S'inscrire"> 
+			    <input type="reset" NAME="nom" id="btn1 value=" Annuler"></p>	  	
+			</div>
+			
+		</fieldset>
+	 </form>
+
+	<div class = "nom">
+			<p> Vous possedez un compte ? <a href="Connexion">Connexion</a></p>
+	</div> 
+		
 	
 </body>
 </html>
