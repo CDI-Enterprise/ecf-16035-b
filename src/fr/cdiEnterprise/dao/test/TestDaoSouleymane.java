@@ -18,7 +18,9 @@ public class TestDaoSouleymane {
 //					
 		AccesBaseInscrit dao =new AccesBaseInscrit();
 		
-		dao.desinscription(inscrit);
+		dao.inscription(inscrit);
+		String reqSql; 
+		reqSql = "delete * from  inscription";
 		
 		
 		
