@@ -42,17 +42,17 @@ public class RechControl extends HttpServlet{
 			disp.forward(request, response);
 		}
 		
-		else if (path.equals("/RechControl/EnregistrerRech")) {
+		else if (path.equals("/EnregistrerRech")) {
 			disp = request.getRequestDispatcher("/RechEnregistrer");
 			disp.forward(request, response);
 		}
 		
-		else if (path.equals("/RechControl/RechFavAfficher")) {
+		else if (path.equals("/RechFavAfficher")) {
 			disp = request.getRequestDispatcher("/RechFavAfficher");
 			disp.forward(request, response);
 		}
 		
-		else if (path.equals("/RechControl/SupprRechFav")) {
+		else if (path.equals("/RechFavSuppr")) {
 			disp = request.getRequestDispatcher("/RechSupprAfficher");
 			disp.forward(request, response);
 		}

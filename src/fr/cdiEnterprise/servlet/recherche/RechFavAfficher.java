@@ -51,17 +51,15 @@ public class RechFavAfficher extends HttpServlet {
 		if (rechOpt != null){
 			Recherche recherche = req.recupRechFav(rechOpt, idUser);
 			request.setAttribute("RechFavSelect", recherche);
+			Companies listeEntreprises = req.listCompanies(recherche);
+			request.setAttribute("listeEntreprises", listeEntreprises);
 		} else {
 			System.out.println("pas de radio bouton selectionné");
 		}
-		
-		Companies listeEntreprises = req.listCompanies(request.getParameter("nom_comp"), request.getParameter("secteur_comp"), request.getParameter("ville_comp")/*, regionId)()*/);
-		request.setAttribute("listeEntreprises", listeEntreprises);
-		
-		
+				
 		System.out.println("Path dans le do post d'aff rech fav: "+request.getPathInfo());
 		
-		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
+		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichageNew");
 		disp.forward(request, response);
 	}
 
