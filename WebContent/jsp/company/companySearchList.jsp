@@ -26,7 +26,7 @@
 		<label for="companyName">Nom de l'entreprise: </label> 
 		<input type="text" id="companyName" name="companyName" tabindex="1" onchange="changeElement(companyName);" >
 		<br />
-		<input type="button" name="search" value="Rechercher" formaction="<%=request.getContextPath()%>/Company/Rechercher" onclick="return verifCompanyName();"/>
+		<input type="submit" name="search" value="Rechercher" formaction="<%=request.getContextPath()%>/Company/Rechercher" onclick="return verifCompanyName();"/>
 	</div>
 	</form>
 	<br /> 

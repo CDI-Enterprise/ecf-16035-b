@@ -8,9 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.cdiEnterprise.control.MethodsForControl;
 import fr.cdiEnterprise.control.MethodsForListeners;
 import fr.cdiEnterprise.dao.DBConnection;
 import fr.cdiEnterprise.dao.DataBaseCompany;
+import fr.cdiEnterprise.exceptions.CompanyCreationException;
 import fr.cdiEnterprise.model.Company;
 import fr.cdiEnterprise.model.Contact;
 import fr.cdiEnterprise.model.Department;
@@ -72,30 +75,44 @@ public class CompanyCreateServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// Récupération des données du formulaire
+		
 		companyName = request.getParameter("companyName");
 		companyName = companyName.toUpperCase().trim();
-		MethodsForListeners.nullField(companyName);
+		
 		companyAdress = request.getParameter("companyAdress");
 		companyCity = request.getParameter("companyCity");
-		MethodsForListeners.nullField(companyCity);
+		
 		companyCity = companyCity.toUpperCase().trim();
 		companyPostalCode = request.getParameter("companyPostalCode");
-		MethodsForListeners.controlPostalCode(companyPostalCode);
+		
 		departmentName = request.getParameter("companyDepartment");
 		regionName = request.getParameter("companyRegion");
 		companySize = request.getParameter("companySize");
 		companySector = request.getParameter("companySector");
 		companySector = companySector.toLowerCase().trim();
 		languageName = request.getParameter("companyLanguages");
-			if (languageName == null) {
-			languageName = "JAVA";
-			}
+		System.out.println(languageName);
+//		if (languageName == null) {
+//			languageName = "JAVA";
+//			}
 		companyProjects = request.getParameter("companyProjects");
 		companyWebSite = request.getParameter("companyWebSite");
 		contactName = request.getParameter("contactName");
 		contactPhone = request.getParameter("contactPhone");
 		contactMail = request.getParameter("contactMail");
 
+		try{
+			MethodsForControl.nullField(companyName);
+			MethodsForControl.nullField(companyCity);
+			MethodsForControl.controlPostalCode(companyPostalCode);
+			MethodsForControl.nullField(languageName);
+		}catch (CompanyCreationException ev){
+			String mess=ev.getMessage();
+			request.setAttribute("messageErreur", mess);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/Error.jsp");
+			dispatcher.forward(request, response);
+		}
+				
 		try {
 			companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
 			companyRegion = DataBaseCompany.getRegionId(regionName);

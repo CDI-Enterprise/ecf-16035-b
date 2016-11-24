@@ -58,9 +58,6 @@ public class RechAffichageNew extends HttpServlet {
 		
 		Regions listeRegions = req.listerRegions();
 		request.setAttribute("listeRegion", listeRegions);
-				
-//		Companies listeEntreprises = req.listAllCompanies();
-//		request.setAttribute("listeEntreprises", listeEntreprises);
 		
 		RecherchesFav listeRechFav = req.listeRech(idUser);
 		request.setAttribute("listeRechFav", listeRechFav);

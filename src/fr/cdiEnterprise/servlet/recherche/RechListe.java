@@ -53,15 +53,14 @@ public class RechListe extends HttpServlet {
 		String regionNom = request.getParameter("region_comp");
 		Region regionRech = req.regionByName(regionNom);
 		String idUser = (String) request.getAttribute("idUser");
+		String nomFav = request.getParameter("nom_rech");
 		
-		Recherche recherche = new Recherche(0, idUser, null, nom, secteur, regionRech, ville);
+		Recherche recherche = new Recherche(0, idUser, nomFav, nom, secteur, regionRech, ville);
 		request.setAttribute("RechFavSelect", recherche);
 		
 		Companies listeEntreprises = req.listCompanies(recherche);
 		request.setAttribute("listeEntreprises", listeEntreprises);
 	
-		
-		//RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
 		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichageNew");
 		disp.forward(request, response);
 	

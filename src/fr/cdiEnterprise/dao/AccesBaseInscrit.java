@@ -3,6 +3,7 @@ package fr.cdiEnterprise.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -31,7 +32,7 @@ public class AccesBaseInscrit {
 			}
 		
 	}
-	/*
+
 	public void inscription(Inscription exemple){
 		
 		int reference = exemple.getReference();
@@ -66,18 +67,20 @@ public class AccesBaseInscrit {
 			e.printStackTrace();
 		}
 		
-			
 	}
-<<<<<<< HEAD
+
 	
+<<<<<<< HEAD
 	/*
 	public void desinscription(Inscription exemple) throws SQLException{
-=======
+
 	*/
 
-	public void desinscription(Inscription exemple){
+=======
+	
 >>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
-		
+	public void desinscription(Inscription exemple){
+
 <<<<<<< HEAD
 		String nom = exemple.getNom();
 		
@@ -86,23 +89,22 @@ public class AccesBaseInscrit {
 		Statement stmt;
 		stmt = connexion.createStatement();
 		
-		
+
 =======
 >>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
-		
-<<<<<<< HEAD
 		try {
+<<<<<<< HEAD
 			stmt.executeUpdate(reqSup);
+
 =======
+		
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 		String statut = exemple.getStatut();
-		String nom = exemple.getNom();
 		String prenom = exemple.getPrenom();
 		String email = exemple.getEmail();
 		String motDePasse = exemple.getMotDePasse();
 		String confirmation = exemple.getConfirmation();  
 		
-		
-			try {
 				
 			String reqSql = "delete from inscription where( statut= ?, nom=?, prenom=?, email=?, motDePasse=?, confirmation=?)"; 
 			PreparedStatement update = connexion.prepareStatement(reqSql);
@@ -113,7 +115,7 @@ public class AccesBaseInscrit {
 			update.setString(5, email);
 			update.setString(6, motDePasse);
 			update.setString(7, confirmation);
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+
 			
 			update.executeUpdate(reqSql);
 								
@@ -123,15 +125,12 @@ public class AccesBaseInscrit {
 		}
 		
 		
-	}
-	
 <<<<<<< HEAD
-	
-	
-=======
+	}
+
   	
 	/*
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+
 	public  Object listeInscrit(Arraylist<Inscription>inscription){
 		
 		String reqSql = "select * from inscription";
@@ -144,11 +143,21 @@ public class AccesBaseInscrit {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+=======
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 		}
-		return listeInscrit(null);
-		
+
 	}
+
 	
-	*/
+
+  	
 	
-}
+	
+	
+	
+	
+	
+	
+	
+	
