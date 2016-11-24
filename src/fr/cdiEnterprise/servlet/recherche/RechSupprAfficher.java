@@ -54,7 +54,7 @@ public class RechSupprAfficher extends HttpServlet {
 		
 		System.out.println("Path dans le do post de suppr rech fav: "+request.getPathInfo());
 		
-		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
+		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichageNew");
 		disp.forward(request, response);		
 	}
 }
