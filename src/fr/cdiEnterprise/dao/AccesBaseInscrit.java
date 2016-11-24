@@ -70,25 +70,11 @@ public class AccesBaseInscrit {
 	}
 
 	
-	/*
-	public void desinscription(Inscription exemple) throws SQLException{
-=======
-	*/
-
+	
 	public void desinscription(Inscription exemple){
 
-		String nom = exemple.getNom();
-		
-		String reqSup = "delete from inscription where reference =" + nom ;
-		
-		Statement stmt;
-		stmt = connexion.createStatement();
-		
-		
-
 		try {
-			stmt.executeUpdate(reqSup);
-
+		
 		String statut = exemple.getStatut();
 		String nom = exemple.getNom();
 		String prenom = exemple.getPrenom();
