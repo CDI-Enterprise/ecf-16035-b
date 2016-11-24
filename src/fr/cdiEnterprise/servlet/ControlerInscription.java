@@ -14,7 +14,11 @@ import fr.cdiEnterprise.model.Inscription;
 /**
  * Servlet implementation class ControlerInscriptions
  */
-@WebServlet(name="ControlerInscription", urlPatterns={"/inscription"})
+
+@WebServlet(
+		name="ControlerInscription", urlPatterns = {"/inscription", "/desinscription"}
+)
+
 public class ControlerInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -58,14 +62,19 @@ public class ControlerInscription extends HttpServlet {
 		Inscription exemple = new Inscription(reference, statut, nom, prenom, email, motDePasse, confirmation);
 		//Inscription ex = new Inscription(reference, statut, nom, prenom, email, motDePasse, confirmation);
 
+<<<<<<< HEAD
 		//Inscription exemple = new Inscription(statut, nom, prenom, email, motDePasse, confirmation);
+=======
+		
+		
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 
 		// Instanciation d' un objet de type AccesBaseInscrit
 		AccesBaseInscrit base = new AccesBaseInscrit();
 		//AccesBaseInscrit con = new AccesBaseInscrit();
 		//con.inscription(ex);
 		// Application de la méthode inscription de AccesBaseInscrit en lui donnant en paramètre l' objet exemple
-		base.desinscription(exemple);
+//		base.desinscription(exemple);
 		
 
 		// TODO essai d' envoi de la réponse vers une page html.
@@ -83,10 +92,15 @@ public class ControlerInscription extends HttpServlet {
 		request.setAttribute("reussite", "OK");
 		request.getRequestDispatcher("/jsp/Recapitulatif.jsp").forward(request, response);
 
+<<<<<<< HEAD
 		
 		
 		
 		
+=======
+				
+
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 		
 	}
 

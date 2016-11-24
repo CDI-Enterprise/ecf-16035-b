@@ -3,6 +3,7 @@ package fr.cdiEnterprise.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -31,7 +32,7 @@ public class AccesBaseInscrit {
 			}
 		
 	}
-	/*
+
 	public void inscription(Inscription exemple){
 		
 		int reference = exemple.getReference();
@@ -66,17 +67,21 @@ public class AccesBaseInscrit {
 			e.printStackTrace();
 		}
 		
-			
 	}
 
 	
+<<<<<<< HEAD
 	/*
 	public void desinscription(Inscription exemple) throws SQLException{
 
 	*/
 
+=======
+	
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 	public void desinscription(Inscription exemple){
 
+<<<<<<< HEAD
 		String nom = exemple.getNom();
 		
 		String reqSup = "delete from inscription where reference =" + nom ;
@@ -85,17 +90,21 @@ public class AccesBaseInscrit {
 		stmt = connexion.createStatement();
 		
 
+=======
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 		try {
+<<<<<<< HEAD
 			stmt.executeUpdate(reqSup);
 
+=======
+		
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 		String statut = exemple.getStatut();
 		String prenom = exemple.getPrenom();
 		String email = exemple.getEmail();
 		String motDePasse = exemple.getMotDePasse();
 		String confirmation = exemple.getConfirmation();  
 		
-		
-			try {
 				
 			String reqSql = "delete from inscription where( statut= ?, nom=?, prenom=?, email=?, motDePasse=?, confirmation=?)"; 
 			PreparedStatement update = connexion.prepareStatement(reqSql);
@@ -116,6 +125,7 @@ public class AccesBaseInscrit {
 		}
 		
 		
+<<<<<<< HEAD
 	}
 
   	
@@ -133,11 +143,21 @@ public class AccesBaseInscrit {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+=======
+>>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 		}
-		return listeInscrit(null);
-		
+
 	}
+
 	
-	*/
+
+  	
 	
-}
+	
+	
+	
+	
+	
+	
+	
+	

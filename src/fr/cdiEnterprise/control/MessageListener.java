@@ -133,14 +133,14 @@ public class MessageListener implements ActionListener, MouseListener {
 		else if  (e.getSource() == panelMain.getBtnDraft()) {
 
 			panelDraft = new MessagingDraftPanel();
-			MessageListener.panelDraft.setCopyUserItems(client.getMessages(true));
+			MessageListener.panelDraft.setCopyUserItems(client.getMessages(true,false));
 			panelDraft.refresh();	
 			MainFrame.SwithPanel(panelDraft);
 			
 		}
 		else if  (e.getSource() == panelMain.getBtnDisplay()) {
 
-			MessageListener.panelMain.setCopyUserItems(client.getMessages(false));	
+			MessageListener.panelMain.setCopyUserItems(client.getMessages(false,false));	
 			panelMain.refresh();
 
 		}
@@ -183,7 +183,7 @@ public class MessageListener implements ActionListener, MouseListener {
 						//e1.printStackTrace();
 					}
 				
-					MessageListener.panelMain.setCopyUserItems(client.getMessages(false));	
+					MessageListener.panelMain.setCopyUserItems(client.getMessages(false,false));	
 					panelMain.refresh();
 					
 					MainFrame.SwithPanel(panelMain);
@@ -218,7 +218,7 @@ public class MessageListener implements ActionListener, MouseListener {
 				
 					panelDraft = new MessagingDraftPanel();
 					//MessageListener.panelDraft.setCopyUserItems(cli.getMessages(true));
-					MessageListener.panelDraft.setCopyUserItems(client.getMessages(true));
+					MessageListener.panelDraft.setCopyUserItems(client.getMessages(true,false));
 					panelDraft.refresh();
 					MainFrame.SwithPanel(panelDraft);
 			}
@@ -230,7 +230,7 @@ public class MessageListener implements ActionListener, MouseListener {
 
 		
 			//MessageListener.panelMain.setCopyUserItems(cli.getMessages(false));
-			MessageListener.panelMain.setCopyUserItems(client.getMessages(false));
+			MessageListener.panelMain.setCopyUserItems(client.getMessages(false,false));
 		
 			MainFrame.SwithPanel(panelMain);
 			
@@ -247,12 +247,12 @@ public class MessageListener implements ActionListener, MouseListener {
 				customDialog(e1.getMessage());
 				e1.printStackTrace();
 			}
-			MessageListener.panelMain.setCopyUserItems(client.getMessages(false));			
+			MessageListener.panelMain.setCopyUserItems(client.getMessages(false,false));			
 			panelMain.refresh();
 
 			MainFrame.SwithPanel(panelMain);
 		}else if ((panelRead	 != null ) && (e.getSource() == panelRead.getBtnRet())) {
-			MessageListener.panelMain.setCopyUserItems(client.getMessages(false));
+			MessageListener.panelMain.setCopyUserItems(client.getMessages(false,false));
 			
 			MainFrame.SwithPanel(panelMain);
 		} else if ((panelRead	 != null ) && (e.getSource() == panelRead.getBtnDel())) {
@@ -262,7 +262,7 @@ public class MessageListener implements ActionListener, MouseListener {
 			} catch (SQLException e1) {
 				customDialog(e1.getMessage());			
 			}
-			MessageListener.panelMain.setCopyUserItems(client.getMessages(false));
+			MessageListener.panelMain.setCopyUserItems(client.getMessages(false,false));
 			panelMain.refresh();
 			MainFrame.SwithPanel(panelMain);
 
@@ -270,7 +270,7 @@ public class MessageListener implements ActionListener, MouseListener {
 		// LISTE DES BROUILLONS
 		} else if ((panelDraft != null) && (e.getSource() == panelDraft.getBtnDisplay())) {
 			
-			MessageListener.panelDraft.setCopyUserItems(client.getMessages(true));	
+			MessageListener.panelDraft.setCopyUserItems(client.getMessages(true,false));	
 			panelDraft.refresh();
 
 		}
@@ -278,7 +278,7 @@ public class MessageListener implements ActionListener, MouseListener {
 		
 		else if ((panelDraft != null) && ( e.getSource() == panelDraft.getBtnMess())) {
 
-			MessageListener.panelMain.setCopyUserItems(client.getMessages(false));
+			MessageListener.panelMain.setCopyUserItems(client.getMessages(false,false));
 			MainFrame.SwithPanel(panelMain);
 		
 		}
@@ -304,7 +304,7 @@ public class MessageListener implements ActionListener, MouseListener {
 							} catch (CustomMessagingException | SQLException e1) {
 								customDialog(e1.getMessage());
 							}
-							MessageListener.panelMain.setCopyUserItems(client.getMessages(false));
+							MessageListener.panelMain.setCopyUserItems(client.getMessages(false,false));
 
 
 						
@@ -327,7 +327,7 @@ public class MessageListener implements ActionListener, MouseListener {
 						
 						
 					}
-					panelDraft.setCopyUserItems(client.getMessages(true));
+					panelDraft.setCopyUserItems(client.getMessages(true,false));
 					panelDraft.refresh();
 					MainFrame.SwithPanel(panelDraft);
 
@@ -336,7 +336,7 @@ public class MessageListener implements ActionListener, MouseListener {
 					}
 				else if ((panelMod != null) && (e.getSource() == panelMod.getBtnRet())) {
 					
-					MessageListener.panelDraft.setCopyUserItems(client.getMessages(true));	
+					MessageListener.panelDraft.setCopyUserItems(client.getMessages(true,false));	
 					panelDraft.refresh();
 					MainFrame.SwithPanel(panelDraft);		
 					
@@ -359,7 +359,7 @@ public class MessageListener implements ActionListener, MouseListener {
 						customDialog(e1.getMessage());
 
 					} 
-					panelDraft.setCopyUserItems(client.getMessages(true));
+					panelDraft.setCopyUserItems(client.getMessages(true,false));
 					panelDraft.refresh();
 					MainFrame.SwithPanel(panelDraft);
 			
