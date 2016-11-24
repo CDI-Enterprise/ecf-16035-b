@@ -10,7 +10,8 @@
 		<legend>Objet du mail : </legend>
 		<input id="objet" type="text" name="objet" placeholder="Objet du mail" />
 		<hr />
-		<textarea id="body" name="body" rows="10" cols="10"></textarea>
+		<span id="caractereRestant" >4000</span>
+		<textarea id="body" name="body" rows="10" cols="10" onkeypress="compteLongueur(this)"></textarea>
 		<input type="submit" value="Envoyer">
 		<input type="reset" value="Annuler">
 	</form>

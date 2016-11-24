@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.cdiEnterprise.dao.MessageDao;
+import fr.cdiEnterprise.exceptions.MailException;
 import fr.cdiEnterprise.model.Item;
 import fr.cdiEnterprise.service.Items;
 import fr.cdiEnterprise.util.MpClientV2;
@@ -261,30 +262,36 @@ public class messagerie extends HttpServlet {
 		
 		Item item = new Item(id,sender,receiver,object,body,date,draft,deleted);
 		
-		try {
+		if(MailException.senderNotEqualsReceiver(item) && MailException.notNull(item)){
 			
-			MessageDao.insertItem(item);
-			request.setAttribute("url", PATH_ENVOIE_REUSSI);
+			try {
+				
+				MessageDao.insertItem(item);
+				request.setAttribute("url", PATH_ENVOIE_REUSSI);
+				
+				
+			} catch (SQLException e) {
+				
+				// TODO Page Erreur SQL
+				// ERREUR SERVLET 
+				// IO ERREUR
+				e.printStackTrace();
+				request.setAttribute("url", PATH_ENVOIE_ERREUR);
+				
+			}
 			
+			RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
 			
-		} catch (SQLException e) {
+			try {
+				disp.forward(request,response);
+			} catch (ServletException | IOException e) {
+				// TODO Page Erreur messagerie
+				e.printStackTrace();
+			}
 			
-			// TODO Page Erreur SQL
-			// ERREUR SERVLET 
-			// IO ERREUR
-			e.printStackTrace();
-			request.setAttribute("url", PATH_ENVOIE_ERREUR);
-			
-		}
-		
-		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
-		try {
-			disp.forward(request,response);
-		} catch (ServletException | IOException e) {
+		}else{
 			// TODO Page Erreur messagerie
-			e.printStackTrace();
 		}
-		
 	}
 
 	/**
