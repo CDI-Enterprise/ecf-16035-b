@@ -31,6 +31,12 @@ public class Inscription {
 		this.motDePasse = motDePasse;
 		this.confirmation = confirmerPasse;
 	}
+	public Inscription(String nom) {
+		// TODO Auto-generated constructor stub
+	}
+	public Inscription() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getReference() {
 		return reference;
 	}

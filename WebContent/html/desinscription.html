@@ -1,23 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="../css/Inscription.css" />
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Desinscription</title>
-<%@include file="../WEB-INF/menu.html"%>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Formulaire</title>
+	<link rel="stylesheet" href="../css/inscription.css"/>
 </head>
 <body>
+
 	<div class ="b">
 		<p><h1>Bienvenue</h1></p>
-		<p><h4>Pour vous désinscrire, merci de remplir les champs ci-dessous</h4></p>
+		<p><h4>Pour vous désinscrire, merci de bien vouloir remplir le ou les champs</h4></p>
 	</div>
 	
 	<form method= "post" action="../desinscription">
 		
 		<fieldset>
-	    	<legend><h3>Desinscription</h3></legend>
+	    	<legend><h3>Inscription</h3></legend>
 	    	
 	    	<div>
 		    	<p>Statut actuel <input type="radio"
@@ -44,7 +42,7 @@
 	    
 	    	<div>	    
 			    <p>
-			    <input type="submit" NAME="nom" id="btn" value="Se désinscrire"> 
+			    <input type="submit" NAME="nom" id="btn" value="S'inscrire"> 
 			    <input type="reset" NAME="nom" id="btn1 value=" Annuler"></p>	  	
 			</div>
 			
@@ -52,7 +50,9 @@
 	 </form>
 
 	<div class = "nom">
-			<p> Vous voulez plutôt vous connecter ? <a href="Connexion">Connexion</a></p>
+			<p> Vous possedez un compte ? <a href="Connexion">Connexion</a></p>
 	</div> 
+		
+
 </body>
 </html>
