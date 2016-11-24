@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.cdiEnterprise.control.MethodsForControl;
-import fr.cdiEnterprise.control.MethodsForListeners;
 import fr.cdiEnterprise.dao.DBConnection;
 import fr.cdiEnterprise.dao.DataBaseCompany;
 import fr.cdiEnterprise.exceptions.CompanyCreationException;
@@ -73,12 +72,11 @@ public class CompanyCreateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+			
 		// Récupération des données du formulaire
-		
 		companyName = request.getParameter("companyName");
 		companyName = companyName.toUpperCase().trim();
-		
+		System.out.println(companyName);
 		companyAdress = request.getParameter("companyAdress");
 		companyCity = request.getParameter("companyCity");
 		
