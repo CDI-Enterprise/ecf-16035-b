@@ -77,7 +77,7 @@ public class MpClientV2 {
 					}
 				}
 			}else {
-				items = getMessages(false);
+				items = getMessages(false,false);
 			}
 			
 		}
@@ -207,7 +207,7 @@ public class MpClientV2 {
 		int idNumber = CONST_ZERO;
 		ID_NUMBER = ID_NUMBER + CONST_ONE;		
 		idNumber = ID_NUMBER;
-		Item itm = new Item(idNumber, from, to, obj, bdy, null, draft);
+		Item itm = new Item(idNumber, from, to, obj, bdy, null, draft,false);
 	
 
 		MessageDao.insertItem(itm);
@@ -222,10 +222,10 @@ public class MpClientV2 {
 	 * @return an arrayList of items
 	 * 
 	 */
-	public Items getMessages(boolean draft)  {
+	public Items getMessages(boolean draft,boolean deleted)  {
 
 		
-		myMessages = MessageDao.getAllItems(this.box, draft);
+		myMessages = MessageDao.getAllItems(this.box, draft,deleted);
 		//System.out.println("numbers of email : " +myMessages.size());
 		
 		
