@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import fr.cdiEnterprise.control.MessageListener;
 import fr.cdiEnterprise.model.Item;
@@ -201,7 +202,7 @@ public class MessageDao {
 	 * @since 23/11/2016
 	 * @author Aurélien
 	 */
-	public static Items getAllItems(String box, boolean draft,boolean deleted){
+	public static Items getAllItems(String box, boolean draft, boolean deleted){
 
 		Connection connection = null;
 		Statement statement = null;
@@ -230,9 +231,9 @@ public class MessageDao {
 		String createStatement = null;
 		
 			createStatement = String.format(
-					"select %s, %s  , %s ,%s , %s ,%s, %s from %s WHERE %s = '%s' AND %s = '%s' AND %s = '%s'",
+					"select %s,%s, %s,%s,%s,%s,%s,%s from %s WHERE %s = '%s' AND %s = '%s' AND %s = '%s'",
 					//
-					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft","deleted", TABLE_NAME, "SENDER",
+					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft","deleted", TABLE_NAME, "RECEIVER",
 					box, "DRAFT", iDraft ,"DELETED", iDeleted);
 
 			resultSet = statement.executeQuery(createStatement);
@@ -285,14 +286,11 @@ public class MessageDao {
 	 * @since 23/11/2016
 	 * @author Aurélien
 	 * 
-	 * @deprecated Cette methode renvoie tout les mail peut importe sont status ils vos mieux utilisé l'autre methode ou on peux choisir le type
-	 * de message que l'on souhaite retourné.
-	 * 
 	 * @see MessageDao.getAllItems(box,boolean draft,boolean deleted)
 	 */
 
 	// TODO (nicolas) methode a revoir
-	@Deprecated
+	
 	public static Items getAllItems(String box) throws SQLException {
 
 		Connection connection = null;
@@ -628,6 +626,11 @@ public class MessageDao {
 		}
 		return output;
 
+	}
+
+	public void updateDelete(ArrayList<String> id) {
+		// TODO Recupere chaque id de message et update la colone deleted
+		
 	}
 
 }
