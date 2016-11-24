@@ -14,14 +14,14 @@ import fr.cdiEnterprise.dao.RequetesRecherche;
 /**
  * Servlet implementation class RechSupprAfficher
  */
-@WebServlet(name="RechSupprFavori", urlPatterns= {"/RechSupprAfficher/*", "/RechSupprAfficher"})
-public class RechSupprAfficher extends HttpServlet {
+@WebServlet(name="RechSupprFavori", urlPatterns= {"/RechFavSuppr/*", "/RechFavSuppr"})
+public class RechFavSuppr extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RechSupprAfficher() {
+    public RechFavSuppr() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,10 +51,8 @@ public class RechSupprAfficher extends HttpServlet {
 		} else {
 			System.out.println("pas de radio bouton selectionné");
 		}
-		
-		System.out.println("Path dans le do post de suppr rech fav: "+request.getPathInfo());
-		
-		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichageNew");
+				
+		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichage");
 		disp.forward(request, response);		
 	}
 }

@@ -17,7 +17,7 @@ import fr.cdiEnterprise.service.Companies;
 /**
  * Servlet implementation class RechListe
  */
-@WebServlet("/RechListe")
+@WebServlet(name="RechListe", urlPatterns = {"/RechListe", "/RechListe/*"})
 public class RechListe extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -61,7 +61,7 @@ public class RechListe extends HttpServlet {
 		Companies listeEntreprises = req.listCompanies(recherche);
 		request.setAttribute("listeEntreprises", listeEntreprises);
 	
-		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichageNew");
+		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichage");
 		disp.forward(request, response);
 	
 	}
