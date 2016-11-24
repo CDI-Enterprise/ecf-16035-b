@@ -109,7 +109,7 @@ public class CompanyCreateServlet extends HttpServlet {
 		}catch (CompanyCreationException ev){
 			String mess=ev.getMessage();
 			request.setAttribute("messageErreur", mess);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/Error.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/error.jsp");
 			dispatcher.forward(request, response);
 		}
 				

@@ -12,6 +12,7 @@
 <title>Fiche entreprise créée</title>
 </head>
 <body>
+<img src="../ressource/img/logo.png" alt="logo" id="logo">
 <h1 class="title">Fiche entreprise créée</h1>
 <br /><br />
 	<% Company company = (Company) request.getAttribute("company"); %>
