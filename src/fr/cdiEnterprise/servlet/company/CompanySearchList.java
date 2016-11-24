@@ -21,7 +21,7 @@ public class CompanySearchList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanySearchList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companySearchList.jsp");
 		dispatcher.forward(request, response);
 	}
 

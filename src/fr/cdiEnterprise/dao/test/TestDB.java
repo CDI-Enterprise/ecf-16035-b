@@ -88,7 +88,7 @@ public class TestDB {
 
 		System.out.println("--- TEST 1 ---");
 
-		items =  client1.getMessages(false);
+		items =  client1.getMessages(false,false);
 		for(Item current :items) {
 			
 			System.out.println("email : "+current);
@@ -96,7 +96,7 @@ public class TestDB {
 		
 		System.out.println("dans la boite brouillon");
 		
-		items =  client1.getMessages(true);
+		items =  client1.getMessages(true,false);
 		for(Item current :items) {
 			System.out.println("email : "+current);
 		}
@@ -127,7 +127,7 @@ public class TestDB {
 			e.printStackTrace();
 		}
 		
-		Items itms2 = client2.getMessages(false);
+		Items itms2 = client2.getMessages(false,false);
 		
 		
 		

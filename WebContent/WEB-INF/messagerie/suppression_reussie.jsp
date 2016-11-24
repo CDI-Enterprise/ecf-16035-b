@@ -2,8 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <div id="content" >
 
-<h1>Envoie du message : </h1>
+<h1>Suppression du/des message : </h1>
 <p>Reussie</p>
 
 </div>
-

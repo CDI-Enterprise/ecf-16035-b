@@ -30,6 +30,17 @@ public class Inscription {
 		this.email = email;
 		this.motDePasse = motDePasse;
 		this.confirmation = confirmerPasse;
+		
+		
+	}
+	public Inscription(String statut, String nom, String prenom, String email, String motDePasse, String confirmation) {
+		super();
+		this.statut = statut;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.confirmation = confirmation;
 	}
 	public Inscription(String nom) {
 		// TODO Auto-generated constructor stub

@@ -1,28 +1,26 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="utf-8"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css/Inscription.css" />
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<<<<<<< HEAD
-<title>Desinscription</title>
-<%@include file="../WEB-INF/menu.html"%>
-=======
-<<<<<<< HEAD
-<title>Insert title here</title>
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+<title>Inscription</title>
 </head>
+<%@include file="../WEB-INF/menu.html"%>
 <body>
-	<div class ="b">
+	
+		<div class ="b">
 		<p><h1>Bienvenue</h1></p>
-		<p><h4>Pour vous désinscrire, merci de remplir les champs ci-dessous</h4></p>
+		<p><h4>Vous pouvez vous incrire en remplissant le formulaire ci-dessous</h4></p>
 	</div>
 	
-	<form method= "post" action="../desinscription">
+	<form method= "post" action="../inscription">
 		
 		<fieldset>
-	    	<legend><h3>Desinscription</h3></legend>
+	    	<legend><h3>Inscription</h3></legend>
 	    	
 	    	<div>
 		    	<p>Statut actuel <input type="radio"
@@ -34,9 +32,8 @@
 			    <p><label>
 			    <input type="text" class ="t" name="nom" placeholder="Votre Nom ici" aria-label="nom" maxlength="24"></label></p>
 
-<<<<<<< HEAD
 			    <p><label>
-			    <input type="text" class ="t" name="prenom" placeholder="Votre prénom ici" aria-label="prenom" maxlength="24"></label></p>
+			    <input type="text" class ="t" name="prenom" placeholder="Votre pr�nom ici" aria-label="prenom" maxlength="24"></label></p>
 
 			    <p><label>
 			    <input type="text" class ="e" name="email" placeholder="Votre E-mail ici" aria-label="email" maxlength="34"></label></p>
@@ -50,7 +47,7 @@
 	    
 	    	<div>	    
 			    <p>
-			    <input type="submit" NAME="nom" id="btn" value="Se désinscrire"> 
+			    <input type="submit" NAME="nom" id="btn" value="S'inscrire"> 
 			    <input type="reset" NAME="nom" id="btn1 value=" Annuler"></p>	  	
 			</div>
 			
@@ -58,29 +55,9 @@
 	 </form>
 
 	<div class = "nom">
-			<p> Vous voulez plutôt vous connecter ? <a href="Connexion">Connexion</a></p>
+			<p> Vous possedez un compte ? <a href="Connexion">Connexion</a></p>
 	</div> 
-=======
-		<p><label>Nom:</label></p>
 		
-		<p> <input type="text" name= "sup" value =""></p>
-=======
-<title>Desinscription</title>
-</head>
-<body>
 	
-		<h1>Desinscription</h1>
-		
-		<form method= "post" action="../desinscription">
-
-		<p><label>Nom:</label></p>
-		
-		<p> <input type="text" name= "sup" value ="nom"></p>
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
-		
-		<p> 
-		<input type="submit" value="Submit"></p>
-		</form>
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 </body>
 </html>

@@ -2,8 +2,8 @@ package fr.cdiEnterprise.dao.test;
 
 
 import java.sql.SQLException;
-
 import fr.cdiEnterprise.dao.DataBaseCompany;
+import fr.cdiEnterprise.service.Companies;
 //import fr.cdiEnterprise.dao.OldDatas;
 //import fr.cdiEnterprise.model.Department;
 //import fr.cdiEnterprise.service.Departments;
@@ -24,7 +24,7 @@ public class TestDBAna {
 //		Departments dpts= DataBaseCompany.getDepartmentListData();
 //		Regions regs 	= DataBaseCompany.getRegionsListData();
 //		Languages lgs =  DataBaseCompany.getLanguagesListData();
-//		
+		Companies companies;
 //		System.out.println(dpts);
 //		System.out.println(regs);
 //		System.out.println(lgs);
@@ -35,7 +35,8 @@ public class TestDBAna {
 //		dept = DataBaseCompany.getDepartmentId("Ain");
 //		System.out.println(dept);
 		
-		DataBaseCompany.getCompaniesData();
+		companies = DataBaseCompany.getCompaniesData();
+		System.out.println(companies);
 //		DataBaseCompany.deleteCompanyData(6);
 //		DataBaseCompany.updateCompanyData(6, "rue des oiseaux");
 }

@@ -180,17 +180,21 @@
 }
 
 #destination{
-	display: block;
+	display: inline-block;
 	width: 500px;
 	height: 30px;
 	background-color:  #ebebe0;
 }
 
 #objet{
-	display: block;
+	display: inline-block;
 	width: 500px;
 	height: 30px;
 	background-color:  #ebebe0;
+}
+
+#body{
+	display: inline-block;
 }
 
 #content textarea{
@@ -198,4 +202,21 @@
 	width: 800px;
 	height: 425px;
 	background-color:  #ebebe0;
+}
+
+#repondre{
+ visibility: hidden;	
+}
+
+#supprimer{
+	 visibility: hidden;
+}
+
+#deplace{
+	 visibility: hidden;
+}
+
+.msgErr{
+	color: red;
+	
 }
