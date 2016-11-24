@@ -88,5 +88,22 @@ public class MailException extends Exception {
 		
 		return notNull;
 	}
+	
+	public static boolean notMaxChar(Item item){
+		
+		final String ERREUR = "Erreur le corp du message contient plus de 4000 caractere";
+		final int MAXCHAR = 4000;
+		
+		boolean notMaxChar = true;
+		
+		try{
+			if(item.getBody().length() > MAXCHAR){
+				throw new MailException(ERREUR);
+			}
+		}catch  (MailException Me){
+			notMaxChar = false;
+		}
+		return notMaxChar;
+	}
 
 }
