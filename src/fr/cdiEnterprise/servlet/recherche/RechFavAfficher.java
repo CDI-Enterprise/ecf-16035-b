@@ -59,7 +59,7 @@ public class RechFavAfficher extends HttpServlet {
 				
 		System.out.println("Path dans le do post d'aff rech fav: "+request.getPathInfo());
 		
-		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichageNew");
+		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichage");
 		disp.forward(request, response);
 	}
 
