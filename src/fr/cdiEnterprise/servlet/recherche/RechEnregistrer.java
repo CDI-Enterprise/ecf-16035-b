@@ -51,7 +51,7 @@ public class RechEnregistrer extends HttpServlet {
 		String nomComp = request.getParameter("nom_comp");
 		String sector = request.getParameter("secteur_comp");
 		String city = request.getParameter("ville_comp");
-		String nomRech = request.getParameter("nom_rech");
+		String nomRech = request.getParameter("nom_rech").trim();
 		
 		System.out.println("enregistrement des infos: "+idUser+"/"+nomComp+"/"+sector+"/"+city+"/"+region+"/"+nomRech);
 		
@@ -61,9 +61,7 @@ public class RechEnregistrer extends HttpServlet {
 			req.enregistrerRech(recherche);
 		}
 		
-		response.sendRedirect(request.getContextPath()+"/Recherche/");
-		
-		RequestDispatcher disp= request.getRequestDispatcher("/jsp/page_rech.jsp");
+		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichageNew");
 		disp.forward(request, response);
 	}
 

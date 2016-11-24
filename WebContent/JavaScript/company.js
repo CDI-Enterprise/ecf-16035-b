@@ -26,6 +26,8 @@ function validate() {
 function verifCompanyName() {
 	// Récupération du nom de l'entreprise à partir du formulaire
 	var companyNameForm = document.companyForm.companyName.value;
+	console.log(companyNameForm);
+	
 	// Test pour vérifier que le nom a bien été récupéré
 	// console.log('Nom entreprise: ' + companyNameForm);
 	if (companyNameForm == null || companyNameForm == '') {
@@ -95,6 +97,7 @@ function verifPostalCode() {
  * 
  * @returns
  */
+
 function verifLangage() {
 	var selectElmt = document.getElementById("languages");
 	var element = selectElmt.options.lenght;

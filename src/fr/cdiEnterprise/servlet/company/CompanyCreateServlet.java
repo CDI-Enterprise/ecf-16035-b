@@ -2,13 +2,14 @@ package fr.cdiEnterprise.servlet.company;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import fr.cdiEnterprise.control.MethodsForListeners;
+import fr.cdiEnterprise.dao.DBConnection;
 import fr.cdiEnterprise.dao.DataBaseCompany;
 import fr.cdiEnterprise.model.Company;
 import fr.cdiEnterprise.model.Contact;
@@ -50,7 +51,7 @@ public class CompanyCreateServlet extends HttpServlet {
 
 	// Méthode init pour initialiser la base de données
 	public void init() {
-		// DBConnection.getConnect();
+		 DBConnection.getConnect();
 	}
 
 	/**
@@ -59,8 +60,6 @@ public class CompanyCreateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
 		doPost(request, response);
 
 	}
@@ -74,54 +73,52 @@ public class CompanyCreateServlet extends HttpServlet {
 
 		// Récupération des données du formulaire
 		companyName = request.getParameter("companyName");
+		companyName = companyName.toUpperCase().trim();
+		MethodsForListeners.nullField(companyName);
 		companyAdress = request.getParameter("companyAdress");
 		companyCity = request.getParameter("companyCity");
+		MethodsForListeners.nullField(companyCity);
+		companyCity = companyCity.toUpperCase().trim();
 		companyPostalCode = request.getParameter("companyPostalCode");
+		MethodsForListeners.controlPostalCode(companyPostalCode);
 		departmentName = request.getParameter("companyDepartment");
 		regionName = request.getParameter("companyRegion");
 		companySize = request.getParameter("companySize");
 		companySector = request.getParameter("companySector");
+		companySector = companySector.toLowerCase().trim();
 		languageName = request.getParameter("companyLanguages");
+			if (languageName == null) {
+			languageName = "JAVA";
+			}
 		companyProjects = request.getParameter("companyProjects");
 		companyWebSite = request.getParameter("companyWebSite");
 		contactName = request.getParameter("contactName");
 		contactPhone = request.getParameter("contactPhone");
 		contactMail = request.getParameter("contactMail");
 
-		// Récupération objet department
 		try {
 			companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
-			System.out.println(companyDepartment);
 			companyRegion = DataBaseCompany.getRegionId(regionName);
 			companyLanguage = DataBaseCompany.getLanguageId(languageName);
-			System.out.println(languageName);
-			// Création d'un objet contact
 			// Récupération du dernier id de la base de données
 			idContact = DataBaseCompany.getIdMax("contact");
-			// Création de l'objet
+			// Création de l'objet Contact
 			contact = new Contact(idContact, contactName, contactPhone, contactMail);
-
-			// Création d'un objet company
 			// Récupération du dernier id de la base de données +1
 			idCompany = DataBaseCompany.getIdMax("company") + 1;
 			// Création objet et insertion BDD
 			company = new Company(idCompany, companyName, companyAdress, companyPostalCode, companyCity,
 					companyDepartment, companyRegion, companySize, companySector, companyLanguage, companyProjects,
 					companyWebSite, contact);
-
-			System.out.println(company);
 			DataBaseCompany.insertCompanyData(company, contact);
-
 		} catch (SQLException e2) {
-			// TODO Auto-generated catch block
 			System.out.println("-------PROBLEME--------");
 			e2.printStackTrace();
 		}
 		request.setAttribute("company", company);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyCreate.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreate.jsp");
 		dispatcher.forward(request, response);
-		// response.sendRedirect( request.getContextPath() + "/jsp/accueil.jsp"
-		// );
+
 	}
 
 }

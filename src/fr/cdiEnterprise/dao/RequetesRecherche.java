@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.sound.midi.Synthesizer;
+
 import fr.cdiEnterprise.model.Company;
 import fr.cdiEnterprise.model.Contact;
 import fr.cdiEnterprise.model.Department;
@@ -73,27 +75,29 @@ public class RequetesRecherche {
 	}
 
 	//Methode de recherche d'une liste d'entreprises selon les critères
-	public Companies listCompanies(String nom, String secteur, String ville/*, String regionId*/){
+	public Companies listCompanies(Recherche recherche){
 		Connection connect = DBConnection.getConnect();
+		Statement stmt;
+		Companies listeEntreprises = new Companies();
+		
 		String req = "Select companyid, companyname, companyadress, companycodepostal, companycity"
 				+ ",companysize, companysector, companyprojects, companyweb from company where ";
-		Companies listeEntreprises = new Companies();
 		int param = 0;
 		
-		if (nom != null){
-			req = req + "companyname = '"+nom+"' ";
+		if (recherche.getCompRech() != ""){
+			req = req + "companyname = '"+recherche.getCompRech()+"' ";
 			param++;
 		}
 		
-		if (secteur != null){
-			if (param == 0) { req = req + "companysector ='"+secteur+"' ";}
-			else {req = req + "and companysector ='"+secteur+"' ";}
+		if (recherche.getSectorRech() != ""){
+			if (param == 0) { req = req + "companysector ='"+recherche.getSectorRech()+"' ";}
+			else {req = req + "and companysector ='"+recherche.getSectorRech()+"' ";}
 			param++;
 		}
 		
-		if (ville != null){
-			if (param == 0) { req = req + "companycity ='"+ville+"' ";}
-			else {req = req + "and companycity ='"+ville+"' ";}
+		if (recherche.getCityRech() != ""){
+			if (param == 0) { req = req + "companycity ='"+recherche.getCityRech()+"' ";}
+			else {req = req + "and companycity ='"+recherche.getCityRech()+"' ";}
 			param++;
 		}
 		
@@ -106,7 +110,7 @@ public class RequetesRecherche {
 		System.out.println(req);
 		
 		try {
-			Statement stmt = connect.createStatement();
+			stmt = connect.createStatement();
 			ResultSet res = stmt.executeQuery(req);
 			
 			while (res.next()){
@@ -119,15 +123,70 @@ public class RequetesRecherche {
 						res.getString("companycodepostal"), res.getString("companycity"), departement, region, 
 						res.getString("companysize"), res.getString("companysector"), langage, res.getString("companyprojects"), 
 						res.getString("companyweb"), contact);
+				
+				System.out.println(entreprise);
 				listeEntreprises.add(entreprise);
 			}
 						
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Erreur d'acces à la recherche d'entreprise");
 			e.printStackTrace();
 		}
 		return listeEntreprises;
 	}
+		
+//		PreparedStatement prepStmt;
+//		String req = "Select companyid, companyname, companyadress, companycodepostal, companycity, companysize, companysector, companyprojects, companyweb "
+//				+ "from company where companyname= ? and companysector= ? and companycity= ?";
+//		
+//		Companies listeEntreprises = new Companies();
+//		String nomCompRech = null;
+//		String sectorRech = null;
+//		String cityRech = null;
+//		
+//		
+//		if (recherche.getCompRech() != "") {
+//			nomCompRech = recherche.getCompRech();
+//		}
+//		
+//		if (recherche.getSectorRech() != "") {
+//			sectorRech = recherche.getSectorRech();
+//		}
+//		
+//		if (recherche.getCityRech() != "") {
+//			cityRech = recherche.getCityRech();
+//		}
+//		
+//		System.out.println("param entrée en recherche: companyname="+nomCompRech+"companysector="+sectorRech+"companycity="+cityRech);
+//		
+//		try {
+//			prepStmt = connect.prepareStatement(req);
+//			prepStmt.setString(1, nomCompRech);
+//			prepStmt.setString(2, sectorRech);
+//			prepStmt.setString(3, cityRech);
+//			ResultSet res = prepStmt.executeQuery(req);
+//			
+//			while (res.next()){
+//				Department departement = recupDept(res.getInt("companyId"));
+//				Region region = recupRegion(res.getInt("companyId"));
+//				Language langage =null;
+//				Contact contact = null;
+//			
+//				Company entreprise = new Company(res.getInt("companyid"), res.getString("companyname"), res.getString("companyadress"), 
+//						res.getString("companycodepostal"), res.getString("companycity"), departement, region, 
+//						res.getString("companysize"), res.getString("companysector"), langage, res.getString("companyprojects"), 
+//						res.getString("companyweb"), contact);
+//				
+//				System.out.println(entreprise);
+//				listeEntreprises.add(entreprise);
+//			}
+//						
+//		} catch (SQLException e) {
+//			System.out.println("Erreur d'acces à la recherche d'entreprise");
+//			e.printStackTrace();
+//		}
+//		return listeEntreprises;
+//	}
 	
 	//Methode de recuperation des recherches favorites de l'utilisateur
 	public RecherchesFav listeRech(String idUser){
@@ -195,32 +254,75 @@ public class RequetesRecherche {
 	//methode pour enregistrer une recherche dans les favoris
 	public void enregistrerRech(Recherche rech) {
 		Connection connect = DBConnection.getConnect();
-		//rechercher le numero de region qui correspond a la string region
-		PreparedStatement prepStmt;
-		String req = "insert into rech_fav values (?, ?, ?, ?, ?, ?, ?)";
+		String reqRec = "";
 		
+		
+		
+		//Recherche si le nom de recherche est déjà associé au user dans la bbd
+		String reqVerif = "Select nom_rech from rech_fav where user_id = ? and nom_rech = ?";
 		try {
-			int idRegion =0;
-			if (rech.getRegionRech() != null){
-				idRegion = rech.getRegionRech().getCodeRegion();
+			PreparedStatement prepStmt;
+			prepStmt = connect.prepareStatement(reqVerif);
+			prepStmt.setString(1, rech.getIdUser());
+			prepStmt.setString(2, rech.getNomRech());
+			ResultSet res= prepStmt.executeQuery();
+			
+			if(res.next()){				//si oui fait un update de la ligne dans la bdd
+				reqRec="Update RECH_FAV set comp_rech=?, sector_rech=?, region_rech=?, city_rech=? where nom_rech = ?"; 
+				System.out.println("resultat non vide... l'enregistrement sera un update");
+				
+				try {	
+					int idRegion =0;											//rechercher le numero de region qui correspond a la string region
+					if (rech.getRegionRech() != null){		
+						idRegion = rech.getRegionRech().getCodeRegion();
+					}
+					PreparedStatement prepStmtUpdate;
+					prepStmtUpdate = connect.prepareStatement(reqRec);
+					prepStmtUpdate.setString(1, rech.getCompRech());
+					prepStmtUpdate.setString(2, rech.getSectorRech());
+					prepStmtUpdate.setInt(3, idRegion);
+					prepStmtUpdate.setString(4, rech.getCityRech());
+					prepStmtUpdate.setString(5, rech.getNomRech());
+					prepStmtUpdate.executeUpdate();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			} else {					//sinon fais un insert
+				reqRec="insert into rech_fav values (?, ?, ?, ?, ?, ?, ?)";
+				System.out.println("resultat vide... l'enregistrement sera un insert");
+				
+				try {	
+					int idRegion =0;											//rechercher le numero de region qui correspond a la string region
+					if (rech.getRegionRech() != null){		
+						idRegion = rech.getRegionRech().getCodeRegion();
+					}
+					PreparedStatement prepStmtInsert;
+					prepStmtInsert = connect.prepareStatement(reqRec);
+					prepStmtInsert.setInt(1, rech.getIdRech());
+					prepStmtInsert.setString(2, rech.getIdUser());
+					prepStmtInsert.setString(3, rech.getNomRech());
+					prepStmtInsert.setString(4, rech.getCompRech());
+					prepStmtInsert.setString(5, rech.getSectorRech());
+					prepStmtInsert.setInt(6, idRegion);
+					prepStmtInsert.setString(7, rech.getCityRech());
+					prepStmtInsert.executeUpdate();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 			}
 			
-			prepStmt = connect.prepareStatement(req);
-			prepStmt.setInt(1, rech.getIdRech());
-			prepStmt.setString(2, rech.getIdUser());
-			prepStmt.setString(3, rech.getNomRech());
-			prepStmt.setString(4, rech.getCompRech());
-			prepStmt.setString(5, rech.getSectorRech());
-			prepStmt.setInt(6, idRegion);
-			prepStmt.setString(7, rech.getCityRech());
-			ResultSet res= prepStmt.executeQuery();
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 	}
 	
-	
+	//Methode de suppression d'une recherche favorite dans la bdd
 	public void SupprRechFav(String rechOpt, String idUser) {
 		Connection connect = DBConnection.getConnect();
 		PreparedStatement prepStmt;

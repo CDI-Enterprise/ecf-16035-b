@@ -11,7 +11,7 @@
   fr.cdiEnterprise.service.Regions, fr.cdiEnterprise.model.Department, fr.cdiEnterprise.model.Region, fr.cdiEnterprise.model.Language" %> 
 <title>Entreprise - CDI Enterprise</title>
 </head>
-<body>
+<body> 
 	<%@ include file="../../WEB-INF/menu.html" %>
 	<br/><br/><br/>
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">

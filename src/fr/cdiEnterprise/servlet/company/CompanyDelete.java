@@ -58,7 +58,7 @@ public class CompanyDelete extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyDeleteOk.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyDeleteOk.jsp");
 		dispatcher.forward(request, response);
 	}
 

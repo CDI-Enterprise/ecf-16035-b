@@ -58,7 +58,7 @@ public class CompanyCreationServlet extends HttpServlet {
 		request.setAttribute("regions", regions);
 		request.setAttribute("languages", languages);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyCreation.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreation.jsp");
 		dispatcher.forward(request, response);
 	}
 

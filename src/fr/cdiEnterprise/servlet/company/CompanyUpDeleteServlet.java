@@ -45,7 +45,6 @@ public class CompanyUpDeleteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		System.out.println("--- in the doPost method ---");
 
 		try {
@@ -55,7 +54,7 @@ public class CompanyUpDeleteServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("companies", companies);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/CompanyUpdateDelete.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdateDelete.jsp");
 		dispatcher.forward(request, response);
 	}
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/company.css" />
@@ -8,14 +8,14 @@
 
 <%@ page import= "fr.cdiEnterprise.model.Company" %>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+ 
 <title>Fiche entreprise créée</title>
 </head>
 <body>
 <h1 class="title">Fiche entreprise créée</h1>
 <br /><br />
 	<% Company company = (Company) request.getAttribute("company"); %>
-	<%=company %>
+	<div class= "fieldset">
 	Nom de l'entreprise: <%=company.getCompanyName() %>
 	<br /><br />
 	Adresse: <%=company.getAdress() %>
@@ -38,17 +38,10 @@
 	<br/><br/>
 	Site Web: <%=company.getWebSite() %> 
 	<br /><br /> 
-	Contact
-	<br/><br/>
-	Nom du contact: <%=company.getContact().getName() %>
-	<br /><br /> 
-	Numéro de téléphone: <%=company.getContact().getPhoneNumber() %>
-	<br /><br /> 
-	Adresse mail: <%=company.getContact().getEmail() %> 
-
-			
+</div>
+<br /><br /> 
 <footer>
-		<a href= "<%=request.getContextPath()%>/jsp/Accueil.jsp">Retour à l'accueil </a>
+		<a href= "<%=request.getContextPath()%>/jsp/accueil.jsp">Retour à l'accueil </a>
 </footer>
 
 </body>

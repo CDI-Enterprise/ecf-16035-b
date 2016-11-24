@@ -99,7 +99,7 @@ public class Company {
 		this.contact = contact;
 		this.companyId = companyId;
 	}
-
+	
 	 public Company(int idEntreprise,String companyName, String adress, String postalCode, 
 			 String city, Department department, Region region, String size, String sector, String webSite) {
 	
@@ -113,6 +113,36 @@ public class Company {
 	 this.size = size;
 	 this.webSite = webSite;
 	 this.companyId = idEntreprise;
+	 }
+	 
+	 /**
+	  * Constructeur sans Contact et avec uniquement un langage informatique
+	  * @param idEntreprise
+	  * @param companyName
+	  * @param adress
+	  * @param postalCode
+	  * @param city
+	  * @param department
+	  * @param region
+	  * @param language
+	  * @param size
+	  * @param sector
+	  * @param webSite
+	  */
+	 public Company(int idEntreprise,String companyName, String adress, String postalCode, 
+			 String city, Department department, Region region, Language language, String size, String sector, String webSite) {
+	
+	 this.companyName = companyName;
+	 this.adress = adress;
+	 this.postalCode = postalCode;
+	 this.city = city;
+	 this.department = department;
+	 this.region = region;
+	 this.sector = sector;
+	 this.size = size;
+	 this.webSite = webSite;
+	 this.companyId = idEntreprise;
+	 this.language=language;
 	 }
 	 
 	/**

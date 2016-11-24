@@ -420,13 +420,15 @@ public class DataBaseCompany {
 		stmt = connexion.createStatement();
 
 		rs = stmt.executeQuery("select company.companyId, companyName,companyAdress, companyCODEPOSTAL, companyCity, "
-				+ "companySize , companySector , companyProjects , companyWeb, departmentname, regionName "
-				+ "from company, departments, regions, companydepartment, companyregion "
+				+ "companySize , companySector , companyProjects , companyWeb, departmentname, regionName, languagename "
+				+ "from company, language, departments, regions, companydepartment, companyregion, companylanguage "
 				+ "where company.companyId = companyregion.companyId "
 				+ "and company.companyId = companydepartment.companyId "
+				+ "and company.companyId = companyLanguage.companyId "
 				+ "and departments.departmentNumber = companydepartment.departmentNumber "
-				+ "and regions.regionId = companyregion.regionId");
-
+				+ "and regions.regionId = companyregion.regionId "
+				+ "and language.languageId = companylanguage.LANGUAGEID");
+		
 		while (rs.next()) {
 			int companyId = rs.getInt("companyId");
 			String companyName = rs.getString("companyName");
@@ -438,11 +440,12 @@ public class DataBaseCompany {
 			String sector = rs.getString("companySector");
 			String size = rs.getString("companySize");
 			String webSite = rs.getString("companyWeb");
+			String languageName = rs.getString("languagename");
 
 			Department department = DataBaseCompany.getDepartmentId(departmentN);
 			Region region = DataBaseCompany.getRegionId(regionN);
-
-			companies.add(new Company(companyId, companyName, companyAdress, postalcode, city, department, region, sector, size, webSite));
+			Language language = DataBaseCompany.getLanguageId(languageName);
+			companies.add(new Company(companyId, companyName, companyAdress, postalcode, city, department, region,language, size, sector, webSite));
 
 		}
 		
@@ -476,7 +479,7 @@ public class DataBaseCompany {
 		int rsd;
 		int rse;
 		int rsf;
-
+		
 		connexion = DBConnection.getConnect();
 		stmt = connexion.createStatement();
 
@@ -657,11 +660,13 @@ public class DataBaseCompany {
 			String sector = rs.getString("companySector");
 			String size = rs.getString("companySize");
 			String webSite = rs.getString("companyWeb");
+			String languageName= rs.getString("languagename");
 
 			Department department = DataBaseCompany.getDepartmentId(departmentN);
 			Region region = DataBaseCompany.getRegionId(regionN);
-
-			company = new Company(companyId, companyName, companyAdress, postalcode, city, department, region, sector, size, webSite);
+			Language language = DataBaseCompany.getLanguageId(languageName);
+			
+			company = new Company(companyId, companyName, companyAdress, postalcode, city, department, region, language, size, sector, webSite);
 		}
 		stmt.close();
 

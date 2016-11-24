@@ -25,40 +25,43 @@ public class CompanyController extends HttpServlet {
 		String path = request.getPathInfo();
 		System.out.println("================  dans Controleur path=" + path);
 		System.out.println("================  dans Controleur path=" + request.getContextPath());
-		switch(path){
-			case "/Creation":
-				// affichage formulaire gestion des bonbons
-				goCreation(request, response);
-				break;
-			case "/CompanyCreate":
-				// affichage formulaire gestion des bonbons
-				goCreate(request, response);
-				break;
-			case "/ModifSuppr":
-				// affichage page pour modifier supprimer une fiche entreprise
-				goUpDeleteCompany(request, response);
-				break;
-			case "/AffRecher":
-				// affichage page pour afficher et rechercher des fiches entreprises
-				goSearchList(request, response);
-				break;
-			case "/Affichage":
-				// affichage page pour afficher et rechercher des fiches entreprises
-				goList(request, response);
-				break;
-			case "/Modifier":
-				goUpdateCompany(request, response);
-				break;
-			case "/Supprimer":
-				goDeleteCompany(request, response);
-				break;
-			case "/FicheModifiee":
-				goCompanyUpdated(request, response);
-				break;
-			default:
-				System.out.println("Adresse non valide");
-				doAccueil(request, response);
-				break;
+		switch (path) {
+		case "/Creation":
+			// affichage formulaire gestion des bonbons
+			goCreation(request, response);
+			break;
+		case "/CompanyCreate":
+			// affichage formulaire gestion des bonbons
+			goCreate(request, response);
+			break;
+		case "/ModifSuppr":
+			// affichage page pour modifier supprimer une fiche entreprise
+			goUpDeleteCompany(request, response);
+			break;
+		case "/AffRecher":
+			// affichage page pour afficher et rechercher des fiches entreprises
+			goSearchList(request, response);
+			break;
+		case "/Affichage":
+			// affichage page pour afficher et rechercher des fiches entreprises
+			goList(request, response);
+			break;
+		case "/Modifier":
+			goUpdateCompany(request, response);
+			break;
+		case "/Supprimer":
+			goDeleteCompany(request, response);
+			break;
+		case "/FicheModifiee":
+			goCompanyUpdated(request, response);
+			break;
+		case "/Rechercher":
+			goCompanySearch(request, response);
+			break;
+		default:
+			System.out.println("Adresse non valide");
+			doAccueil(request, response);
+			break;
 		}
 
 		System.out.println("** Fin Controleur**");
@@ -75,13 +78,13 @@ public class CompanyController extends HttpServlet {
 	private void doAccueil(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		disp = request.getRequestDispatcher("/jsp/Accueil.jsp");
+		disp = request.getRequestDispatcher("/jsp/accueil.jsp");
 		disp.forward(request, response);
 
 	}
 
 	/**
-	 * Redirige vers la page de création d'une fiche entreprise
+	 * Redirige vers la servlet pour ouvrir la page de création d'une fiche entreprise
 	 * 
 	 * @param request
 	 * @param response
@@ -100,7 +103,7 @@ public class CompanyController extends HttpServlet {
 	}
 
 	/**
-	 * Redirige vers la page concernant l'entreprise nouvellement créée
+	 * Redirige vers la servlet ouvrant la  page concernant l'entreprise nouvellement créée
 	 * 
 	 * @param request
 	 * @param response
@@ -118,7 +121,7 @@ public class CompanyController extends HttpServlet {
 	}
 
 	/**
-	 * Redirige vers la page de sélection d'une fiche entreprise pour
+	 * Redirige vers la servlet de la page de sélection d'une fiche entreprise pour
 	 * modification ou suppression
 	 * 
 	 * @param request
@@ -148,7 +151,7 @@ public class CompanyController extends HttpServlet {
 	}
 
 	/**
-	 * 
+	 * Permet d'accéder à la servlet ouvrant la page pour la recherche ou l'affichage de fiche entreprise
 	 * 
 	 * @param request
 	 * @param response
@@ -162,15 +165,14 @@ public class CompanyController extends HttpServlet {
 		disp.forward(request, response);
 	}
 
-	private void goList(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	private void goList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		disp = request.getRequestDispatcher("/action/Affichage");
 		disp.forward(request, response);
 	}
-	
+
 	/**
-	 * Permet d'accéder à la page d'information fiche modifiée
+	 * Permet d'accéder à la servlet ouvrant la page d'information fiche modifiée
 	 * 
 	 * @param request
 	 * @param response
@@ -185,7 +187,7 @@ public class CompanyController extends HttpServlet {
 	}
 
 	/**
-	 * Permet d'accéder à la page de suppression d'une fiche entreprise
+	 * Permet d'accéder à la servlet ouvrant la page de suppression d'une fiche entreprise
 	 * 
 	 * @param request
 	 * @param response
@@ -199,8 +201,25 @@ public class CompanyController extends HttpServlet {
 		disp.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	/**
+	 * Permet d'accéder à la servlet ouvrant la page de la recherche
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void goCompanySearch(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		disp = request.getRequestDispatcher("/action/Rechercher");
+		disp.forward(request, response);
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		doGet(request, response);
 	}
 

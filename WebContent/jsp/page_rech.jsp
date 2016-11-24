@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="http://localhost:8085/ecf-16035-b/css/general.css"/>
 <link rel="stylesheet" href="http://localhost:8085/ecf-16035-b/css/recherche.css"/>
 <title>Page de recherche</title>
+<script type="text/javascript" src="../JavaScript/recherche.js"></script>
 </head>
 
 <%	String idUser = (String) request.getAttribute("idUser");
@@ -26,7 +27,7 @@
 
 
 <div id="blocRech">
-	<form class="fieldset" name="FormRecherche" action="RechControl" method="post">
+	<form class="fieldset" name="FormRecherche" action="/Recherche" method="post">
 		<fieldset id="recherche" >
 		<legend>Recherche</legend>
 			<label class="rech">Nom de l'entreprise :</label> 
@@ -35,7 +36,7 @@
 						value="<%= RechFav.getCompRech() %>"
 				<%}%>
 			/>
-			<input type="submit" name="rechercher" value="Rechercher" formaction="RechControl/RechListe"/>
+			<input type="submit" name="rechercher" value="Rechercher" formaction="http://localhost:8085/<%=request.getContextPath()%>/Recherche/RechListe"/>
 			<br/>
 		
 			<label class="rech">Secteur d'activité :</label> 
@@ -48,7 +49,7 @@
 		
 			
 			<label class="rech">Région :</label> 
-			<select name="region_comp">
+			<select name="region_comp" disabled="disabled">
 			
 			<%if (listeRegion != null) {
 				for (int i=0; i<listeRegion.size(); i++){%>
@@ -56,7 +57,7 @@
 				<%}
 			}%>
 			</select>
-			<input type="submit" name="Enregistrer" value="Enregistrer" formaction="RechControl/EnregistrerRech"/>
+			<input type="submit" name="enregistrer" value="Enregistrer" onclick="return verifSaisie();" formaction="http://localhost:8085/<%=request.getContextPath()%>/Recherche/EnregistrerRech"/>
 			<br/>
 			
 			<label class="rech">Ville :</label> 
@@ -68,9 +69,13 @@
 			<br/>
 			
 			<label class="rech" style="font-size:12px">Nom d'enregistrement de recherche : </label> 
-			<input type="text" name="nom_rech"/>
+			<input type="text" name="nom_rech"
+				<% if (RechFav != null && RechFav.getNomRech()!= null) {%>
+						value="<%= RechFav.getNomRech()%>"
+				<%}%>
+			/>
 			
-			<input type="reset" name="Reset" value="Reinitialiser"/>
+			<input type="reset" name="reset" value="Reinitialiser"/>
 			
 		</fieldset>
 	</form>
@@ -91,9 +96,9 @@
 		</fieldset>
 		
 		<span id="btnFavoris">
-			<input type="submit" name="voir_rech" value="Voir" formaction="RechControl/RechFavAfficher"/>
-			<input type="submit" name="suppr_rech" value="Supprimer" formaction="RechControl/SupprRechFav"/>
-			<input type="reset" value="Reinitialiser">
+			<input type="submit" name="voir_rech" value="Voir" formaction="http://localhost:8085/<%=request.getContextPath()%>/Recherche/RechFavAfficher"/>
+			<input type="submit" name="suppr_rech" value="Supprimer" formaction="http://localhost:8085/<%=request.getContextPath()%>/Recherche/RechFavSuppr"/>
+			<input type="reset" name="resetFav" value="Reinitialiser">
 		</span>
 <!-- 	</div> -->
 	</form>
@@ -102,30 +107,28 @@
 <div class="listeEntreprises">
 	<fieldset id="liste">	
 	<legend>Entreprises</legend>
-		<table>
+		<table id="tableauRech">
 			<tr>
-				<th>Nom</th>
-				<th>Adresse</th>
-				<th>Code postal</th>
-				<th>Ville</th>
-				<th>Région</th>
-				<th>Departement</th>
-				<th>Secteur</th>
-				<th>Projets</th>
-				<th>Site Web</th>
+				<th>Nom			</th>
+				<th>Adresse		</th>
+				<th>Code postal	</th>
+				<th>Ville		</th>
+				<th>Région		</th>
+				<th>Secteur		</th>
+				<th>Projets		</th>
+				<th>Site Web	</th>
 			</tr>
 			<% if (listeEntreprise != null) {
 				for (int i=0; i<listeEntreprise.size(); i++){ %>
 				<tr>
-					<td><%=listeEntreprise.get(i).getCompanyName() 	%></td>
-					<td><%=listeEntreprise.get(i).getAdress() 		%></td>
-					<td><%=listeEntreprise.get(i).getPostalCode() 	%></td>
-					<td><%=listeEntreprise.get(i).getCity() 		%></td>
-					<td><%=listeEntreprise.get(i).getRegion()		%></td>
-					<td><%=listeEntreprise.get(i).getDepartment()	%></td>
-					<td><%=listeEntreprise.get(i).getSector() 		%></td>
-					<td><%=listeEntreprise.get(i).getProjets()	 	%></td>
-					<td><%=listeEntreprise.get(i).getWebSite()	 	%></td>
+					<td><%=listeEntreprise.get(i).getCompanyName() 	%>			</td>
+					<td><%=listeEntreprise.get(i).getAdress() 		%>			</td>
+					<td><%=listeEntreprise.get(i).getPostalCode() 	%>			</td>
+					<td><%=listeEntreprise.get(i).getCity() 		%>			</td>
+					<td><%=listeEntreprise.get(i).getRegion().getRegionName()%>	</td>
+					<td><%=listeEntreprise.get(i).getSector() 		%>			</td>
+					<td><%=listeEntreprise.get(i).getProjets()	 	%>			</td>
+					<td><%=listeEntreprise.get(i).getWebSite()	 	%>			</td>
 				</tr>
 				<%}
 			}%>	
