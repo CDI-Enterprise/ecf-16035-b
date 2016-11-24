@@ -1,5 +1,5 @@
 /**
- * 
+ * JavaScript permettant de vérifier les formulires 
  */
 
 function validate() {
@@ -25,6 +25,7 @@ function validate() {
  */
 function verifCompanyName() {
 	// Récupération du nom de l'entreprise à partir du formulaire
+	deleteAllError();
 	var companyNameForm = document.companyForm.companyName.value;
 	console.log(companyNameForm);
 	

@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import fr.cdiEnterprise.control.MethodsForControl;
+import fr.cdiEnterprise.exceptions.CompanyCreationException;
 import fr.cdiEnterprise.model.Company;
 import fr.cdiEnterprise.model.Contact;
 import fr.cdiEnterprise.model.Department;
@@ -462,11 +465,11 @@ public class DataBaseCompany {
 	 * @param company
 	 * @throws SQLException
 	 */
-	public static void insertCompanyData(Company company, Contact contact) throws SQLException {
+	public static void insertCompanyData(Company company, Contact contact) throws SQLException, CompanyCreationException{
 
 		Connection connexion = null;
 		Statement stmt = null;
-		// int companyId = DataBaseCompany.getIdMax("company");
+		String language;
 		String reqSqla;
 		String reqSqlb;
 		String reqSqlc;
@@ -485,7 +488,9 @@ public class DataBaseCompany {
 
 		reqSqla = "insert into company values (?,?,?,?,?,?,?,?,?)";
 		PreparedStatement insertCompany = connexion.prepareStatement(reqSqla);
-
+		
+		language = company.getLanguage().getLanguageName();
+		MethodsForControl.nullField(language);
 		insertCompany.setInt(1, company.getCompanyId());
 		insertCompany.setString(2, company.getCompanyName());
 		insertCompany.setString(3, company.getAdress());
@@ -506,6 +511,7 @@ public class DataBaseCompany {
 		insertCompanyDepartment.setInt(1, company.getCompanyId());
 		insertCompanyDepartment.setInt(2, company.getDepartment().getDepartmentNumber());
 
+		
 		reqSqld = "insert into companylanguage values (?,?)";
 		PreparedStatement insertCompanyLanguage = connexion.prepareStatement(reqSqld);
 		insertCompanyLanguage.setInt(1, company.getCompanyId());
@@ -531,9 +537,9 @@ public class DataBaseCompany {
 		rsf = insertContact.executeUpdate();
 
 		stmt.close();
-
+		
 		System.out.println("rsa" + rsa + "rsb" + rsb + "rsc" + rsc + "rsd" + rsd + "rse" + rse + "rsf" + rsf);
-
+		
 		connexion.commit();
 		stmt.close();
 
@@ -696,5 +702,28 @@ public class DataBaseCompany {
 			idMax = rsMax.getInt(1);
 		return idMax;
 	}
-
+	
+	/**
+	 * Méthode pour controler si les champs obligatoires ont bien été renseignés
+	 * 
+	 * @author Anaïs
+	 * @param String
+	 *            (champ à tester)
+	 * @return String (valeur du champ si ok)
+	 * @version 23-11-2016
+	 */
+	public static String nullField(String txtField) {
+		String field = txtField;
+		if (field == null) {
+			throw new CompanyCreationException("Veuillez remplir les champs obligatoires: Nom de l'entreprise, Ville, "
+					+ " Code Postal, Departement, Région, Langage, Secteur, Taille,  SiteWeb ");
+		} else {
+			int fieldLength = field.length();
+			if (fieldLength == 0) {
+				throw new CompanyCreationException("Veuillez remplir les champs obligatoires: Nom de l'entreprise, Ville, "
+					+ " Code Postal, Departement, Région, Langage, Secteur, Taille,  SiteWeb ");
+			} 
+		}
+		return field;
+	}
 }

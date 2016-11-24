@@ -1,5 +1,6 @@
 package fr.cdiEnterprise.model;
 
+import fr.cdiEnterprise.exceptions.CompanyCreationException;
 import fr.cdiEnterprise.service.Languages;
 
 /**
@@ -347,7 +348,13 @@ public class Company {
 	}
 
 	public void setLanguage(Language language) {
+		String languageName;
+		languageName= language.getLanguageName();
+		if(languageName == null || languageName.length()==0){
+			throw new CompanyCreationException(" Veuillez renseigner un langage informatique");
+		}else{
 		this.language = language;
+		}
 	}
 
 	/*

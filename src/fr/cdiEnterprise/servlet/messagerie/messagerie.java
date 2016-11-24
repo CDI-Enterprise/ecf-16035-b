@@ -54,10 +54,15 @@ public class messagerie extends HttpServlet {
 	/**
 	 * Récupérer les requete get et renvoi l'utilisateur a la page demander avec les elements neccessaires a la construction de la page.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 21/11/2016
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 //Syso de controle
+		
 		System.out.println("get");
 		System.out.println("getRequestURI :" + request.getRequestURI());
 		
@@ -73,14 +78,16 @@ public class messagerie extends HttpServlet {
 		final String AFFICHAGE = "/ecf-16035-b/messagerie/affichage";
 		final String NOUVEAU = "/ecf-16035-b/messagerie/nouveau";
 		final String SUPPRESSION = "/ecf-16035-b/messagerie/supprimer";
+		final String MODIFICATION_BROUILLON = "/ecf-16035-b/messagerie/brouillon";
 		
 //Recuperation de l'uri demander
+		
 		String path = request.getRequestURI();
 		System.out.println("path " + path);
 		
 		
 		
-//Declaration des constante TODO a passé en enum
+//Aiguillage TODO a passé en enum/switch
 
 		if(path.equalsIgnoreCase(MESSAGERIE)){
 			
@@ -95,10 +102,8 @@ public class messagerie extends HttpServlet {
 			afficheMail(request,response);
 			
 		}else if(path.equalsIgnoreCase(NOUVEAU)){
-
 			
-				nouveauMail(request,response);
-			
+			nouveauMail(request,response);
 			
 		}else if(path.equalsIgnoreCase(SUPPRESSION)){
 			
@@ -108,35 +113,21 @@ public class messagerie extends HttpServlet {
 			
 			constructSupprimer(request, response);
 		
+		}else if(path.equalsIgnoreCase(MODIFICATION_BROUILLON)){
+		
+			affichageBrouillon(request, response);
+		
 		}
 
-	}
-	/**
-	 * recupere l'id des mail selectionnée par l'utilisateur et les supprime de la base de donnée
-	 * @param response 
-	 * @param request 
-	 * 
-	 */
-	private void supprimerMail(HttpServletRequest request, HttpServletResponse response) {
-
-		int i= 0;
-		Enumeration<String> parameterName = request.getParameterNames();
-		ArrayList<String> id = new ArrayList<String>();
-		
-			while(parameterName.hasMoreElements()){
-				
-				id.add(request.getParameter(parameterName.nextElement()));
-				i++;
-
-			}
-			MessageDao dao = new MessageDao();
-			dao.updateDelete(id);
-		
 	}
 
 	/**
 	 * Récupere et renvoie l'utilisateur a la page demander avec une inscription dans la base de données des données entrer par l'utilisateur.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 21/11/2016
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 	
@@ -155,22 +146,110 @@ public class messagerie extends HttpServlet {
 	}
 	
 	/**
+	 * Recupere l'id du Mail brouillon et remplie les informations avec les informations deja existante pour ce message
+	 * 
+	 * @param request
+	 * @param response
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 24/11/2016
+	 */
+	private void affichageBrouillon(HttpServletRequest request, HttpServletResponse response) {
+		
+		final String PATH_MESSAGERIE =  "/jsp/messagerie/messagerie.jsp";
+		final String PATH_UN_BROUILLON = "../../WEB-INF/messagerie/un_brouillon.jsp";
+		
+		String id = request.getParameter("id");
+		
+		MessageDao dao = new MessageDao();
+		Item item = dao.getItemByRef(id, true, false);
+		
+		request.setAttribute("message", item);
+		request.setAttribute("url", PATH_UN_BROUILLON);
+		
+		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
+		try {
+			disp.forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Page erreur
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * recupere l'id des mail selectionnée par l'utilisateur et les supprime de la base de donnée
+	 * @param response 
+	 * @param request 
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 24/11/2016
+	 */
+	private void supprimerMail(HttpServletRequest request, HttpServletResponse response) {
+		
+		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
+		final String PATH_SUPPRESSION_REUSSI = "../../WEB-INF/messagerie/suppression_reussie.jsp";
+		final String PATH_SUPPRESSION_ERREUR = "../../WEB-INF/messagerie/suppression_erreur.jsp";
+		
+		
+		int i= 0;
+		Enumeration<String> parameterName = request.getParameterNames();
+		ArrayList<String> id = new ArrayList<String>();
+		Items items = new Items();
+		Item item = new Item();
+		
+			while(parameterName.hasMoreElements()){
+				
+				id.add(request.getParameter(parameterName.nextElement()));
+				i++;
+
+			}
+			
+			MessageDao dao = new MessageDao();
+			
+			for(int x = 0;x < id.size();x++){
+				
+				item = dao.getItemByRef(id.get(x), false, false);
+				items.add(item);		
+			}
+		
+			dao.updateDelete(items);
+			
+			RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
+			
+			try {
+				request.setAttribute("url", PATH_SUPPRESSION_REUSSI);
+				disp.forward(request,response);
+				
+			} catch (ServletException | IOException e) {
+				
+				request.setAttribute("url", PATH_SUPPRESSION_ERREUR);
+				//TODO Send redirect?
+				e.printStackTrace();
+			} 
+			
+		
+	}
+	
+	/**
 	 * Envoie le mail en l'inserant dans la base de donnée grace a {@link MessageDao}
 	 * 
 	 * @param request
 	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 24/11/2016
 	 */
 	private void sendMail(HttpServletRequest request, HttpServletResponse response) {
 		
 		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_ENVOIE_REUSSI = "../../WEB-INF/messagerie/envoie_reussie.jsp";
-		final String PATH_ENVOIE_ERREUR = "../../WEB-INF/messagerie/envoie_erreur.jsp";
+		final String PATH_ENVOIE_ERREUR = "../../WEB-INF/messagerie/envoie_erreur.jsp";	
 		
-		
-		
-		int ref = Integer.parseInt(request.getParameter("ref"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		String sender = "oracle"; //TODO a supprimer SIMULATION DE SESSION
 		String receiver = request.getParameter("receiver");
@@ -180,11 +259,11 @@ public class messagerie extends HttpServlet {
 		boolean draft = false; //false car non un draft
 		boolean deleted = false; //false car non deleted
 		
-		Item item = new Item(ref,sender,receiver,object,body,date,draft,deleted);
+		Item item = new Item(id,sender,receiver,object,body,date,draft,deleted);
 		
 		try {
-			MessageDao.insertItem(item);
 			
+			MessageDao.insertItem(item);
 			request.setAttribute("url", PATH_ENVOIE_REUSSI);
 			
 			
@@ -209,13 +288,14 @@ public class messagerie extends HttpServlet {
 	}
 
 	/**
-	 * Envoie sur la fenetre de nouveau message en generant un ID/ref/identity au mail.
+	 * Envoie sur la fenetre de nouveau message en generant un ID/id/identity au mail.
 	 * 
 	 * @param request
 	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 * @throws SQLException 
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 24/11/2016
 	 */
 	private void nouveauMail(HttpServletRequest request, HttpServletResponse response){
 		
@@ -235,11 +315,11 @@ public class messagerie extends HttpServlet {
 			// TODO Page Erreur Messagerie
 			e1.printStackTrace();
 		}
-		System.out.println(mpclient.getNewID());
+		
 		
 		request.setAttribute("url", PATH_NOUVEAU);
 		request.setAttribute("id", mpclient.getNewID());
-		
+	
 		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
 		try {
 			disp.forward(request,response);
@@ -253,20 +333,22 @@ public class messagerie extends HttpServlet {
 	/**
 	 * Recupere l'id du mail qui a etait selectionné par le mail et affiche son contennu grace {@link MessageDao}	
 	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * @param response 
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 24/11/2016
 	 */
 	private void afficheMail(HttpServletRequest request, HttpServletResponse response){
 		
 		final String PATH_MESSAGERIE =  "/jsp/messagerie/messagerie.jsp";
 		final String PATH_AFFICHAGE = "../../WEB-INF/messagerie/un_message.jsp";
 		
-		String ref = request.getParameter("ref");
+		String id = request.getParameter("id");
 		MessageDao dao = new MessageDao();
 		
 		//1 false = draft | 2 false = deleted les deux a false car on est dans la boite de recepetion
-		Item item = dao.getItemByRef(ref,false,false);
+		Item item = dao.getItemByRef(id,false,false);
 		
 		request.setAttribute("url", PATH_AFFICHAGE);
 		request.setAttribute("message", item);
@@ -286,8 +368,10 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @param response 
 	 * @param request 
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 24/11/2016
 	 */
 	private void constructMail(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -325,8 +409,10 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @param response 
 	 * @param request 
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 24/11/2016 
 	 */
 	private void constructBrouillon(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -359,8 +445,10 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @param response 
 	 * @param request 
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * 
+	 * @author Aurélien
+	 * @version 1
+ 	 * @since 24/11/2016
 	 */
 	private void constructSupprimer(HttpServletRequest request, HttpServletResponse response){
 		

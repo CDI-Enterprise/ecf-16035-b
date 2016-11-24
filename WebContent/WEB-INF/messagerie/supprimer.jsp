@@ -19,7 +19,7 @@
 				<th><input value="<%= items.get(i).getId() %>" type="checkbox" name="checkbox" onchange="controleMenu(this)"/></th>
 				<th><%= items.get(i).getSender() %></th>
 				<th><%= items.get(i).getReceiver() %></th>
-				<th><a href="/ecf-16035-b/messagerie/affichage?ref=<%= items.get(i).getId() %>" > <%= items.get(i).getObject() %> </a></th>
+				<th><a href="/ecf-16035-b/messagerie/affichage?id=<%= items.get(i).getId() %>" > <%= items.get(i).getObject() %> </a></th>
 				<th><%= items.get(i).getTimeStamp() %></th>
 			</tr>
 		<%}%>

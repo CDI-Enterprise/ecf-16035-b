@@ -32,7 +32,7 @@
 	<br/><br/>
 	Secteur d'activité: <%=company.getSector() %>
 	<br/><br/>
-	Langages principalement utilis&eacute; <%=company.getLanguage() %> 
+	Langage principalement utilis&eacute; <%=company.getLanguage() %> 
 	<br/><br/>
 	Principaux projets de l'entreprise: <%=company.getProjets() %>
 	<br/><br/>
