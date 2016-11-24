@@ -1,12 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page import="fr.cdiEnterprise.model.Item, fr.cdiEnterprise.service.Items" %>
 
-</body>
-</html>
+<!-- Content messagerie -->
+
+<% Item item = (Item) request.getAttribute("message"); %>
+
+<div id="content">
+
+<h1>Nouveau Message</h1><hr /><br />
+	<form method="post" action="../../ecf-16035-b/messagerie/nouveau?id=<%= item.getId() %>" onsubmit="return controleNouveauMail()">
+		<legend>Boite de destination :</legend>
+		<input id="destination" type="text" name="receiver" placeholder="Destination" value="<%= item.getReceiver() %>" />
+		<legend>Objet du mail : </legend>
+		<input id="objet" type="text" name="objet" placeholder="Objet du mail" value="<%= item.getObject() %>" />
+		<hr />
+		<textarea id="body" name="body" rows="10" cols="10"><%= item.getBody() %></textarea>
+		<input type="submit" value="Envoyer">
+		<input type="reset" value="Annuler">
+	</form>
+</div>

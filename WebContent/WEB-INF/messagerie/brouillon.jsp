@@ -19,7 +19,7 @@
 				<th><input type="checkbox" /></th>
 				<th><%= items.get(i).getSender() %></th>
 				<th><%= items.get(i).getReceiver() %></th>
-				<th><a href="/ecf-16035-b/messagerie/brouillon?ref=<%= items.get(i).getId() %>" > <%= items.get(i).getObject() %> </a></th>
+				<th><a href="/ecf-16035-b/messagerie/brouillon?id=<%= items.get(i).getId() %>" > <%= items.get(i).getObject() %> </a></th>
 				<th><%= items.get(i).getTimeStamp() %></th>
 			</tr>
 		<%}%>

@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import javax.sound.midi.SysexMessage;
+
 import fr.cdiEnterprise.control.MessageListener;
 import fr.cdiEnterprise.model.Item;
 import fr.cdiEnterprise.service.Items;
@@ -127,6 +129,7 @@ public class MessageDao {
 		Statement statement = null;
 		ResultSet resultSet = null;
 		Item item = new Item();
+		
 		int iDraft = booleanToInt(draft);
 		int iDeleted = booleanToInt(deleted);
 
@@ -319,7 +322,7 @@ public class MessageDao {
 		
 		String createStatement = null;
 
-		createStatement = String.format("select %s, %s  , %s ,%s , %s ,%s, %s from %s",
+		createStatement = String.format("select %s, %s  , %s ,%s , %s ,%s, %s, %s from %s",
 				//
 				"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft","deleted", TABLE_NAME);
 
@@ -361,10 +364,9 @@ public class MessageDao {
 	 * Cette methode effectue une recherche par mot sur le sujet du message, il retournera une liste dItems si necessaire.
 	 * @param word est le mot a trouver dans le sujet d'un message
 	 * @return une liste de message dont le sujet correspond au critere de recherche.
-	 * @deprecated Ancien methode qui vien de la partie seulemenet application
 	 * @see Other searchMessage(String,String,Boolean,Boolean);
 	 */
-	@Deprecated
+	
 	public static Items searchMessage(String word) {
 		
 		Connection connection = null;
@@ -627,9 +629,47 @@ public class MessageDao {
 		return output;
 
 	}
+	/**
+	 * This methode is going to
+	 * @param items
+	 */
+	public void updateDelete(Items items) {
+		
+		
+		Connection connection = null;
+		connection = DBConnection.getConnect();
+		
+		
+		int ref = 0;
+		String receiver = null;
+		int deleted = 1;
+		
+		for(int i = 0;i < items.size();i++){
+			
+			Item item = items.get(i);
+			ref = item.getId();
+			receiver = item.getReceiver();		
+			
+			String sql = "UPDATE MAILBOX SET DELETED = ? where IDENTITY = ? and RECEIVER = ?";
 
-	public void updateDelete(ArrayList<String> id) {
-		// TODO Recupere chaque id de message et update la colone deleted
+			try {
+				
+				PreparedStatement update = connection.prepareStatement(sql);
+				update.setInt(1, deleted);
+				update.setInt(2, ref);
+				update.setString(3, receiver);
+				
+				update.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Page erreur SQL
+				System.err.println("[POST] Erreur lors de la mise a jour du status de suppression des mails" + e);
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
 		
 	}
 
