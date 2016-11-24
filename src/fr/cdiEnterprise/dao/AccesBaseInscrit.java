@@ -76,9 +76,7 @@ public class AccesBaseInscrit {
 	*/
 
 	public void desinscription(Inscription exemple){
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
-		
-<<<<<<< HEAD
+
 		String nom = exemple.getNom();
 		
 		String reqSup = "delete from inscription where reference =" + nom ;
@@ -86,16 +84,11 @@ public class AccesBaseInscrit {
 		Statement stmt;
 		stmt = connexion.createStatement();
 		
-		
-=======
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
-		
-<<<<<<< HEAD
+
 		try {
 			stmt.executeUpdate(reqSup);
-=======
+
 		String statut = exemple.getStatut();
-		String nom = exemple.getNom();
 		String prenom = exemple.getPrenom();
 		String email = exemple.getEmail();
 		String motDePasse = exemple.getMotDePasse();
@@ -113,7 +106,7 @@ public class AccesBaseInscrit {
 			update.setString(5, email);
 			update.setString(6, motDePasse);
 			update.setString(7, confirmation);
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+
 			
 			update.executeUpdate(reqSql);
 								
@@ -124,14 +117,10 @@ public class AccesBaseInscrit {
 		
 		
 	}
-	
-<<<<<<< HEAD
-	
-	
-=======
+
   	
 	/*
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+
 	public  Object listeInscrit(Arraylist<Inscription>inscription){
 		
 		String reqSql = "select * from inscription";

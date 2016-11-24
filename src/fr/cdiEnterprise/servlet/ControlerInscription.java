@@ -43,12 +43,9 @@ public class ControlerInscription extends HttpServlet {
 		
 		// Récupération des variables depuis le formulaire Inscription.jsp
 		// récupération possible car adresse indiquée dans le formulaire Inscription.jsp
-<<<<<<< HEAD
+
 		int reference = 4;
-=======
-		
-		
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+
 		String statut = request.getParameter("radio");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -57,13 +54,12 @@ public class ControlerInscription extends HttpServlet {
 		String confirmation = request.getParameter("confirmation");
 		
 		// Instanciation d' un objet de type Inscription
-<<<<<<< HEAD
+
 		Inscription exemple = new Inscription(reference, statut, nom, prenom, email, motDePasse, confirmation);
 		//Inscription ex = new Inscription(reference, statut, nom, prenom, email, motDePasse, confirmation);
-=======
-		Inscription exemple = new Inscription(statut, nom, prenom, email, motDePasse, confirmation);
-		
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+
+		//Inscription exemple = new Inscription(statut, nom, prenom, email, motDePasse, confirmation);
+
 		// Instanciation d' un objet de type AccesBaseInscrit
 		AccesBaseInscrit base = new AccesBaseInscrit();
 		//AccesBaseInscrit con = new AccesBaseInscrit();
@@ -71,24 +67,22 @@ public class ControlerInscription extends HttpServlet {
 		// Application de la méthode inscription de AccesBaseInscrit en lui donnant en paramètre l' objet exemple
 		base.desinscription(exemple);
 		
-<<<<<<< HEAD
+
 		// TODO essai d' envoi de la réponse vers une page html.
 	//	response.sendRedirect("../InscriptionReussie.html");
-=======
+
 		// essai d' envoi de la réponse vers une page html.
 		// response.sendRedirect("../Recapitulatif.jsp");
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
-		
-<<<<<<< HEAD
+
 		// TODO essai pour générer un récapitulatif de l' inscription.
 	//	request.setAttribute("inscription", exemple);
 	//	RequestDispatcher dispatcher = request.getRequestDispatcher("../Recapitulatif.jsp");
-=======
+
 		// essai pour générer un récapitulatif de l'inscription.
 		request.setAttribute("inscription", exemple);
 		request.setAttribute("reussite", "OK");
 		request.getRequestDispatcher("/jsp/Recapitulatif.jsp").forward(request, response);
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+
 		
 		
 		
