@@ -10,16 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import fr.cdiEnterprise.dao.DBConnection;
 import fr.cdiEnterprise.dao.DataBaseCompany;
-import fr.cdiEnterprise.service.Companies;
+import fr.cdiEnterprise.model.Company;
 
 /**
- * Servlet implementation class CompanyUpdateServlet
+ * Servlet implementation class CompanyDelete
  */
-@WebServlet("/action/ModifSuppr")
-public class CompanyUpDeleteServlet extends HttpServlet {
-
+@WebServlet("/action/Supprimer")
+public class CompanyDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Companies companies;
+	private String companyName;
+	private Company company;
+	private int idCompany;
 
 	/**
 	 * Permet d'initialiser la base de données
@@ -35,7 +36,7 @@ public class CompanyUpDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("---- In the get method ----");
+
 		doPost(request, response);
 	}
 
@@ -45,16 +46,20 @@ public class CompanyUpDeleteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("--- in the doPost method ---");
-
+		System.out.println("----- in the post method ----");
+		System.out.println(request.getParameter("companiesSelec"));
+		companyName = request.getParameter("companiesSelec");
 		try {
-			companies = DataBaseCompany.getCompaniesData();
-			System.out.println(companies);
+			company = DataBaseCompany.getCompaniesId(companyName);
+			System.out.println(company);
+			idCompany = company.getCompanyId();
+			DataBaseCompany.deleteCompanyData(idCompany);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		request.setAttribute("companies", companies);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdateDelete.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyDeleteOk.jsp");
 		dispatcher.forward(request, response);
 	}
+
 }

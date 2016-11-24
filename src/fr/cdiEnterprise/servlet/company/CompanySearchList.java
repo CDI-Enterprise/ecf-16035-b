@@ -1,6 +1,8 @@
-package fr.cdiEnterprise.servlet;
+package fr.cdiEnterprise.servlet.company;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,31 +10,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Accueil
+ * Servlet implementation class CompanyList
  */
-@WebServlet(name="accueil",
-urlPatterns = {
-		
-"/accueil"})
-public class Accueil extends HttpServlet {
+@WebServlet("/action/AffRecher")
+public class CompanySearchList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-
-	/**
+   	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("get");
-		System.out.println("Path : " + request.getRequestURI());
-		response.sendRedirect( request.getContextPath() + "/jsp/accueil.jsp" );
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companySearchList.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 

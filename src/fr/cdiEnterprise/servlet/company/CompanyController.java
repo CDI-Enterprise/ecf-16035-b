@@ -8,166 +8,219 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * Servlet implementation class Company
  */
-@WebServlet(name= "CompanyControl", urlPatterns={"/Company/*"})
+@WebServlet(name = "CompanyControl", urlPatterns = { "/Company/*" })
 
 public class CompanyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     
-	private RequestDispatcher 	disp;
 
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// recuperation de l'url (à partir du chemin relatif à la servlet application cad après /bb)
+	private RequestDispatcher disp;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// recuperation de l'url (à partir du chemin relatif à la servlet
+		// application cad après /bb)
 		String path = request.getPathInfo();
-		System.out.println("================  dans Controleur path=" + path );
-		System.out.println("================  dans Controleur path=" + request.getContextPath() );
-				
-		if (path.equals("/Creation")) {
+		System.out.println("================  dans Controleur path=" + path);
+		System.out.println("================  dans Controleur path=" + request.getContextPath());
+		switch (path) {
+		case "/Creation":
 			// affichage formulaire gestion des bonbons
 			goCreation(request, response);
-		}
-		else if (path.equals("/CompanyCreate")) {
+			break;
+		case "/CompanyCreate":
 			// affichage formulaire gestion des bonbons
 			goCreate(request, response);
-		}
-		else if (path.equals("/ModifSuppr")) {
+			break;
+		case "/ModifSuppr":
 			// affichage page pour modifier supprimer une fiche entreprise
 			goUpDeleteCompany(request, response);
-		}
-		else if (path.equals("/AffRecher")) {
+			break;
+		case "/AffRecher":
 			// affichage page pour afficher et rechercher des fiches entreprises
 			goSearchList(request, response);
-		}
-		else if (path.equals("/Modifier")){
+			break;
+		case "/Affichage":
+			// affichage page pour afficher et rechercher des fiches entreprises
+			goList(request, response);
+			break;
+		case "/Modifier":
 			goUpdateCompany(request, response);
-		}
-		else{
-			System.out.println("BETISE");
-			request.setAttribute("msgErreur", "Vous avez tripatouill&eacute; l'url!!! ");
+			break;
+		case "/Supprimer":
+			goDeleteCompany(request, response);
+			break;
+		case "/FicheModifiee":
+			goCompanyUpdated(request, response);
+			break;
+		case "/Rechercher":
+			goCompanySearch(request, response);
+			break;
+		default:
+			System.out.println("Adresse non valide");
 			doAccueil(request, response);
+			break;
 		}
-		
+
 		System.out.println("** Fin Controleur**");
 	}
 
 	/**
-	 * Affichage de la page d'accueil du site
+	 * Redirige vers la page d'accueil du site
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void doAccueil(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		
+	private void doAccueil(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		disp = request.getRequestDispatcher("/jsp/accueil.jsp");
-		disp.forward(request,response);	
-		
-		//on demande au navigateur de réémettre cette requete
-//		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/index.jsp"));
+		disp.forward(request, response);
+
 	}
 
-//	
-//	/**
-//	 * Affichage de la page pour créer une fiche entreprise
-//	 * @param request
-//	 * @param response
-//	 * @throws ServletException
-//	 * @throws IOException
-//	 */
-	private void goCreation(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("--- in the goCreation method ---");
-		System.out.println(request.getPathInfo());
-//		
+	/**
+	 * Redirige vers la servlet pour ouvrir la page de création d'une fiche entreprise
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void goCreation(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// System.out.println("--- in the goCreation method ---");
+		// System.out.println(request.getPathInfo());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/action/Creation");
-		System.out.println(dispatcher);
+		// System.out.println(dispatcher);
 		dispatcher.forward(request, response);
 
 	}
-	
-	private void goCreate(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("--- in the goCreate method ---");
-		System.out.println(request.getPathInfo());
+
+	/**
+	 * Redirige vers la servlet ouvrant la  page concernant l'entreprise nouvellement créée
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void goCreate(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// System.out.println("--- in the goCreate method ---");
+		// System.out.println(request.getPathInfo());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/action/CompanyCreate");
 		System.out.println(dispatcher);
 		dispatcher.forward(request, response);
 	}
-	
+
 	/**
-	 * Modification - Suppression d'une fiche entreprise
+	 * Redirige vers la servlet de la page de sélection d'une fiche entreprise pour
+	 * modification ou suppression
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void goUpDeleteCompany(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		disp = request.getRequestDispatcher("/action/ModifSuppr"); 
-		disp.forward(request,response);
+	private void goUpDeleteCompany(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		disp = request.getRequestDispatcher("/action/ModifSuppr");
+		disp.forward(request, response);
 	}
-	
+
 	/**
-	 * Redirige vers la servlet permettant l'affichage de la page pour modifier une fiche entreprise
+	 * Redirige vers la servlet permettant l'affichage de la page pour modifier
+	 * une fiche entreprise
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void goUpdateCompany(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		disp = request.getRequestDispatcher("/action/Modifier"); 
-		disp.forward(request,response);
+	private void goUpdateCompany(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		disp = request.getRequestDispatcher("/action/Modifier");
+		disp.forward(request, response);
 	}
-	
+
 	/**
-	 * Affichage de la liste des bonbons
-	 * Redirige vers ControleurCatalogue.class
+	 * Permet d'accéder à la servlet ouvrant la page pour la recherche ou l'affichage de fiche entreprise
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void goSearchList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	private void goSearchList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-		disp = request.getRequestDispatcher("AfficheRecherche"); 
-		disp.forward(request,response);		
+		disp = request.getRequestDispatcher("/action/AffRecher");
+		disp.forward(request, response);
 	}
-//
-//
 
+	private void goList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		disp = request.getRequestDispatcher("/action/Affichage");
+		disp.forward(request, response);
+	}
 
+	/**
+	 * Permet d'accéder à la servlet ouvrant la page d'information fiche modifiée
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void goCompanyUpdated(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
+		disp = request.getRequestDispatcher("/action/FicheModifiee");
+		disp.forward(request, response);
+	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/**
+	 * Permet d'accéder à la servlet ouvrant la page de suppression d'une fiche entreprise
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void goDeleteCompany(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		disp = request.getRequestDispatcher("/action/Supprimer");
+		disp.forward(request, response);
+	}
+
+	/**
+	 * Permet d'accéder à la servlet ouvrant la page de la recherche
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void goCompanySearch(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		disp = request.getRequestDispatcher("/action/Rechercher");
+		disp.forward(request, response);
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		doGet(request, response);
 	}
 
 }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-//	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		doGet(request, response);
-//	}
-
-

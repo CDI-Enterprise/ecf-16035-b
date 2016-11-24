@@ -38,11 +38,21 @@ public class MessageDao {
 	private static final String MESSBODY = "MESSBODY";
 	private static final String TIMESTAMP  = "TIMESTAMP";
 	private static final String DRAFT  = "DRAFT";
+	private static final String DELETED  = "DELETED";
 	
 	/**
 	 * This class is going to insert new message in the table.
 	 * @param item represent the item to insert.
 	 * @throws SQLException 
+	 * 
+	 * @author Nicolas Tarral
+	 * @version 19-10-2016
+	 * 
+	 * Modifié pour inclure le status de suppression mis a 0 pour non deleted
+	 * 
+	 * @version 1.1
+	 * @since 23/11/2016
+	 * @author Aurélien
 	 */
 	public static void insertItem(Item item) throws SQLException {
 
@@ -61,20 +71,23 @@ public class MessageDao {
 			String body = null;
 			String date = null;
 			int draft = 0; // 0 for draft
-
+			int deleted = 0; // 0 pour non deleted 1 pour deleted lors de l'insertion l'email ne peux etre supprimer
+			
 			ref = item.getId();
 			sender = item.getSender();
 			receiver = item.getReceiver();
 			object = item.getObject();
 			body = item.getBody();
 			draft = booleanToInt(item.isDraftEmail());
-			//System.out.println(item.isDraftEmail()+ " "+ draft);
+			deleted = booleanToInt(item.isDeletedEmail());
+			
+			//Ajout de la date meme au message supprimer.
 			if (draft == 0) {
 				date = localDateToString(item.getTimeStamp());
 			}
 			
 			statement = connection
-					.prepareStatement("insert into mailbox (IDENTITY, SENDER, RECEIVER, SUBJECT, MESSBODY, TIMESTAMP, DRAFT) values (?, ?, ?, ?, ?, ?, ?)");
+					.prepareStatement("insert into mailbox (IDENTITY, SENDER, RECEIVER, SUBJECT, MESSBODY, TIMESTAMP, DRAFT,DELETED) values (?, ?, ?, ?, ?, ?,?,?)");
 			
 			
 			statement.setInt(1, ref);
@@ -84,6 +97,7 @@ public class MessageDao {
 			statement.setString(5, body);
 			statement.setString(6, date);
 			statement.setInt(7, draft);
+			statement.setInt(8, deleted);
 			statement.executeUpdate();
 			connection.commit();
 
@@ -96,19 +110,98 @@ public class MessageDao {
 		}
 
 	}
+	
+	/**
+	 * Recupere le mail grace a la reference dans la base de donnée SQL
+	 * 
+	 * @param ref reference email/base de données
+	 * 
+	 * @author Aurélien
+	 * @version 1
+	 * @since 21/11/2016
+	 */
+	public Item getItemByRef(String ref,boolean draft,boolean deleted){
+		
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		Item item = new Item();
+		int iDraft = booleanToInt(draft);
+		int iDeleted = booleanToInt(deleted);
 
+		connection = DBConnection.getConnect();
+		
+		try {
+			
+			statement = connection.createStatement();
+			
+		int ident = 0;
+		String sender = null;
+		String receiver = null;
+		String object = null;
+		String body = null;
+		String date = null;
+	
+		String createStatement = null;
+		
+			createStatement = String.format("select %s, %s  , %s ,%s , %s ,%s from %s WHERE %s = '%s' and %s = %s and %s = %s",
+					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", TABLE_NAME, "identity",
+					ref, "draft",iDraft,"deleted",iDeleted);
+
+			resultSet = statement.executeQuery(createStatement);
+			connection.commit();
+
+			while (resultSet.next()) {
+
+				ident 	= resultSet.getInt("identity");
+				sender 	= resultSet.getString("sender");
+				receiver= resultSet.getString("receiver");
+				object 	= resultSet.getString("subject");
+				body 	= resultSet.getString("messBody");
+				date = resultSet.getString("timeStamp");
+				
+				item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date), draft , deleted);
+				
+			}
+		} catch (SQLException e1) {
+			System.out.println("[GET] an issue happen with the SQL to getItemByRef");
+			e1.printStackTrace();
+		}
+		
+		return item;
+		
+	}
 
 	/**
-	 * This method is going to return the email for a particular user mailbox or
-	 * a draft Mailbox. box will indicate the mailbox whether draft is false ,
+	 * This method is going to return the email for a particular user mailbox,
+	 * a draft Mailbox or a deleted Mailbox.
+	 * box will indicate the mailbox whether draft is false ,
 	 * or draft message if that is true
 	 * 
 	 * @param box indicate the user messagebox.
-	 * @param draft indicate if it is a draft email (true) 
+	 * @param draft indicate if it is a draft email (true)
+	 * @param deleted indicate if it's a deleted email (true)
 	 * @return list of items found for this user.
 	 * @throws SQLException to specify the type of issue
+	 * @return {@link Items} a list of item
+	 * 
+	 * @author Nicolas Tarral
+	 * @version 19-10-2016
+	 * 
+	 * Modifié pour inclure le status de suppression.
+	 * 
+	 * La gestion du draft/suppression a etait modifier pour prendre les parametre d'entré des boolean,
+	 * qui sont transformer en int grace a la methode
+	 * booleanToInt et envoyer directement dans la requete SQL, 
+	 * 
+	 * draft = true = 1 remontera tout les draft 
+	 * deleted = true = 1 remontera tout les message supprimer
+	 * 
+	 * @version 1.1
+	 * @since 23/11/2016
+	 * @author Aurélien
 	 */
-	public static Items getAllItems(String box, boolean draft){
+	public static Items getAllItems(String box, boolean draft,boolean deleted){
 
 		Connection connection = null;
 		Statement statement = null;
@@ -128,24 +221,19 @@ public class MessageDao {
 		String body = null;
 		String date = null;
 		int draftMess = 0;
+		int deletedMess = 0;
+		
+		int iDraft = booleanToInt(draft);
+		int iDeleted = booleanToInt(deleted);
+			
 
 		String createStatement = null;
-		if (draft) {
+		
 			createStatement = String.format(
-					"select %s, %s  , %s ,%s , %s ,%s, %s from %s WHERE %s = '%s' AND %s = '%s'",
+					"select %s, %s  , %s ,%s , %s ,%s, %s from %s WHERE %s = '%s' AND %s = '%s' AND %s = '%s'",
 					//
-					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft", TABLE_NAME, "SENDER",
-					box, "DRAFT", 1);
-		} else {
-			createStatement = String.format(
-					"select %s, %s  , %s ,%s , %s ,%s, %s from %s WHERE %s = '%s' AND %s = '%s'",
-					//
-					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft", TABLE_NAME,
-					"RECEIVER", box, "DRAFT", 0);
-		}
-
-
-
+					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft","deleted", TABLE_NAME, "SENDER",
+					box, "DRAFT", iDraft ,"DELETED", iDeleted);
 
 			resultSet = statement.executeQuery(createStatement);
 			connection.commit();
@@ -157,14 +245,18 @@ public class MessageDao {
 				receiver= resultSet.getString("receiver");
 				object 	= resultSet.getString("subject");
 				body 	= resultSet.getString("messBody");
-
 				draftMess = resultSet.getInt("draft");
+				deletedMess = resultSet.getInt("deleted");
+				
 				if (draftMess == 0) {
+					
 					date = resultSet.getString("timeStamp");
+					
 				}
 
 				Item item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date),
-						intToBoolean(draftMess));
+						intToBoolean(draftMess),intToBoolean(deletedMess));
+				
 				items.add(item);
 			}
 		} catch (SQLException e1) {
@@ -177,16 +269,30 @@ public class MessageDao {
 
 	//TODO (nicolas) a revoir
 	/**
-	 * This method is going to return the email for a particular user mailbox or
-	 * a draft Mailbox. box will indicate the mailbox whether draft is false ,
+	 * This method is going to return the email for a particular user mailbox ,
+	 * a draft Mailbox or a deleted Mailbox. box will indicate the mailbox whether draft is false ,
 	 * or draft message if that is true
 	 * 
 	 * @box indicqte the user messagebox.
 	 * @return a list of all the message for the user.
 	 * @throws SQLException throw if SAL issue.
+	 * 
+	 * 
+	 * 
+	 * Modifié pour inclure le statut de suppression.
+	 * 
+	 * @version 1.1
+	 * @since 23/11/2016
+	 * @author Aurélien
+	 * 
+	 * @deprecated Cette methode renvoie tout les mail peut importe sont status ils vos mieux utilisé l'autre methode ou on peux choisir le type
+	 * de message que l'on souhaite retourné.
+	 * 
+	 * @see MessageDao.getAllItems(box,boolean draft,boolean deleted)
 	 */
 
 	// TODO (nicolas) methode a revoir
+	@Deprecated
 	public static Items getAllItems(String box) throws SQLException {
 
 		Connection connection = null;
@@ -199,6 +305,7 @@ public class MessageDao {
 			statement = connection.createStatement();
 		} catch (SQLException e1) {
 			// TODO (nicolas) need to fix this excp
+			//TODO (aurelien) Page Erreur SQL
 			e1.printStackTrace();
 		}
 
@@ -210,12 +317,13 @@ public class MessageDao {
 		String body = null;
 		String date = null;
 		int draftMess = 0;
-
+		int deletedMess = 0;
+		
 		String createStatement = null;
 
 		createStatement = String.format("select %s, %s  , %s ,%s , %s ,%s, %s from %s",
 				//
-				"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft", TABLE_NAME);
+				"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft","deleted", TABLE_NAME);
 
 		try {
 			resultSet = statement.executeQuery(createStatement);
@@ -228,14 +336,15 @@ public class MessageDao {
 				receiver = resultSet.getString("receiver");
 				object = resultSet.getString("subject");
 				body = resultSet.getString("messBody");
-
 				draftMess = resultSet.getInt("draft");
+				deletedMess = resultSet.getInt("deleted");
+				
 				if (draftMess == 0) {
 					date = resultSet.getString("timeStamp");
 				}
 
 				Item item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date),
-						intToBoolean(draftMess));
+						intToBoolean(draftMess),intToBoolean(deletedMess));
 				items.add(item);
 			}
 		} catch (SQLException e) {
@@ -254,7 +363,10 @@ public class MessageDao {
 	 * Cette methode effectue une recherche par mot sur le sujet du message, il retournera une liste dItems si necessaire.
 	 * @param word est le mot a trouver dans le sujet d'un message
 	 * @return une liste de message dont le sujet correspond au critere de recherche.
+	 * @deprecated Ancien methode qui vien de la partie seulemenet application
+	 * @see Other searchMessage(String,String,Boolean,Boolean);
 	 */
+	@Deprecated
 	public static Items searchMessage(String word) {
 		
 		Connection connection = null;
@@ -293,9 +405,9 @@ public class MessageDao {
 				if (draftMess == 0) {
 					date = resultSet.getString("timeStamp");
 				}
-
+				//false ajouter pour la prise en compte du status de suppresion @see other searchMessage()
 				Item item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date),
-						intToBoolean(draftMess));
+						intToBoolean(draftMess),false);
 				items.add(item);
 			}
 		
@@ -303,10 +415,76 @@ public class MessageDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return items;
+	}
+	
+	/**
+	 * Cette methode effectue une recherche par mot sur le sujet du message,celons la boite, il retournera une liste dItems si necessaire.
+	 * 
+	 * @param login de l'utilisateur, lié a la session. (simulé pour le moment)
+	 * @param word {@link String} le mot rechercher.
+	 * @param draft {@link boolean} si la boite est une boite de brouillon.
+	 * @param deleted{@link boolean} si la boite est une boite de suppression.
+	 * @return {@link Items} list of item who contains the word we search
+	*/
+	public static Items searchMessage(String login , String word, boolean draft, boolean deleted) {
 		
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		
+
+		Items items = new Items();
+		try {
+	
+			connection = DBConnection.getConnect();
+			statement = connection.createStatement();
+			
+			int ident = 0;
+			String sender = null;
+			String receiver = null;
+			String object = null;
+			String body = null;
+			String date = null;
+			int draftMess = 0;
+			int deletedMess = 0;
+			
+			int iDraft = booleanToInt(draft);
+			int iDeleted = booleanToInt(deleted);
+			
+			String query =  String.format("SELECT  %s, %s  , %s ,%s , %s ,%s, %s FROM %s WHERE RECEIVER = '%s' AND DRAFT = '%s' AND DELETED = '%s' AND UPPER (SUBJECT) LIKE UPPER('%%%s%%')",
+					IDENTITY, SENDER, RECEIVER, SUBJECT, MESSBODY, TIMESTAMP, DRAFT, TABLE_NAME, login , iDraft, iDeleted ,word);
+			System.out.println(query);
+			resultSet = statement.executeQuery(query);
+			connection.commit();
+
+			while (resultSet.next()) {
+
+				ident = resultSet.getInt("identity");
+				sender = resultSet.getString("sender");
+				receiver = resultSet.getString("receiver");
+				object = resultSet.getString("subject");
+				body = resultSet.getString("messBody");
+				draftMess = resultSet.getInt("draft");
+				deletedMess = resultSet.getInt("deleted");
+						
+				if (draftMess == 0) {
+					date = resultSet.getString("timeStamp");
+				}
+			
+				Item item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date),
+						intToBoolean(draftMess),intToBoolean(deletedMess));
+				items.add(item);
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return items;
 	}
 
 

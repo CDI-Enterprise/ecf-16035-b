@@ -12,19 +12,17 @@ import fr.cdiEnterprise.model.Inscription;
 public class AccesBaseInscrit {
 	
 	private final static String strNomDriver = "oracle.jdbc.driver.OracleDriver";
-	private final static String dbURL = "jdbc:oracle:thin:cdi_enterprise/stagpw@junon:1521:AFPA";
+	private final static String dbURL = "jdbc:oracle:thin:stag15/stag15pw@localhost:1521:xe";
 	
 	private Connection connexion; 
-	private Statement stmt;
-		
+	Statement stmt;
 	
 	public AccesBaseInscrit(){
-		
-				
+					
 		try {
 			Class.forName(strNomDriver);
 			connexion = DriverManager.getConnection(dbURL);
-			stmt = connexion.createStatement();
+			connexion.createStatement();
 			
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -51,7 +49,9 @@ public class AccesBaseInscrit {
 				
 		try {
 			
-			PreparedStatement update = connexion.prepareStatement(sql);
+			PreparedStatement update;
+			update = connexion.prepareStatement(sql);
+			
 			update.setInt(1, reference);
 			update.setString(2, statut);
 			update.setString(3, nom);
@@ -70,7 +70,59 @@ public class AccesBaseInscrit {
 	}
 
 	
-}	
+	/*
+	public void desinscription(Inscription exemple) throws SQLException{
+=======
+	*/
+
+	public void desinscription(Inscription exemple){
+
+		String nom = exemple.getNom();
+		
+		String reqSup = "delete from inscription where reference =" + nom ;
+		
+		Statement stmt;
+		stmt = connexion.createStatement();
+		
+		
+
+		try {
+			stmt.executeUpdate(reqSup);
+
+		String statut = exemple.getStatut();
+		String nom = exemple.getNom();
+		String prenom = exemple.getPrenom();
+		String email = exemple.getEmail();
+		String motDePasse = exemple.getMotDePasse();
+		String confirmation = exemple.getConfirmation();  
+		
+				
+			String reqSql = "delete from inscription where( statut= ?, nom=?, prenom=?, email=?, motDePasse=?, confirmation=?)"; 
+			PreparedStatement update = connexion.prepareStatement(reqSql);
+			//update.setInt(1, 0);
+			update.setString(2, statut);
+			update.setString(3, nom);
+			update.setString(4, prenom);
+			update.setString(5, email);
+			update.setString(6, motDePasse);
+			update.setString(7, confirmation);
+
+			
+			update.executeUpdate(reqSql);
+								
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		}
+
+	}
+
+	
+
+  	
 	
 	
 	

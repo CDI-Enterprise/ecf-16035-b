@@ -11,8 +11,8 @@
 <script type="text/javascript" src="../JavaScript/company.js"></script>
 <title>Modification - Suppression fiche entreprise</title>
 </head>
-<body>
-	<%@ include file="../WEB-INF/menu.html"%>
+<body> 
+	<%@ include file="../../WEB-INF/menu.html"%>
 	<br />
 	<br />
 	<br />

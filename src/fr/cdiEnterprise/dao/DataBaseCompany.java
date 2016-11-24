@@ -27,32 +27,17 @@ public class DataBaseCompany {
 	 * @throws SQLException
 	 */
 	public static void insertDepartmentData(Department department) throws SQLException {
-		// Statement stmt = null;
 		Connection connexion = null;
-		// String reqSql = null;
 		int res;
-
+		
 		connexion = DBConnection.getConnect();
-		// stmt = connexion.createStatement();
-		//
-		// reqSql = "insert into departments values(" +
-		// department.getDepartmentNumber() + ",'"
-		// + department.getDepartmentName() + "')";
-		// System.out.println(reqSql);
-		// stmt.executeUpdate(reqSql);
-		// connexion.commit();
-		// stmt.close();
-
 		PreparedStatement insertDepartment = connexion.prepareStatement("insert into departments values (?,?)");
-
 		insertDepartment.setInt(1, department.getDepartmentNumber());
 		insertDepartment.setString(2, department.getDepartmentName());
 
 		res = insertDepartment.executeUpdate();
 		System.out.println(res);
 		connexion.commit();
-		// stmt.close();
-
 	}
 
 	/**
@@ -443,7 +428,7 @@ public class DataBaseCompany {
 				+ "and departments.departmentNumber = companydepartment.departmentNumber "
 				+ "and regions.regionId = companyregion.regionId "
 				+ "and language.languageId = companylanguage.LANGUAGEID");
-
+		
 		while (rs.next()) {
 			int companyId = rs.getInt("companyId");
 			String companyName = rs.getString("companyName");
@@ -455,11 +440,12 @@ public class DataBaseCompany {
 			String sector = rs.getString("companySector");
 			String size = rs.getString("companySize");
 			String webSite = rs.getString("companyWeb");
+			String languageName = rs.getString("languagename");
 
 			Department department = DataBaseCompany.getDepartmentId(departmentN);
 			Region region = DataBaseCompany.getRegionId(regionN);
-
-			companies.add(new Company(companyId, companyName, companyAdress, postalcode, city, department, region, sector, size, webSite));
+			Language language = DataBaseCompany.getLanguageId(languageName);
+			companies.add(new Company(companyId, companyName, companyAdress, postalcode, city, department, region,language, size, sector, webSite));
 
 		}
 		
@@ -493,7 +479,7 @@ public class DataBaseCompany {
 		int rsd;
 		int rse;
 		int rsf;
-
+		
 		connexion = DBConnection.getConnect();
 		stmt = connexion.createStatement();
 
@@ -674,11 +660,13 @@ public class DataBaseCompany {
 			String sector = rs.getString("companySector");
 			String size = rs.getString("companySize");
 			String webSite = rs.getString("companyWeb");
+			String languageName= rs.getString("languagename");
 
 			Department department = DataBaseCompany.getDepartmentId(departmentN);
 			Region region = DataBaseCompany.getRegionId(regionN);
-
-			company = new Company(companyId, companyName, companyAdress, postalcode, city, department, region, sector, size, webSite);
+			Language language = DataBaseCompany.getLanguageId(languageName);
+			
+			company = new Company(companyId, companyName, companyAdress, postalcode, city, department, region, language, size, sector, webSite);
 		}
 		stmt.close();
 
@@ -706,7 +694,6 @@ public class DataBaseCompany {
 
 		while (rsMax.next())
 			idMax = rsMax.getInt(1);
-
 		return idMax;
 	}
 

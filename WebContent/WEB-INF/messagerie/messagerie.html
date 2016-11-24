@@ -1,0 +1,36 @@
+<!-- Import des fichier externe a la page HTML -->
+<link rel="stylesheet" href="../../ecf-16035-b/css/messagerie/messagerie.css" />
+
+
+<!-- Case du Compte -->
+<div id="compte">
+	
+</div>
+
+<!-- Menu messagerie top -->
+<div id="menuMessagerieTop">
+	<ul>
+		<li><a href="/ecf-16035-b/messagerie/nouveau" >Nouveau message</a></li>
+		<li id="repondre"><a href="/ecf-16035-b/messagerie/repondre" >R&eacute;pondre</a></li>
+		<li id="supprimer"><a onclick="supprimeID()">Supprimer</a></li>
+		<li id="deplace"><a href="/ecf-16035-b/messagerie/deplacer" >D&eacute;plac&eacute;</a></li>
+	</ul>
+</div>
+
+<!-- Case de recherche -->
+<div id="recherche">
+	<img class="search-logo" alt="Rechercher" src="../../ecf-16035-b/ressource/img/loupe.png" onclick="changeFocus(this)"/>
+	<input class="search-bar" type="search" placeholder="Recherche" onkeypress="recherche()" />
+</div>
+		
+<!-- Menu messagerie left -->
+<div id="menuMessagerieLeft">
+	<ul>
+		<li><a href="/ecf-16035-b/messagerie" >Boite de reception</a></li>
+		<li><a href="/ecf-16035-b/brouillon" >Brouillon</a></li>
+		<li><a href="/ecf-16035-b/envoyer" >&Eacute;l&eacute;ments envoy&eacute;s</a></li>
+		<li><a href="/ecf-16035-b/supprimer" >&Eacute;l&eacute;ments supprimer</a></li>
+		<li><a href="/ecf-16035-b/archive" >Archive</a></li>
+	</ul>
+</div>
+ 

@@ -2,7 +2,6 @@ package fr.cdiEnterprise.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,11 +12,13 @@ import fr.cdiEnterprise.dao.AccesBaseInscrit;
 import fr.cdiEnterprise.model.Inscription;
 
 /**
- * Servlet implementation class ControlerInscription
+ * Servlet implementation class ControlerInscriptions
  */
+
 @WebServlet(
 		name="ControlerInscription", urlPatterns = {"/inscription", "/desinscription"}
 )
+
 public class ControlerInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,10 +44,12 @@ public class ControlerInscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("post");
 		
+		
 		// Récupération des variables depuis le formulaire Inscription.jsp
 		// récupération possible car adresse indiquée dans le formulaire Inscription.jsp
-		
-		
+
+		int reference = 4;
+
 		String statut = request.getParameter("radio");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -55,22 +58,38 @@ public class ControlerInscription extends HttpServlet {
 		String confirmation = request.getParameter("confirmation");
 		
 		// Instanciation d' un objet de type Inscription
-		Inscription exemple = new Inscription(statut, nom, prenom, email, motDePasse, confirmation);
+
+		Inscription exemple = new Inscription(reference, statut, nom, prenom, email, motDePasse, confirmation);
+		//Inscription ex = new Inscription(reference, statut, nom, prenom, email, motDePasse, confirmation);
+
 		
+		
+
 		// Instanciation d' un objet de type AccesBaseInscrit
 		AccesBaseInscrit base = new AccesBaseInscrit();
-		
+		//AccesBaseInscrit con = new AccesBaseInscrit();
+		//con.inscription(ex);
 		// Application de la méthode inscription de AccesBaseInscrit en lui donnant en paramètre l' objet exemple
 //		base.desinscription(exemple);
 		
+
+		// TODO essai d' envoi de la réponse vers une page html.
+	//	response.sendRedirect("../InscriptionReussie.html");
+
 		// essai d' envoi de la réponse vers une page html.
 		// response.sendRedirect("../Recapitulatif.jsp");
-		
+
+		// TODO essai pour générer un récapitulatif de l' inscription.
+	//	request.setAttribute("inscription", exemple);
+	//	RequestDispatcher dispatcher = request.getRequestDispatcher("../Recapitulatif.jsp");
+
 		// essai pour générer un récapitulatif de l'inscription.
 		request.setAttribute("inscription", exemple);
 		request.setAttribute("reussite", "OK");
 		request.getRequestDispatcher("/jsp/Recapitulatif.jsp").forward(request, response);
+
 				
+
 		
 	}
 

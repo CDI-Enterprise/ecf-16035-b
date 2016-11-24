@@ -52,14 +52,13 @@ public class CompanyCreationServlet extends HttpServlet {
 			regions = DataBaseCompany.getRegionsListData();
 			languages = DataBaseCompany.getLanguagesListData();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		request.setAttribute("departments", departments);
 		request.setAttribute("regions", regions);
 		request.setAttribute("languages", languages);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/companyCreation.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreation.jsp");
 		dispatcher.forward(request, response);
 	}
 

@@ -10,20 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.cdiEnterprise.control.MethodsForListeners;
 import fr.cdiEnterprise.dao.DBConnection;
 import fr.cdiEnterprise.dao.DataBaseCompany;
 import fr.cdiEnterprise.model.Company;
 
-
 /**
- * Servlet implementation class CompanyUpdate
+ * Servlet implementation class CompanySearch
  */
-@WebServlet("/action/Modifier")
-public class CompanyUpdate extends HttpServlet {
+@WebServlet("/action/Rechercher")
+public class CompanySearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     
-	private String companyName;
-	private Company company;
+    private Company company;
+    private String companyName;
     
 	/**
 	 * Permet d'initialiser la base de données
@@ -32,12 +31,12 @@ public class CompanyUpdate extends HttpServlet {
 	public void init() {
 		DBConnection.getConnect();
 	}
-	
+
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doPost(request, response);
 	}
 
@@ -45,20 +44,19 @@ public class CompanyUpdate extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			System.out.println("----- in the post method ----");
-			System.out.println(request.getParameter("companiesSelec"));
-			companyName = request.getParameter("companiesSelec");
-			try {
-				company = DataBaseCompany.getCompaniesId(companyName);
-				System.out.println(company);
-				request.setAttribute("company", company);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			request.setAttribute("company", company);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdate.jsp");
-			dispatcher.forward(request, response);
+		System.out.println("----Dans method post -----");
+		companyName = request.getParameter("companyName");
+		companyName = companyName.toUpperCase().trim();
+		MethodsForListeners.nullField(companyName);
+		System.out.println(companyName);
+		try {
+			company = DataBaseCompany.getCompaniesId(companyName);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
+		request.setAttribute("company", company);		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companySearch.jsp");
+		dispatcher.forward(request, response);
+	}
 
 }
