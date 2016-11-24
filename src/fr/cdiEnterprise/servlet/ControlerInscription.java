@@ -16,7 +16,8 @@ import fr.cdiEnterprise.model.Inscription;
  * Servlet implementation class ControlerInscription
  */
 @WebServlet(
-		name="ControlerInscription", urlPatterns={"/inscription"})
+		name="ControlerInscription", urlPatterns = {"/inscription", "/desinscription"}
+)
 public class ControlerInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -60,7 +61,7 @@ public class ControlerInscription extends HttpServlet {
 		AccesBaseInscrit base = new AccesBaseInscrit();
 		
 		// Application de la méthode inscription de AccesBaseInscrit en lui donnant en paramètre l' objet exemple
-		base.desinscription(exemple);
+//		base.desinscription(exemple);
 		
 		// essai d' envoi de la réponse vers une page html.
 		// response.sendRedirect("../Recapitulatif.jsp");
@@ -69,10 +70,7 @@ public class ControlerInscription extends HttpServlet {
 		request.setAttribute("inscription", exemple);
 		request.setAttribute("reussite", "OK");
 		request.getRequestDispatcher("/jsp/Recapitulatif.jsp").forward(request, response);
-		
-		
-		
-		
+				
 		
 	}
 

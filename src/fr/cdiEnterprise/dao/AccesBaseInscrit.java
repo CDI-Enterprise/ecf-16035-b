@@ -3,6 +3,7 @@ package fr.cdiEnterprise.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -33,7 +34,7 @@ public class AccesBaseInscrit {
 			}
 		
 	}
-	/*
+
 	public void inscription(Inscription exemple){
 		
 		int reference = exemple.getReference();
@@ -66,62 +67,16 @@ public class AccesBaseInscrit {
 			e.printStackTrace();
 		}
 		
-			
 	}
-	*/
 
-	public void desinscription(Inscription exemple){
-		
-		
-		String statut = exemple.getStatut();
-		String nom = exemple.getNom();
-		String prenom = exemple.getPrenom();
-		String email = exemple.getEmail();
-		String motDePasse = exemple.getMotDePasse();
-		String confirmation = exemple.getConfirmation();  
-		
-		
-			try {
-				
-			String reqSql = "delete from inscription where( statut= ?, nom=?, prenom=?, email=?, motDePasse=?, confirmation=?)"; 
-			PreparedStatement update = connexion.prepareStatement(reqSql);
-			//update.setInt(1, 0);
-			update.setString(2, statut);
-			update.setString(3, nom);
-			update.setString(4, prenom);
-			update.setString(5, email);
-			update.setString(6, motDePasse);
-			update.setString(7, confirmation);
-			
-			update.executeUpdate(reqSql);
-								
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
 	
-  	
-	/*
-	public  Object listeInscrit(Arraylist<Inscription>inscription){
-		
-		String reqSql = "select * from inscription";
-		
-		try {
-			ResultSet rs = stmt.executeQuery(reqSql);
-			while (rs.next()){
-				listInscrit = rs.getListeInscrit();
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return listeInscrit(null);
-		
-	}
+}	
 	
-	*/
 	
-}
+	
+	
+	
+	
+	
+	
+	
