@@ -2,7 +2,6 @@ package fr.cdiEnterprise.control;
 
 import fr.cdiEnterprise.exceptions.CompanyCreationException;
 
-
 /**
  * Méthode pour les controles de champs
  * 
@@ -15,24 +14,29 @@ public class MethodsForControl {
 	 * Méthode pour controler si les champs obligatoires ont bien été renseignés
 	 * 
 	 * @author Anaïs
-	 * @param String (champ à tester)
+	 * @param String
+	 *            (champ à tester)
 	 * @return String (valeur du champ si ok)
 	 * @version 23-11-2016
 	 */
 
 	public static String nullField(String txtField) {
 		String field = txtField;
-		int fieldLength = field.length();
-		String fieldReturn;
-
-		if (fieldLength != 0) {
-			fieldReturn = field;
+		if (field == null) {
+			throw new CompanyCreationException("Veuillez remplir les champs obligatoires: Nom de l'entreprise, Ville, "
+					+ " Code Postal, Departement, Région, Langage, Secteur, Taille,  SiteWeb ");
 		} else {
-			throw new CompanyCreationException("Veuillez remplir les champs obligatoires");
-		}
-		return fieldReturn;
-	}
+			int fieldLength = field.length();
 
+			if (fieldLength == 0) {
+				throw new CompanyCreationException("Veuillez remplir les champs obligatoires: Nom de l'entreprise, Ville, "
+					+ " Code Postal, Departement, Région, Langage, Secteur, Taille,  SiteWeb ");
+			} else {
+
+			}
+		}
+		return field;
+	}
 
 	/**
 	 * Méthode permettant de controler la saisie du code postal
