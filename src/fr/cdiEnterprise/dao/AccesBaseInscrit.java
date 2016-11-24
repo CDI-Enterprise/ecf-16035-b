@@ -68,11 +68,11 @@ public class AccesBaseInscrit {
 		
 			
 	}
-<<<<<<< HEAD
+
 	
 	/*
 	public void desinscription(Inscription exemple) throws SQLException{
-=======
+
 	*/
 
 	public void desinscription(Inscription exemple){
