@@ -73,68 +73,65 @@ public class CompanyCreateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, CompanyCreationException {
-
+		try {
 		// Récupération des données du formulaire
 		companyName = request.getParameter("companyName");
 		companyName = companyName.toUpperCase().trim();
-		System.out.println(companyName);
 		companyAdress = request.getParameter("companyAdress");
 		companyCity = request.getParameter("companyCity");
-
 		companyCity = companyCity.toUpperCase().trim();
 		companyPostalCode = request.getParameter("companyPostalCode");
-
 		departmentName = request.getParameter("companyDepartment");
 		regionName = request.getParameter("companyRegion");
 		companySize = request.getParameter("companySize");
 		companySector = request.getParameter("companySector");
 		companySector = companySector.toLowerCase().trim();
 		languageName = request.getParameter("companyLanguages");
-		System.out.println(languageName);
-		// if (languageName == null) {
-		// languageName = "JAVA";
-		// }
+		 if (languageName == null) {
+			 throw new CompanyCreationException("Veuillez renseigner un langage infomatique");
+		 }
 		companyProjects = request.getParameter("companyProjects");
 		companyWebSite = request.getParameter("companyWebSite");
 		contactName = request.getParameter("contactName");
 		contactPhone = request.getParameter("contactPhone");
 		contactMail = request.getParameter("contactMail");
 
-		try {
+		
+			System.out.println("try");
 			MethodsForControl.nullField(companyName);
 			MethodsForControl.nullField(companyCity);
 			MethodsForControl.controlPostalCode(companyPostalCode);
 			MethodsForControl.nullField(languageName);
+			try {
+				companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
+				companyRegion = DataBaseCompany.getRegionId(regionName);
+				companyLanguage = DataBaseCompany.getLanguageId(languageName);
+				// Récupération du dernier id de la base de données
+				idContact = DataBaseCompany.getIdMax("contact");
+				// Création de l'objet Contact
+				contact = new Contact(idContact, contactName, contactPhone, contactMail);
+				// Récupération du dernier id de la base de données +1
+				idCompany = DataBaseCompany.getIdMax("company") + 1;
+				// Création objet et insertion BDD
+				company = new Company(idCompany, companyName, companyAdress, companyPostalCode, companyCity,
+						companyDepartment, companyRegion, companySize, companySector, companyLanguage, companyProjects,
+						companyWebSite, contact);
+				DataBaseCompany.insertCompanyData(company, contact);
+				request.setAttribute("company", company);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreate.jsp");
+				dispatcher.forward(request, response);
+			} catch (SQLException e2) {
+				System.out.println("-------PROBLEME--------");
+				e2.printStackTrace();
+			}
 		} catch (CompanyCreationException ev) {
+			System.out.println("Exception");
 			String mess = ev.getMessage();
+			System.out.println(mess);
 			request.setAttribute("messageErreur", mess);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/error.jsp");
 			dispatcher.forward(request, response);
 		}
-
-		try {
-			companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
-			companyRegion = DataBaseCompany.getRegionId(regionName);
-			companyLanguage = DataBaseCompany.getLanguageId(languageName);
-			// Récupération du dernier id de la base de données
-			idContact = DataBaseCompany.getIdMax("contact");
-			// Création de l'objet Contact
-			contact = new Contact(idContact, contactName, contactPhone, contactMail);
-			// Récupération du dernier id de la base de données +1
-			idCompany = DataBaseCompany.getIdMax("company") + 1;
-			// Création objet et insertion BDD
-			company = new Company(idCompany, companyName, companyAdress, companyPostalCode, companyCity,
-					companyDepartment, companyRegion, companySize, companySector, companyLanguage, companyProjects,
-					companyWebSite, contact);
-			DataBaseCompany.insertCompanyData(company, contact);
-		} catch (SQLException e2) {
-			System.out.println("-------PROBLEME--------");
-			e2.printStackTrace();
-		}
-		request.setAttribute("company", company);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreate.jsp");
-		dispatcher.forward(request, response);
-
 	}
 
 }

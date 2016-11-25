@@ -13,9 +13,9 @@
 	<br/><br/><br/>
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">
 	<h1 class="title">UNE ERREUR A ETE DETECTEE</h1>
-	<div>
+	<div class="info">
 <%=request.getAttribute("messageErreur") %>
-
+</div>
 
 <footer>
 		<a href= "<%=request.getContextPath()%>/Company/Creation">Retour au formulaire </a>
