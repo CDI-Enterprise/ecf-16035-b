@@ -32,6 +32,7 @@ public class CompanyUpdateOk extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("----- in the get method----");
+		response.sendRedirect(request.getContextPath() + "/jsp/accueil.jsp");
 	}
 
 	/**

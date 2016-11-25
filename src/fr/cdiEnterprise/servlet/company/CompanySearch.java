@@ -40,7 +40,7 @@ public class CompanySearch extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("--------doget------");
-
+		response.sendRedirect(request.getContextPath() + "/jsp/accueil.jsp");
 	}
 
 	/**
