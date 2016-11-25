@@ -107,9 +107,8 @@ public class RequetesRecherche {
 	 * @return 	listeEntreprises, Objet Companies
 	 * @throws 	SQLException 
 	 */
-	public Companies listCompanies(Recherche recherche){	//TODO parametrer cette requete!
+	public Companies listCompanies(Recherche recherche){	
 		Connection connect = DBConnection.getConnect();
-		Statement stmt;
 		Companies listeEntreprises = new Companies();
 		
 		//La recherche peut contenir de 1 à 3 critères

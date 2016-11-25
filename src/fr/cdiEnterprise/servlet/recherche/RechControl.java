@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 * Servlet implementation class RechControl
 * 
 * <b>Servlet RechControl</b>
-* Cette Servlet sert de controleur pour la page de recherche d'entreprises.
+* Cette Servlet sert de contrôleur pour la page de recherche d'entreprises.
 * Elle redirige les flux reçus depuis les formulaires de la page rech_jsp
 * 
 */
@@ -28,7 +28,6 @@ public class RechControl extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		System.out.println("methode doGet Controleur");
 		doPost(request, response);
 		
 	}
@@ -38,8 +37,7 @@ public class RechControl extends HttpServlet{
 		request.setAttribute("idUser", idUser);
 		RequestDispatcher disp;
 		String path = request.getPathInfo();
-		System.out.println("methode doPost Controleur, path = "+path);
-
+		
 		if (path.equals("/")){
 			disp = request.getRequestDispatcher("/RechAffichageNew");
 			disp.forward(request, response);	

@@ -13,31 +13,23 @@ import fr.cdiEnterprise.dao.RequetesRecherche;
 
 /**
  * Servlet implementation class RechSupprAfficher
+ * Servlet servant à gérer la suppression d'une recherche favorite
  */
 @WebServlet(name="RechSupprFavori", urlPatterns= {"/RechFavSuppr/*", "/RechFavSuppr"})
 public class RechFavSuppr extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RechFavSuppr() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
+   
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			System.out.println("doGet de suppr rech fav");
+		response.sendRedirect("/Recherche/RechAffichageNew");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost de suppr rech fav");
 		RequetesRecherche req= new RequetesRecherche();
 		
 		String idUser= (String) request.getAttribute("idUser");
