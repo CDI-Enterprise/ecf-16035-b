@@ -25,5 +25,3 @@
 		<%}%>
 	</table>
 </div> 
-</body>
-</html>

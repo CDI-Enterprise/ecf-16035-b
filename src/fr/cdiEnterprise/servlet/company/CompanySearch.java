@@ -22,9 +22,9 @@ import fr.cdiEnterprise.model.Company;
 
 public class CompanySearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private Company company;
-    private String companyName;
-    
+	private Company company;
+	private String companyName;
+
 	/**
 	 * Permet d'initialiser la base de données
 	 * 
@@ -33,19 +33,22 @@ public class CompanySearch extends HttpServlet {
 		DBConnection.getConnect();
 	}
 
-
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("--------doget------");
-		
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("----Dans method post -----");
 		companyName = request.getParameter("companyName");
 		companyName = companyName.toUpperCase().trim();
@@ -56,7 +59,7 @@ public class CompanySearch extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("company", company);		
+		request.setAttribute("company", company);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companySearch.jsp");
 		dispatcher.forward(request, response);
 	}

@@ -22,18 +22,10 @@ public class MethodsForControl {
 
 	public static String nullField(String txtField) {
 		String field = txtField;
-		if (field == null) {
+		System.out.println(field);
+		if (field.isEmpty() || field == null || field.length() == 0 ) {
 			throw new CompanyCreationException("Veuillez remplir les champs obligatoires: Nom de l'entreprise, Ville, "
 					+ " Code Postal, Departement, Région, Langage, Secteur, Taille,  SiteWeb ");
-		} else {
-			int fieldLength = field.length();
-
-			if (fieldLength == 0) {
-				throw new CompanyCreationException("Veuillez remplir les champs obligatoires: Nom de l'entreprise, Ville, "
-					+ " Code Postal, Departement, Région, Langage, Secteur, Taille,  SiteWeb ");
-			} else {
-
-			}
 		}
 		return field;
 	}

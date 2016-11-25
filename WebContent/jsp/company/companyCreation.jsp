@@ -17,9 +17,9 @@
 	<img src="../ressource/img/logo.png" alt="logo" id="logo">
 	<h1 class="title">Création d'une fiche entreprise</h1>
 	<div>
-	
-		<form id= "companyForm" name= "companyForm" action="<%=request.getContextPath()%>/Company/CompanyCreate" 
-		 onsubmit= "return validate();" onreset="reset();" method="post">
+
+		<form id= "companyForm" name= "companyForm" action="<%=request.getContextPath()%>/Company/CompanyCreate" onsubmit= "return validate();"
+		  onreset="reset();" method="post">
 			<div class="fieldset">
 			<fieldset id="company" >
 				<legend>Entreprise</legend>
@@ -70,7 +70,7 @@
 					</select> 
 				<br/><br/>
 				<label for="companyProjects">Principaux projets de l'entreprise</label>
-				<textarea type="text" name="companyProjects" tabindex="5" ></textarea> 
+				<textarea name="companyProjects" tabindex="5" ></textarea> 
 				<br/><br/>
 				<label for="companyWebSite">Site Web: </label> 
 				<input type="text" name="companyWebSite" id="companyWebSite" tabindex="6" onchange="changeElement(companyWebSite);"> 
