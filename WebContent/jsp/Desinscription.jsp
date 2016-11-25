@@ -71,7 +71,7 @@ function verifier() {      // confère demo proposition de solution javaScript
 	 </form>
 
 	<div class = "nom">
-			<p> Vous voulez plutôt vous connecter ? <a href="Connexion">Connexion</a></p>
+			<p> Vous voulez plutôt vous connecter ? <a href="/ecf-16035-b">Connexion</a></p>
 	</div> 
 </body>
 </html>
