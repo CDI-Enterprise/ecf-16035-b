@@ -21,27 +21,31 @@ import fr.cdiEnterprise.model.Company;
 public class CompanyUpdateOk extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String companyName;
-	private String companyAdress; 
-    private Company company;
-    private int idCompany;
+	private String companyAdress;
+	private Company company;
+	private int idCompany;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("----- in the get method----");
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("----in the post method ----");
 		companyName = request.getParameter("companyName");
 		System.out.println(companyName);
 		try {
 			company = DataBaseCompany.getCompaniesId(companyName);
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -54,7 +58,7 @@ public class CompanyUpdateOk extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		request.setAttribute("company", company);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdateOk.jsp");
 		dispatcher.forward(request, response);

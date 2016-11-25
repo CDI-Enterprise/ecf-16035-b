@@ -14,7 +14,6 @@ import fr.cdiEnterprise.dao.DBConnection;
 import fr.cdiEnterprise.dao.DataBaseCompany;
 import fr.cdiEnterprise.model.Company;
 
-
 /**
  * Servlet implementation class CompanyUpdate
  */
@@ -22,10 +21,10 @@ import fr.cdiEnterprise.model.Company;
 
 public class CompanyUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     
+
 	private String companyName;
 	private Company company;
-    
+
 	/**
 	 * Permet d'initialiser la base de données
 	 * 
@@ -33,33 +32,36 @@ public class CompanyUpdate extends HttpServlet {
 	public void init() {
 		DBConnection.getConnect();
 	}
-	
+
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		System.out.println("---- in the get method----");
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			System.out.println("----- in the post method ----");
-			System.out.println(request.getParameter("companiesSelec"));
-			companyName = request.getParameter("companiesSelec");
-			try {
-				company = DataBaseCompany.getCompaniesId(companyName);
-				System.out.println(company);
-				request.setAttribute("company", company);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("----- in the post method ----");
+		System.out.println(request.getParameter("companiesSelec"));
+		companyName = request.getParameter("companiesSelec");
+		try {
+			company = DataBaseCompany.getCompaniesId(companyName);
+			System.out.println(company);
 			request.setAttribute("company", company);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdate.jsp");
-			dispatcher.forward(request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
+		request.setAttribute("company", company);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdate.jsp");
+		dispatcher.forward(request, response);
+	}
 
 }

@@ -54,7 +54,7 @@ public class CompanyCreateServlet extends HttpServlet {
 
 	// Méthode init pour initialiser la base de données
 	public void init() {
-		 DBConnection.getConnect();
+		DBConnection.getConnect();
 	}
 
 	/**
@@ -72,18 +72,18 @@ public class CompanyCreateServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-			
+			throws ServletException, IOException, CompanyCreationException {
+
 		// Récupération des données du formulaire
 		companyName = request.getParameter("companyName");
 		companyName = companyName.toUpperCase().trim();
 		System.out.println(companyName);
 		companyAdress = request.getParameter("companyAdress");
 		companyCity = request.getParameter("companyCity");
-		
+
 		companyCity = companyCity.toUpperCase().trim();
 		companyPostalCode = request.getParameter("companyPostalCode");
-		
+
 		departmentName = request.getParameter("companyDepartment");
 		regionName = request.getParameter("companyRegion");
 		companySize = request.getParameter("companySize");
@@ -91,27 +91,27 @@ public class CompanyCreateServlet extends HttpServlet {
 		companySector = companySector.toLowerCase().trim();
 		languageName = request.getParameter("companyLanguages");
 		System.out.println(languageName);
-//		if (languageName == null) {
-//			languageName = "JAVA";
-//			}
+		// if (languageName == null) {
+		// languageName = "JAVA";
+		// }
 		companyProjects = request.getParameter("companyProjects");
 		companyWebSite = request.getParameter("companyWebSite");
 		contactName = request.getParameter("contactName");
 		contactPhone = request.getParameter("contactPhone");
 		contactMail = request.getParameter("contactMail");
 
-		try{
+		try {
 			MethodsForControl.nullField(companyName);
 			MethodsForControl.nullField(companyCity);
 			MethodsForControl.controlPostalCode(companyPostalCode);
 			MethodsForControl.nullField(languageName);
-		}catch (CompanyCreationException ev){
-			String mess=ev.getMessage();
+		} catch (CompanyCreationException ev) {
+			String mess = ev.getMessage();
 			request.setAttribute("messageErreur", mess);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/error.jsp");
 			dispatcher.forward(request, response);
 		}
-				
+
 		try {
 			companyDepartment = DataBaseCompany.getDepartmentId(departmentName);
 			companyRegion = DataBaseCompany.getRegionId(regionName);

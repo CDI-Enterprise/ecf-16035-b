@@ -20,8 +20,8 @@ import fr.cdiEnterprise.service.Companies;
 
 public class CompanyList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private Companies companies;
-    
+	private Companies companies;
+
 	/**
 	 * Permet d'initialiser la base de données
 	 * 
@@ -31,19 +31,23 @@ public class CompanyList extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		System.out.println("--- in the get method----");
-	
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		System.out.println("----Dans method post -----");
 		try {
 			companies = DataBaseCompany.getCompaniesData();
@@ -51,7 +55,7 @@ public class CompanyList extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("companies", companies);		
+		request.setAttribute("companies", companies);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyList.jsp");
 		dispatcher.forward(request, response);
 	}
