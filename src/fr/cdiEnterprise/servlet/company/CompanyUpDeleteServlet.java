@@ -13,9 +13,10 @@ import fr.cdiEnterprise.dao.DataBaseCompany;
 import fr.cdiEnterprise.service.Companies;
 
 /**
- * Servlet implementation class CompanyUpdateServlet
+ * Servlet implementation class CompanyUpDeletedateServlet
  */
-@WebServlet("/action/ModifSuppr")
+@WebServlet(name = "ModifSuppr", urlPatterns = { "/action/ModifSuppr" })
+
 public class CompanyUpDeleteServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

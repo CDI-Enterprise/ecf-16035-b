@@ -16,7 +16,8 @@ import fr.cdiEnterprise.service.Companies;
 /**
  * Servlet implementation class CompanySearchList
  */
-@WebServlet("/action/Affichage")
+@WebServlet(name = "Affichage", urlPatterns = { "/action/Affichage" })
+
 public class CompanyList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Companies companies;

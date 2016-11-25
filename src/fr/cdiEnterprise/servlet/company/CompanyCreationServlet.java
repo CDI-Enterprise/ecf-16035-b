@@ -19,7 +19,8 @@ import fr.cdiEnterprise.service.Regions;
 /**
  * Servlet implementation class CompanyServlet
  */
-@WebServlet("/action/Creation")
+@WebServlet(name = "Creation", urlPatterns = { "/action/Creation" })
+
 public class CompanyCreationServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;

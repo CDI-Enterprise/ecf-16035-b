@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class CompanyList
  */
-@WebServlet("/action/AffRecher")
+@WebServlet(name = "AffRecher", urlPatterns = { "/action/AffRecher" })
+
 public class CompanySearchList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

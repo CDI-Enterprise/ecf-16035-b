@@ -15,7 +15,8 @@ import fr.cdiEnterprise.model.Company;
 /**
  * Servlet implementation class CompanyDelete
  */
-@WebServlet("/action/Supprimer")
+@WebServlet(name = "Suppression", urlPatterns = { "/action/Supprimer" })
+
 public class CompanyDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String companyName;

@@ -17,7 +17,7 @@ import fr.cdiEnterprise.model.Inscription;
  */
 
 @WebServlet(
-		name="ControlerInscription", urlPatterns = {"/inscription", "/desinscription"}
+		name="ControlerInscription", urlPatterns = {"/inscription"}
 )
 
 public class ControlerInscription extends HttpServlet {

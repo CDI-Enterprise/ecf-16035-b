@@ -18,7 +18,8 @@ import fr.cdiEnterprise.model.Company;
 /**
  * Servlet implementation class CompanySearch
  */
-@WebServlet("/action/Rechercher")
+@WebServlet(name = "Rechercher", urlPatterns = { "/action/Rechercher" })
+
 public class CompanySearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Company company;

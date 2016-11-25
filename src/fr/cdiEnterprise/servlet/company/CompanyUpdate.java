@@ -18,7 +18,8 @@ import fr.cdiEnterprise.model.Company;
 /**
  * Servlet implementation class CompanyUpdate
  */
-@WebServlet("/action/Modifier")
+@WebServlet(name = "Modifier", urlPatterns = { "/action/Modifier" })
+
 public class CompanyUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      
