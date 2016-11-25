@@ -131,7 +131,8 @@ public class Company {
 	  * @param webSite
 	  */
 	 public Company(int idEntreprise,String companyName, String adress, String postalCode, 
-			 String city, Department department, Region region, Language language, String size, String sector, String webSite) {
+			 String city, Department department, Region region, Language language, String size, String sector, String webSite) throws 
+	 CompanyCreationException {
 	
 	 this.companyName = companyName;
 	 this.adress = adress;
@@ -348,13 +349,16 @@ public class Company {
 	}
 
 	public void setLanguage(Language language) {
-		String languageName;
-		languageName= language.getLanguageName();
-		if(languageName == null || languageName.length()==0){
-			throw new CompanyCreationException(" Veuillez renseigner un langage informatique");
-		}else{
+
 		this.language = language;
-		}
+
+//		String languageName;
+//		languageName= language.getLanguageName();
+//		if(languageName == null || languageName.length()==0){
+//			throw new CompanyCreationException(" Veuillez renseigner un langage informatique");
+//		}else{
+//		this.language = language;
+//		}
 	}
 
 	/*

@@ -49,7 +49,7 @@ public class RequetesRecherche {
 				Region region = new Region(res.getString("regionname"), res.getInt("regionid"));
 				listeRegion.add(region);
 			}
-	
+			res.close();
 		} catch (SQLException e) {
 			System.out.println("La requete de demande de la liste des régions n'a pas pu aboutir");
 			e.printStackTrace();
@@ -89,7 +89,7 @@ public class RequetesRecherche {
 						res.getString("companyweb"), contact);
 				listeEntreprises.add(entreprise);
 			}
-			
+			res.close();
 		} catch (SQLException e) {
 			System.out.println("La requete de demande de la liste des entreprises n'a pas pu aboutir");
 			e.printStackTrace();
@@ -112,45 +112,57 @@ public class RequetesRecherche {
 		Statement stmt;
 		Companies listeEntreprises = new Companies();
 		
-		
-		//La recherche peut contenir de 1 à 4 critères
+		//La recherche peut contenir de 1 à 3 critères
 		//la requete va donc être construite dynamiquement en fonction des critères non vides
 		String req = "Select companyid, companyname, companyadress, companycodepostal, companycity"
 				+ ",companysize, companysector, companyprojects, companyweb from company where ";
 		int param = 0;
+		int posComp = 0;
+		int posSector = 0;
+		int posCity = 0;
 		
-		if (recherche.getCompRech() != ""){
-			req = req + "companyname = '"+recherche.getCompRech()+"' ";
+		if (recherche.getCompRech() != ""){				//si le nom d'entreprise est renseigné (non null)
+			req = req + "companyname = ?";				//la requete est concaténée
+			posComp = 1;								//la position du nom d'entreprise dans la requete sera en 1
 			param++;
 		}
 		
-		if (recherche.getSectorRech() != ""){
-			if (param == 0) { req = req + "companysector ='"+recherche.getSectorRech()+"' ";}
-			else {req = req + "and companysector ='"+recherche.getSectorRech()+"' ";}
+		if (recherche.getSectorRech() != ""){			//si le secteur de la recherche est renseigné (non null)
+			if (param == 0) { 							//si c'est le premier paramètre qu'on renseigne
+				req = req + "companysector = ? ";		//la requète est concaténée sans le "and"
+									
+			
+			} else {									//si il y avait déjà un paramètre renseigné
+				req = req + " and companysector = ?";	
+				posSector = 2;							//la position du secteur dans la requete sera en 2
+			}
 			param++;
+			posSector = param;							//la position du secteur dans la requete sera égale au nombre de paramètre de la requete
 		}
 		
-		if (recherche.getCityRech() != ""){
-			if (param == 0) { req = req + "companycity ='"+recherche.getCityRech()+"' ";}
-			else {req = req + "and companycity ='"+recherche.getCityRech()+"' ";}
+		if (recherche.getCityRech() != ""){				//si la ville de la recherche est renseignée (non null)
+			if (param == 0) { 							//si c'est le premier paramètre qu'on renseigne
+				req = req + "companycity = ?";			//la requète est concaténée sans le "and"
+			} else {
+				req = req + " and companycity = ?";
+			}
 			param++;
+			posCity = param;
 		}
-		
-		//le 4ème critère (la region) est pour le moment non pris en compte, il le sera dans une prochaine iteration
-		//TODO
-//		if (regionId != null){
-//			if (param == 0) { req = req + "companycity ='"+ville+"' ";}
-//			else {req = req + "and companycity ='"+ville+"' ";}
-//			param++;
-//		}
 		
 		System.out.println(req);
 		
+		
 		if (param != 0) {
 			try {
-				stmt = connect.createStatement();
-				ResultSet res = stmt.executeQuery(req);
-				
+					PreparedStatement prepStmtUpdate;
+					prepStmtUpdate = connect.prepareStatement(req);
+					
+					if (posComp != 0)	{prepStmtUpdate.setString(posComp, recherche.getCompRech());}
+					if (posSector != 0)	{prepStmtUpdate.setString(posSector, recherche.getSectorRech());}
+					if (posCity != 0)	{prepStmtUpdate.setString(posCity, recherche.getCityRech());}
+					ResultSet res= prepStmtUpdate.executeQuery();
+								
 				while (res.next()){
 					Department departement = recupDept(res.getInt("companyId"));
 					Region region = recupRegion(res.getInt("companyId"));
@@ -164,7 +176,7 @@ public class RequetesRecherche {
 				
 					listeEntreprises.add(entreprise);
 				}
-							
+				res.close();			
 			} catch (SQLException e) {
 				System.out.println("Erreur d'acces à la recherche d'entreprise");
 				e.printStackTrace();
@@ -198,6 +210,7 @@ public class RequetesRecherche {
 			while (res.next()){
 				number = res.getInt("languageid");
 			}
+			res.close();
 			
 			String reqLang = "Select languagename from language where languageid = ? ";
 			PreparedStatement prepStmt2 = connect.prepareStatement(reqLang);
@@ -207,7 +220,7 @@ public class RequetesRecherche {
 			while (res2.next()){
 				name = res2.getString("languagename");
 			}
-		
+			res2.close();
 			
 		} catch (SQLException e) {
 			System.out.println("La recherche de langage n'a pas pu aboutir");
@@ -246,7 +259,7 @@ public class RequetesRecherche {
 													res.getString("sector_rech"), region, res.getString("city_rech"));
 				listeRech.add(recherche);
 			}
-		
+			res.close();
 			return listeRech;
 			
 		} catch (SQLException e) {
@@ -283,6 +296,7 @@ public class RequetesRecherche {
 				recherche = new Recherche (res.getInt("id_rech"), res.getString("user_id"), res.getString("nom_rech"), res.getString("comp_rech"),
 											res.getString("sector_rech"), region, res.getString("city_rech"));
 			}
+			res.close();
 			return recherche;	
 			
 		} catch (SQLException e) {
@@ -415,6 +429,7 @@ public class RequetesRecherche {
 					index=res.getInt("id_rech");
 				}
 			}
+			res.close();
 		} catch (SQLException e) {
 			System.out.println("La recherche de l'indice max dans la table rech_fav n'a pas pu aboutir");
 			e.printStackTrace();
@@ -446,7 +461,7 @@ public class RequetesRecherche {
 				number = res.getInt("departmentnumber");
 				name=recupDeptName(number);
 			}
-		
+			res.close();
 		} catch (SQLException e) {
 			System.out.println("La recherche de numéro de departement n'a pas pu aboutir");
 			e.printStackTrace();
@@ -477,7 +492,8 @@ public class RequetesRecherche {
 			while (res2.next()){
 				nameDpt = res2.getString("departmentname");
 			}
-		
+			res2.close();
+			
 		} catch (SQLException e) {
 			System.out.println("La recherche de nom de departement n'a pas pu aboutir");
 			e.printStackTrace();
@@ -513,11 +529,16 @@ public class RequetesRecherche {
 				PreparedStatement prepStmt2 = connect.prepareStatement(reqReg);
 				prepStmt2.setInt(1, number);
 				ResultSet res2 = prepStmt2.executeQuery();
+				
 				while (res2.next()){
 					name = res2.getString("regionname");
 				}
+				res2.close();
 			}
+			
+			res.close();
 			region = new Region(name, number);
+			
 		} catch (SQLException e) {
 			System.out.println("La recherche de region par id d'entreprise n'a pas pu aboutir");
 			e.printStackTrace();
@@ -547,7 +568,7 @@ public class RequetesRecherche {
 			while (res.next()){
 				region= new Region(nomRegion, res.getInt("regionid"));
 			}
-	
+			res.close();
 		} catch (SQLException e) {
 			System.out.println("La recherche de region par nom n'a pas pu aboutir");
 			e.printStackTrace();

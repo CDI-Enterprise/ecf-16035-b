@@ -55,7 +55,6 @@ public class CompanyDelete extends HttpServlet {
 			idCompany = company.getCompanyId();
 			DataBaseCompany.deleteCompanyData(idCompany);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyDeleteOk.jsp");

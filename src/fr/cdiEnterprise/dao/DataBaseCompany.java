@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import fr.cdiEnterprise.control.MethodsForControl;
 import fr.cdiEnterprise.exceptions.CompanyCreationException;
 import fr.cdiEnterprise.model.Company;
@@ -489,7 +488,12 @@ public class DataBaseCompany {
 		reqSqla = "insert into company values (?,?,?,?,?,?,?,?,?)";
 		PreparedStatement insertCompany = connexion.prepareStatement(reqSqla);
 		
-		language = company.getLanguage().getLanguageName();
+//		if(company.getLanguage().getLanguageName().isEmpty()){
+//			throw new CompanyCreationException("Veuillez renseigner un langage informatique");
+//		}else{
+//			language=company.getLanguage().getLanguageName();
+//		}
+		language=company.getLanguage().getLanguageName();
 		MethodsForControl.nullField(language);
 		insertCompany.setInt(1, company.getCompanyId());
 		insertCompany.setString(2, company.getCompanyName());
