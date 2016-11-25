@@ -87,7 +87,7 @@ public class ControlerDesinscription extends HttpServlet {
 		//Rédirection vers Recapitulatif.jsp 
 		request.setAttribute("inscription", exemple);
 		request.setAttribute("reussite", "OK");
-		request.getRequestDispatcher("/jsp/Recapitulatif.jsp").forward(request, response);
+		request.getRequestDispatcher("/jsp/Recapitulatif_desinscri.jsp").forward(request, response);
 		System.out.println(" redirection vers recapitulatif");
 				
 			
