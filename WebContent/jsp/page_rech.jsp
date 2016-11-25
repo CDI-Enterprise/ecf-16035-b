@@ -31,7 +31,7 @@
 		<fieldset id="recherche" >
 		<legend>Recherche</legend>
 			<label class="rech">Nom de l'entreprise :</label> 
-			<input type="text" name="nom_comp" 
+			<input type="text" name="nom_comp" id="nom_comp" 
 				<% if (RechFav != null && RechFav.getCompRech()!= null) {%>
 						value="<%= RechFav.getCompRech() %>"
 				<%}%>
@@ -40,7 +40,7 @@
 			<br/>
 		
 			<label class="rech">Secteur d'activité :</label> 
-			<input type="text" name="secteur_comp"
+			<input type="text" name="secteur_comp" id="secteur_comp"
 				<% if (RechFav != null && RechFav.getSectorRech()!= null) {%>
 						value="<%= RechFav.getSectorRech()%>"
 				<%}%>
@@ -61,7 +61,7 @@
 			<br/>
 			
 			<label class="rech">Ville :</label> 
-			<input type="text" name="ville_comp"
+			<input type="text" name="ville_comp" id="ville_comp"
 			<% if (RechFav != null && RechFav.getCityRech()!= null) {%>
 						value="<%= RechFav.getCityRech() %>"
 				<%}%>
@@ -69,18 +69,18 @@
 			<br/>
 			
 			<label class="rech" style="font-size:12px">Nom d'enregistrement de recherche : </label> 
-			<input type="text" name="nom_rech"
+			<input type="text" name="nom_rech" id="nom_rech"
 				<% if (RechFav != null && RechFav.getNomRech()!= null) {%>
 						value="<%= RechFav.getNomRech()%>"
 				<%}%>
 			/>
 			
-			<input type="reset" name="reset" value="Reinitialiser"/>
+			<input type="submit" name="reset" value="Reinitialiser" formaction="http://localhost:8085/<%=request.getContextPath()%>/Recherche/Affichage" formmethod="get"/>
 			
 		</fieldset>
 	</form>
 	
-<!-- 	<div class="fieldset"> -->
+
 	<form class="fieldset" name="FormFavoris" action="RechControl" method="post">
 		<fieldset id="favoris" > <legend>Recherches Enregistrées</legend>
 			<div id="listeFavoris">
@@ -100,7 +100,6 @@
 			<input type="submit" name="suppr_rech" value="Supprimer" formaction="http://localhost:8085/<%=request.getContextPath()%>/Recherche/RechFavSuppr"/>
 			<input type="reset" name="resetFav" value="Reinitialiser">
 		</span>
-<!-- 	</div> -->
 	</form>
 </div>
 
@@ -115,20 +114,22 @@
 				<th>Ville		</th>
 				<th>Région		</th>
 				<th>Secteur		</th>
+				<th>Langage		</th>
 				<th>Projets		</th>
 				<th>Site Web	</th>
 			</tr>
 			<% if (listeEntreprise != null) {
 				for (int i=0; i<listeEntreprise.size(); i++){ %>
 				<tr>
-					<td><%=listeEntreprise.get(i).getCompanyName() 	%>			</td>
-					<td><%=listeEntreprise.get(i).getAdress() 		%>			</td>
-					<td><%=listeEntreprise.get(i).getPostalCode() 	%>			</td>
-					<td><%=listeEntreprise.get(i).getCity() 		%>			</td>
-					<td><%=listeEntreprise.get(i).getRegion().getRegionName()%>	</td>
-					<td><%=listeEntreprise.get(i).getSector() 		%>			</td>
-					<td><%=listeEntreprise.get(i).getProjets()	 	%>			</td>
-					<td><%=listeEntreprise.get(i).getWebSite()	 	%>			</td>
+					<td><%=listeEntreprise.get(i).getCompanyName() 	%>				</td>
+					<td><%=listeEntreprise.get(i).getAdress() 		%>				</td>
+					<td><%=listeEntreprise.get(i).getPostalCode() 	%>				</td>
+					<td><%=listeEntreprise.get(i).getCity() 		%>				</td>
+					<td><%=listeEntreprise.get(i).getRegion().getRegionName()%>		</td>
+					<td><%=listeEntreprise.get(i).getSector() 		%>				</td>
+					<td><%=listeEntreprise.get(i).getLanguage().getLanguageName()%>	</td>
+					<td><%=listeEntreprise.get(i).getProjets()	 	%>				</td>
+					<td><%=listeEntreprise.get(i).getWebSite()	 	%>				</td>
 				</tr>
 				<%}
 			}%>	

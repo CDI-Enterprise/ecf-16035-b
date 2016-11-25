@@ -49,7 +49,7 @@ public class RequetesRecherche {
 				Region region = new Region(res.getString("regionname"), res.getInt("regionid"));
 				listeRegion.add(region);
 			}
-			
+	
 		} catch (SQLException e) {
 			System.out.println("La requete de demande de la liste des régions n'a pas pu aboutir");
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class RequetesRecherche {
 	 * @return 	listeEntreprises, Objet Companies	
 	 * @throws 	SQLException 
 	 */
-	public Companies listAllCompanies(){ //TODO paramétrer la requete!
+	public Companies listAllCompanies(){ 
 		Connection connect = DBConnection.getConnect();
 		String req = "Select companyid, companyname, companyadress, companycodepostal, companycity"
 				+ ",companysize, companysector, companyprojects, companyweb from company";
@@ -80,7 +80,7 @@ public class RequetesRecherche {
 			while (res.next()){
 				Department departement = recupDept(res.getInt("companyId"));
 				Region region = recupRegion(res.getInt("companyId"));
-				Language langage =null;
+				Language langage = recupLanguage(res.getInt("companyId"));
 				Contact contact = null;
 			
 				Company entreprise = new Company(res.getInt("companyid"), res.getString("companyname"), res.getString("companyadress"), 
@@ -154,7 +154,7 @@ public class RequetesRecherche {
 				while (res.next()){
 					Department departement = recupDept(res.getInt("companyId"));
 					Region region = recupRegion(res.getInt("companyId"));
-					Language langage =null;
+					Language langage = recupLanguage(res.getInt("companyId"));
 					Contact contact = null;
 				
 					Company entreprise = new Company(res.getInt("companyid"), res.getString("companyname"), res.getString("companyadress"), 
@@ -176,6 +176,53 @@ public class RequetesRecherche {
 		return listeEntreprises;
 	}
 		
+/**
+ * Methode qui retourne un langage correspondant à l'index d'entreprise entré en paramètre
+ * @author Francois Georgel
+ * @version: 1.0	24/11/2016
+ * @param	companyId, int
+ * @return 	lang, Objet Language	
+ * @throws 	SQLException 
+ */
+	private Language recupLanguage(int companyId) {
+		int number = 0;
+		String name = "";
+		Connection connect = DBConnection.getConnect();
+		String reqLangId = "Select languageid from companylanguage where companyid = ? ";
+		PreparedStatement prepStmt;
+		
+		try {
+			prepStmt = connect.prepareStatement(reqLangId);
+			prepStmt.setInt(1, companyId);
+			ResultSet res = prepStmt.executeQuery();
+			
+			System.out.println(companyId);
+		
+			while (res.next()){
+				number = res.getInt("languageid");
+			}
+			
+			String reqLang = "Select languagename from language where languageid = ? ";
+			PreparedStatement prepStmt2 = connect.prepareStatement(reqLang);
+			prepStmt2.setInt(1, number);
+			ResultSet res2 = prepStmt2.executeQuery();
+				
+			System.out.println(number);
+			while (res2.next()){
+				name = res2.getString("languagename");
+				System.out.println(name);
+			}
+		
+			
+		} catch (SQLException e) {
+			System.out.println("La recherche de langage n'a pas pu aboutir");
+			e.printStackTrace();
+		}
+		Language lang = new Language(name, number);
+		System.out.println(lang);
+		return lang;
+	}
+
 
 	/**
 	 * Methode qui retourne la liste des recherches favorites de l'utilisateur passé en paramètre
@@ -361,7 +408,7 @@ public class RequetesRecherche {
 	 * @return index, int
 	 * @throws 	SQLException 
 	 */
-	public int indexRechFav() {				//TODO parametrer la requete
+	public int indexRechFav() {				
 		Connection connect = DBConnection.getConnect();
 		int index=0;
 		String req = "select id_rech from rech_fav";
@@ -390,31 +437,42 @@ public class RequetesRecherche {
 	 * @return 	dept, Objet Department	
 	 * @throws 	SQLException 
 	 */
-	public Department recupDept(int companyId) {		//TODO param requete
+	public Department recupDept(int companyId) {		
 		int number = 0;
 		String name = "";
 		Connection connect = DBConnection.getConnect();
-		String reqDeptId = "Select departmentnumber from companydepartment where companyid = '"+companyId+"'";
-		Statement stmt;
+		String reqDeptId = "Select departmentnumber from companydepartment where companyid = ? ";
+		PreparedStatement prepStmt;
 		
 		try {
-			stmt = connect.createStatement();
-			ResultSet res = stmt.executeQuery(reqDeptId);
+			prepStmt = connect.prepareStatement(reqDeptId);
+			prepStmt.setInt(1, companyId);
+			ResultSet res = prepStmt.executeQuery();
+			
+			System.out.println(companyId);
 		
 			while (res.next()){
 				number = res.getInt("departmentnumber");
-				String reqDept = "Select departmentname from departments where departmentnumber = '"+number+"'";
-				Statement stmt2 = connect.createStatement();
-				ResultSet res2 = stmt2.executeQuery(reqDept);
-				while (res2.next()){
-					name = res2.getString("departmentname");
-				}
 			}
+			
+			String reqDept = "Select departmentname from departments where departmentnumber = ? ";
+			PreparedStatement prepStmt2 = connect.prepareStatement(reqDept);
+			prepStmt2.setInt(1, number);
+			ResultSet res2 = prepStmt2.executeQuery(reqDept);
+				
+			System.out.println(number);
+			while (res2.next()){
+				name = res2.getString("departmentname");
+				System.out.println(name);
+			}
+		
+			
 		} catch (SQLException e) {
 			System.out.println("La recherche de departement n'a pas pu aboutir");
 			e.printStackTrace();
 		}
 		Department dept = new Department(name, number);
+		System.out.println(dept);
 		return dept;
 	}
 	
@@ -426,23 +484,25 @@ public class RequetesRecherche {
 	 * @return 	region, Objet Region
 	 * @throws 	SQLException 
 	 */
-	public Region recupRegion(int companyId) {	//TODO param requete
+	public Region recupRegion(int companyId) {	
 		int number = 0;
 		String name = "";
 		Region region = null;
 		Connection connect = DBConnection.getConnect();
-		String reqDeptId = "Select regionid from companyregion where companyid= '"+companyId+"'";
+		String reqRegId = "Select regionid from companyregion where companyid= ?";
 		
-		Statement stmt;
+		PreparedStatement prepStmt;
 		try {
-			stmt = connect.createStatement();
-			ResultSet res = stmt.executeQuery(reqDeptId);
+			prepStmt = connect.prepareStatement(reqRegId);
+			prepStmt.setInt(1, companyId);
+			ResultSet res = prepStmt.executeQuery();
 		
 			while (res.next()){
 				number = res.getInt("regionid");
-				String reqDept = "Select regionname from regions where regionid= '"+number+"'";
-				Statement stmt2 = connect.createStatement();
-				ResultSet res2 = stmt2.executeQuery(reqDept);
+				String reqReg = "Select regionname from regions where regionid= ?";
+				PreparedStatement prepStmt2 = connect.prepareStatement(reqReg);
+				prepStmt2.setInt(1, number);
+				ResultSet res2 = prepStmt2.executeQuery();
 				while (res2.next()){
 					name = res2.getString("regionname");
 				}
