@@ -169,7 +169,7 @@ public class MessageDao {
 				
 			}
 		} catch (SQLException e1) {
-			System.out.println("[GET] an issue happen with the SQL to getItemByRef");
+			System.err.println("[GET] an issue happen with the SQL to getItemByRef");
 			e1.printStackTrace();
 		}
 		
@@ -272,7 +272,7 @@ public class MessageDao {
 				items.add(item);
 			}
 		} catch (SQLException e1) {
-			System.out.println("[GET] an issue happen with the SQL to getAll items");
+			System.err.println("[GET] an issue happen with the SQL to getAll items");
 			e1.printStackTrace();
 		}
 		return items;
@@ -397,7 +397,7 @@ public class MessageDao {
 
 			String query =  String.format("SELECT  %s, %s  , %s ,%s , %s ,%s, %s FROM %s WHERE RECEIVER = '%s' AND DRAFT = '%s' AND UPPER (SUBJECT) LIKE UPPER('%%%s%%')",
 					IDENTITY, SENDER, RECEIVER, SUBJECT, MESSBODY, TIMESTAMP, DRAFT, TABLE_NAME,MessageListener.alias, "0" ,word);
-			System.out.println(query);
+			
 			resultSet = statement.executeQuery(query);
 			connection.commit();
 
@@ -464,7 +464,7 @@ public class MessageDao {
 			
 			String query =  String.format("SELECT  %s, %s  , %s ,%s , %s ,%s, %s FROM %s WHERE RECEIVER = '%s' AND DRAFT = '%s' AND DELETED = '%s' AND UPPER (SUBJECT) LIKE UPPER('%%%s%%')",
 					IDENTITY, SENDER, RECEIVER, SUBJECT, MESSBODY, TIMESTAMP, DRAFT, TABLE_NAME, login , iDraft, iDeleted ,word);
-			System.out.println(query);
+			
 			resultSet = statement.executeQuery(query);
 			connection.commit();
 
@@ -559,7 +559,7 @@ public class MessageDao {
 			String createStatement = String.format(
 					"UPDATE mailbox SET SENDER=" + "'" + sender + "',RECEIVER= " + "'" + receiver + "', SUBJECT = "
 							+ "'" + object + "', MESSBODY = " + "'" + body + "' WHERE receiver = 'receiver' AND identity= " + "'" + ident + "'");
-			System.out.println(createStatement);
+			
 			statement.executeUpdate(createStatement);
 
 			connection.commit();
@@ -766,5 +766,78 @@ public class MessageDao {
 		}
 
 		return idExist;
+	}
+	
+	/**
+	 * 
+	 * @param string
+	 * @param b
+	 * @param c
+	 * @return
+	 */
+	public static Items getSendedItems(String box, boolean draft, boolean deleted) {
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		Items items = new Items();
+
+		connection = DBConnection.getConnect();
+		try {
+			statement = connection.createStatement();
+
+
+		// String ident = null;
+		int ident = 0;
+		String sender = null;
+		String receiver = null;
+		String object = null;
+		String body = null;
+		String date = null;
+		int draftMess = 0;
+		int deletedMess = 0;
+		
+		int iDraft = booleanToInt(draft);
+		int iDeleted = booleanToInt(deleted);
+			
+
+		String createStatement = null;
+		
+			createStatement = String.format(
+					"select %s,%s, %s,%s,%s,%s,%s,%s from %s WHERE %s = '%s' AND %s = '%s' AND %s = '%s'",
+					//
+					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft","deleted", TABLE_NAME, "SENDER",
+					box, "DRAFT", iDraft ,"DELETED", iDeleted);
+		
+
+			resultSet = statement.executeQuery(createStatement);
+			connection.commit();
+
+			while (resultSet.next()) {
+
+				ident 	= resultSet.getInt("identity");
+				sender 	= resultSet.getString("sender");
+				receiver= resultSet.getString("receiver");
+				object 	= resultSet.getString("subject");
+				body 	= resultSet.getString("messBody");
+				draftMess = resultSet.getInt("draft");
+				deletedMess = resultSet.getInt("deleted");
+				
+				if (draftMess == 0) {
+					
+					date = resultSet.getString("timeStamp");
+					
+				}
+
+				Item item = new Item(ident, sender, receiver, object, body, StringToLocalDate(date),
+						intToBoolean(draftMess),intToBoolean(deletedMess));
+				
+				items.add(item);
+			}
+		} catch (SQLException e1) {
+			System.err.println("[GET] an issue happen with the SQL to getSendedItems");
+			e1.printStackTrace();
+		}
+		return items;
+		
 	}
 }

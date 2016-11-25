@@ -37,6 +37,8 @@ import fr.cdiEnterprise.util.MpClientV2;
 	"/brouillon",
 	"/supprimer",
 	"/messagerie/*",
+	"/envoyer",
+	"/archive"
 	
 })
 
@@ -60,11 +62,6 @@ public class messagerie extends HttpServlet {
  	 * @since 21/11/2016
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-//Syso de controle
-		
-		System.out.println("get");
-		System.out.println("getRequestURI :" + request.getRequestURI());
 		
 //Declaration des constante a testé TODO a passé en enum
 		//Dossier
@@ -82,10 +79,7 @@ public class messagerie extends HttpServlet {
 		
 //Recuperation de l'uri demander
 		
-		String path = request.getRequestURI();
-		System.out.println("path " + path);
-		
-		
+		String path = request.getRequestURI();	
 		
 //Aiguillage
 
@@ -117,9 +111,25 @@ public class messagerie extends HttpServlet {
 		
 			affichageBrouillon(request, response);
 		
+		}else if(path.equalsIgnoreCase(ENVOYER)){
+		
+		constructEnvoyer(request, response);
+		
+		}else if(path.equalsIgnoreCase(ARCHIVE)){
+		
+		constructArchive(request, response);
+		
+		}else{
+			
+			final String MESSAGE_ERREUR = "La ressource demander n'existe pas ";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			
 		}
 
 	}
+
+	
 
 	/**
 	 * Récupere et renvoie l'utilisateur a la page demander avec une inscription dans la base de données des données entrer par l'utilisateur.
@@ -127,12 +137,11 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @author Aurélien
 	 * @version 1
- 	 * @since 21/11/2016
+	 * @throws IOException 
+	 * @throws ServletException 
+	 * @since 21/11/2016
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response){
-	
-		System.out.println("post");
-		System.out.println("getRequestURI :" + request.getRequestURI());
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		final String NOUVEAU = "/ecf-16035-b/messagerie/nouveau";
 		
@@ -140,9 +149,11 @@ public class messagerie extends HttpServlet {
 		
 		if(path.equalsIgnoreCase(NOUVEAU)){
 			sendMail(request,response);
+		}else{
+			final String MESSAGE_ERREUR = "La ressource demander n'existe pas ";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
 		}
-		
-		
 	}
 	
 	/**
@@ -153,9 +164,11 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @author Aurélien
 	 * @version 1
+	 * @throws IOException 
+	 * @throws ServletException 
  	 * @since 24/11/2016
 	 */
-	private void affichageBrouillon(HttpServletRequest request, HttpServletResponse response) {
+	private void affichageBrouillon(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		final String PATH_MESSAGERIE =  "/jsp/messagerie/messagerie.jsp";
 		final String PATH_UN_BROUILLON = "../../WEB-INF/messagerie/un_brouillon.jsp";
@@ -172,7 +185,12 @@ public class messagerie extends HttpServlet {
 		try {
 			disp.forward(request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Page erreur
+			
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
 			e.printStackTrace();
 		}
 		
@@ -185,9 +203,11 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @author Aurélien
 	 * @version 1
+	 * @throws IOException 
+	 * @throws ServletException 
  	 * @since 24/11/2016
 	 */
-	private void supprimerMail(HttpServletRequest request, HttpServletResponse response) {
+	private void supprimerMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_SUPPRESSION_REUSSI = "../../WEB-INF/messagerie/suppression_reussie.jsp";
@@ -225,8 +245,11 @@ public class messagerie extends HttpServlet {
 				
 			} catch (ServletException | IOException e) {
 				
-				request.setAttribute("url", PATH_SUPPRESSION_ERREUR);
-				//TODO Send redirect?
+				final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+				final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+				request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+				disp = request.getRequestDispatcher(ERREUR);
+				disp.forward(request, response);
 				e.printStackTrace();
 			} 
 			
@@ -241,9 +264,11 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @author Aurélien
 	 * @version 1
+	 * @throws IOException 
+	 * @throws ServletException 
  	 * @since 24/11/2016
 	 */
-	private void sendMail(HttpServletRequest request, HttpServletResponse response) {
+	private void sendMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_ENVOIE_REUSSI = "../../WEB-INF/messagerie/envoie_reussie.jsp";
@@ -290,9 +315,11 @@ public class messagerie extends HttpServlet {
 				
 			} catch (SQLException e) {
 				
-				// TODO Page Erreur SQL
-				// ERREUR SERVLET 
-				// IO ERREUR
+				final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+				final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+				request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+				RequestDispatcher disp = request.getRequestDispatcher(ERREUR);
+				disp.forward(request, response);
 				e.printStackTrace();
 				request.setAttribute("url", PATH_ENVOIE_ERREUR);
 				
@@ -303,8 +330,14 @@ public class messagerie extends HttpServlet {
 			try {
 				disp.forward(request,response);
 			} catch (ServletException | IOException e) {
-				// TODO Page Erreur messagerie
+				
+				final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+				final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+				request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+				disp = request.getRequestDispatcher(ERREUR);
+				disp.forward(request, response);
 				e.printStackTrace();
+				
 			}
 	}
 
@@ -316,9 +349,11 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @author Aurélien
 	 * @version 1
+	 * @throws IOException 
+	 * @throws ServletException 
  	 * @since 24/11/2016
 	 */
-	private void nouveauMail(HttpServletRequest request, HttpServletResponse response){
+	private void nouveauMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_NOUVEAU = "../../WEB-INF/messagerie/nouveau.jsp";
@@ -333,7 +368,11 @@ public class messagerie extends HttpServlet {
 		try {
 			mpclient = new MpClientV2(session.getAttribute("login").toString());
 		} catch (SQLException e1) {
-			// TODO Page Erreur Messagerie
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			RequestDispatcher disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
 			e1.printStackTrace();
 		}
 		
@@ -345,7 +384,11 @@ public class messagerie extends HttpServlet {
 		try {
 			disp.forward(request,response);
 		} catch (ServletException | IOException e) {
-			// TODO Page Erreur messagerie
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
 			e.printStackTrace();
 		}
 	}
@@ -358,9 +401,11 @@ public class messagerie extends HttpServlet {
 	 * 
 	 * @author Aurélien
 	 * @version 1
+	 * @throws IOException 
+	 * @throws ServletException 
  	 * @since 24/11/2016
 	 */
-	private void afficheMail(HttpServletRequest request, HttpServletResponse response){
+	private void afficheMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		final String PATH_MESSAGERIE =  "/jsp/messagerie/messagerie.jsp";
 		final String PATH_AFFICHAGE = "../../WEB-INF/messagerie/un_message.jsp";
@@ -378,23 +423,30 @@ public class messagerie extends HttpServlet {
 		try {
 			disp.forward(request,response);
 		} catch (ServletException | IOException e) {
-			// TODO Page Erreur messagerie
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
 			e.printStackTrace();
 		}
 		
 	}
 
 	/**
-	 * Demande la liste d'{@link Items} a la base de données grace a la classe {@link MessageDao} et la renvoie a la page messagerie.jsp
+	 * Demande la liste d'{@link Items} a la base de données grace a la classe 
+	 * {@link MessageDao} et la renvoie a la page messagerie.jsp
 	 * 
 	 * @param response 
 	 * @param request 
 	 * 
 	 * @author Aurélien
 	 * @version 1
+	 * @throws IOException 
+	 * @throws ServletException 
  	 * @since 24/11/2016
 	 */
-	private void constructMail(HttpServletRequest request, HttpServletResponse response) {
+	private void constructMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_BOITE_RECEPTION = "../../WEB-INF/messagerie/boite_reception.jsp";
@@ -418,7 +470,11 @@ public class messagerie extends HttpServlet {
 			
 		} catch (ServletException | IOException e) {
 			
-			// TODO Page Erreur messagerie
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
 			e.printStackTrace();
 			
 		}
@@ -426,16 +482,19 @@ public class messagerie extends HttpServlet {
 	}
 	
 	/**
-	 * Demande la liste d'{@link Items} brouillon a la base de données grace a la classe {@link MessageDao} et la renvoie a la page messagerie.jsp
+	 * Demande la liste d'{@link Items} brouillon a la base de données grace a la classe 
+	 * {@link MessageDao} et la renvoie a la page messagerie.jsp
 	 * 
 	 * @param response 
 	 * @param request 
 	 * 
 	 * @author Aurélien
 	 * @version 1
+	 * @throws IOException 
+	 * @throws ServletException 
  	 * @since 24/11/2016 
 	 */
-	private void constructBrouillon(HttpServletRequest request, HttpServletResponse response) {
+	private void constructBrouillon(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_BOITE_BROUILLON = "../../WEB-INF/messagerie/brouillon.jsp";
@@ -455,23 +514,30 @@ public class messagerie extends HttpServlet {
 		try {
 			disp.forward(request,response);
 		} catch (ServletException | IOException e) {
-			// TODO Page Erreur messagerie
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
 			e.printStackTrace();
 		}
 		
 	}
 	
 	/**
-	 * Demande la liste d'{@link Items} supprimer a la base de données grace a la classe {@link MessageDao} et la renvoie a la page messagerie.jsp
+	 * Demande la liste d'{@link Items} supprimer a la base de données grace a la classe 
+	 * {@link MessageDao} et la renvoie a la page messagerie.jsp
 	 * 
 	 * @param response 
 	 * @param request 
 	 * 
 	 * @author Aurélien
 	 * @version 1
+	 * @throws IOException 
+	 * @throws ServletException 
  	 * @since 24/11/2016
 	 */
-	private void constructSupprimer(HttpServletRequest request, HttpServletResponse response){
+	private void constructSupprimer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
 		final String PATH_BOITE_BROUILLON = "../../WEB-INF/messagerie/supprimer.jsp";
@@ -491,7 +557,79 @@ public class messagerie extends HttpServlet {
 		try {
 			disp.forward(request,response);
 		} catch (ServletException | IOException e) {
-			// TODO Page Erreur messagerie
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 *  Demande la liste d'{@link Items} envoyer a la base de données grace a la classe 
+	 *  {@link MessageDao} et la renvoie a la page messagerie.jsp
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void constructEnvoyer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
+		final String PATH_BOITE_ENVOIE = "../../WEB-INF/messagerie/element_envoyer.jsp";
+		
+		HttpSession session = request.getSession(true);
+		String box = "oracle";
+		session.setAttribute("login",box);
+							
+		Items items = new Items();
+		items = MessageDao.getSendedItems(session.getAttribute("login").toString(),false,false);
+		
+		request.setAttribute("message", items);
+		request.setAttribute("url", PATH_BOITE_ENVOIE);
+		
+		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
+		
+		try {
+			disp.forward(request,response);
+		} catch (ServletException | IOException e) {
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 *  Demande la liste d'{@link Items} Archive a la base de données grace a la classe 
+	 *  {@link MessageDao} et la renvoie a la page messagerie.jsp
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void constructArchive(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		final String PATH_MESSAGERIE = "/jsp/messagerie/messagerie.jsp";
+		final String PATH_BOITE_ARCHIVE = "../../WEB-INF/messagerie/archive.jsp";
+		request.setAttribute("url", PATH_BOITE_ARCHIVE);
+		try {
+			
+			RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
+			disp.forward(request, response);
+			
+		} catch (IOException e) {
+			
+			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
+			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
+			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
+			RequestDispatcher disp = request.getRequestDispatcher(ERREUR);
+			disp.forward(request, response);
 			e.printStackTrace();
 		}
 		

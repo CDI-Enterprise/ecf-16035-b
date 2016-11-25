@@ -136,7 +136,7 @@ public class RequetesRecherche {
 			param++;
 		}
 		
-		//le 4ème critère (la region) est pour le moment non prise en compte, elle le sera dans une prochaine iteration
+		//le 4ème critère (la region) est pour le moment non pris en compte, il le sera dans une prochaine iteration
 		//TODO
 //		if (regionId != null){
 //			if (param == 0) { req = req + "companycity ='"+ville+"' ";}
@@ -144,7 +144,7 @@ public class RequetesRecherche {
 //			param++;
 //		}
 		
-//		System.out.println(req);
+		System.out.println(req);
 		
 		if (param != 0) {
 			try {
@@ -161,8 +161,7 @@ public class RequetesRecherche {
 							res.getString("companycodepostal"), res.getString("companycity"), departement, region, 
 							res.getString("companysize"), res.getString("companysector"), langage, res.getString("companyprojects"), 
 							res.getString("companyweb"), contact);
-					
-					System.out.println(entreprise);
+				
 					listeEntreprises.add(entreprise);
 				}
 							
@@ -195,8 +194,6 @@ public class RequetesRecherche {
 			prepStmt = connect.prepareStatement(reqLangId);
 			prepStmt.setInt(1, companyId);
 			ResultSet res = prepStmt.executeQuery();
-			
-			System.out.println(companyId);
 		
 			while (res.next()){
 				number = res.getInt("languageid");
@@ -206,11 +203,9 @@ public class RequetesRecherche {
 			PreparedStatement prepStmt2 = connect.prepareStatement(reqLang);
 			prepStmt2.setInt(1, number);
 			ResultSet res2 = prepStmt2.executeQuery();
-				
-			System.out.println(number);
+		
 			while (res2.next()){
 				name = res2.getString("languagename");
-				System.out.println(name);
 			}
 		
 			
@@ -218,8 +213,8 @@ public class RequetesRecherche {
 			System.out.println("La recherche de langage n'a pas pu aboutir");
 			e.printStackTrace();
 		}
+		
 		Language lang = new Language(name, number);
-		System.out.println(lang);
 		return lang;
 	}
 
@@ -322,7 +317,6 @@ public class RequetesRecherche {
 			
 			if(res.next()){																		//...si oui, fait un update de la ligne dans la bdd
 				reqRec="Update RECH_FAV set comp_rech=?, sector_rech=?, region_rech=?, city_rech=? where nom_rech = ?"; 
-				System.out.println("resultat non vide... l'enregistrement sera un update");
 				
 				try {	
 					int idRegion =0;											
@@ -345,7 +339,6 @@ public class RequetesRecherche {
 				
 			} else {																			//... sinon, fait un insert
 				reqRec="insert into rech_fav values (?, ?, ?, ?, ?, ?, ?)";
-				System.out.println("resultat vide... l'enregistrement sera un insert");
 				
 				try {	
 					int idRegion =0;											
@@ -395,7 +388,7 @@ public class RequetesRecherche {
 			prepStmt.setString(2, rechOpt);
 			prepStmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("La requête de suppression de la rcherche favorite n'a pas pu aboutir");
+			System.out.println("La requête de suppression de la recherche favorite n'a pas pu aboutir");
 			e.printStackTrace();
 		}
 	}
@@ -449,32 +442,49 @@ public class RequetesRecherche {
 			prepStmt.setInt(1, companyId);
 			ResultSet res = prepStmt.executeQuery();
 			
-			System.out.println(companyId);
-		
 			while (res.next()){
 				number = res.getInt("departmentnumber");
-			}
-			
-			String reqDept = "Select departmentname from departments where departmentnumber = ? ";
-			PreparedStatement prepStmt2 = connect.prepareStatement(reqDept);
-			prepStmt2.setInt(1, number);
-			ResultSet res2 = prepStmt2.executeQuery(reqDept);
-				
-			System.out.println(number);
-			while (res2.next()){
-				name = res2.getString("departmentname");
-				System.out.println(name);
+				name=recupDeptName(number);
 			}
 		
-			
 		} catch (SQLException e) {
-			System.out.println("La recherche de departement n'a pas pu aboutir");
+			System.out.println("La recherche de numéro de departement n'a pas pu aboutir");
 			e.printStackTrace();
-		}
+		}	
 		Department dept = new Department(name, number);
-		System.out.println(dept);
 		return dept;
 	}
+	
+	/**
+	 * Methode qui retourne un nom de departement correspondant à l'index entré en paramètre
+	 * @author Francois Georgel
+	 * @version: 1.0	24/11/2016
+	 * @param	deptId, int
+	 * @return 	nameDpt, String	
+	 * @throws 	SQLException 
+	 */	
+	public String recupDeptName(int deptId) {
+		Connection connect = DBConnection.getConnect();
+		String reqDept = "Select departmentname from departments where departmentnumber = ? ";
+		PreparedStatement prepStmt;
+		String nameDpt="";
+		
+		try {
+			prepStmt = connect.prepareStatement(reqDept);
+			prepStmt.setInt(1, deptId);
+			ResultSet res2 = prepStmt.executeQuery();
+						
+			while (res2.next()){
+				nameDpt = res2.getString("departmentname");
+			}
+		
+		} catch (SQLException e) {
+			System.out.println("La recherche de nom de departement n'a pas pu aboutir");
+			e.printStackTrace();
+		}
+		return nameDpt;
+	}
+		
 	
 	/**
 	 * Methode qui retourne un objet Region correspondant à l'index d'entreprise entré en paramètre

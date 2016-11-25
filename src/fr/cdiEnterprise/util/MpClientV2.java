@@ -66,13 +66,10 @@ public class MpClientV2 {
 				
 				for(Item current : items){
 					
-					System.out.println(current.getId());
-					
 					if(current.getId() > max) {
 						
 						max = current.getId();
 						ID_NUMBER = max;
-						System.out.println("max " +ID_NUMBER);
 						
 					}
 				}
@@ -81,8 +78,6 @@ public class MpClientV2 {
 			}
 			
 		}
-		
-	//	System.out.println("l'email le plus rescent est numero "+ ID_NUMBER);
 		return items;
 	}
 	
@@ -115,7 +110,8 @@ public class MpClientV2 {
 				idNumber = ID_NUMBER;
 				Item itm = new Item(from, to, object, body, timeStamp);
 				itm.setId(idNumber);
-				MessageDao.insertItem(itm);
+				MessageDao dao = new MessageDao();
+				dao.insertItem(itm);
 				
 			} else {
 				throw new CustomMessagingException("le Destinataire ou le sujet sont vide.");
@@ -153,7 +149,8 @@ public class MpClientV2 {
 
 			repliedItem.setDraftEmail(true);
 			//System.out.println("message envoye a la base");
-			MessageDao.insertItem(repliedItem);
+			MessageDao dao = new MessageDao();
+			dao.insertItem(repliedItem);
 
 		}else {
 			//System.out.println("message envoye a la base");
@@ -165,8 +162,8 @@ public class MpClientV2 {
 				repliedItem.setReceiver(snd);
 				repliedItem.setSender(rcv);
 				
-				
-				MessageDao.insertItem(repliedItem);
+				MessageDao dao = new MessageDao();
+				dao.insertItem(repliedItem);
 
 			}
 			}else {
@@ -209,8 +206,8 @@ public class MpClientV2 {
 		idNumber = ID_NUMBER;
 		Item itm = new Item(idNumber, from, to, obj, bdy, null, draft,false);
 	
-
-		MessageDao.insertItem(itm);
+		MessageDao dao = new MessageDao();
+		dao.insertItem(itm);
 	
 	}
 
