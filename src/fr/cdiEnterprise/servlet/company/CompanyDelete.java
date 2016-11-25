@@ -38,6 +38,7 @@ public class CompanyDelete extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("---- In the get method -----");
+		response.sendRedirect(request.getContextPath() + "/jsp/accueil.jsp");
 	}
 
 	/**

@@ -17,6 +17,7 @@ import fr.cdiEnterprise.service.Regions;
 
 /**
  * Servlet implementation class RechFavAfficher
+ * Servlet servant à gérer laffichage d'une recherche favorite
  */
 
 @WebServlet(name="RechAfficherFavoris", urlPatterns= {"/RechFavAfficher/*", "/RechFavAfficher"}) 
@@ -27,7 +28,7 @@ public class RechFavAfficher extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet d'afficher recherche favorite");
+		response.sendRedirect("/Recherche/RechAffichageNew");
 	}
 
 	
@@ -36,7 +37,6 @@ public class RechFavAfficher extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost d'afficher recherche favorite");
 		RequetesRecherche req= new RequetesRecherche();
 		
 		String idUser= (String) request.getAttribute("idUser");

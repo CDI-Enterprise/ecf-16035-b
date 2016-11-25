@@ -15,24 +15,18 @@ import fr.cdiEnterprise.model.Region;
 
 /**
  * Servlet implementation class RechEnregistrer
+ * Servlet servant à gérer l'enregistrement d'une recherche favorite
  */
-@WebServlet("/RechEnregistrer")
+@WebServlet(name="RechEnregistrer", urlPatterns = {"/RechEnregistrer", "/RechEnregistrer/*"})
 public class RechEnregistrer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RechEnregistrer() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+   
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet de RechEnregistrer");
+		response.sendRedirect("/Recherche/RechAffichageNew");
 		
 	}
 
@@ -40,7 +34,6 @@ public class RechEnregistrer extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost de RechEnregistrer");
 		RequetesRecherche req = new RequetesRecherche();
 		
 		int index = req.indexRechFav();
@@ -61,7 +54,7 @@ public class RechEnregistrer extends HttpServlet {
 			req.enregistrerRech(recherche);
 		}
 		
-		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichageNew");
+		RequestDispatcher disp= request.getRequestDispatcher("/Recherche/RechAffichage");
 		disp.forward(request, response);
 	}
 

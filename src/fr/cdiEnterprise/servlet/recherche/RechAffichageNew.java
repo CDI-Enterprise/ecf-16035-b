@@ -16,6 +16,7 @@ import fr.cdiEnterprise.service.Regions;
 
 /**
  * Servlet implementation class RechAffichageNew
+ * Servlet servant à appeler le fichier rech_jsp avec les données nécessaires à l'affichage de la page
  */
 
 @WebServlet(name="RechAffichage", urlPatterns = {"/RechAffichageNew", "/RechAffichageNew/*"})
@@ -26,8 +27,6 @@ public class RechAffichageNew extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGetaffichagenew");
-		
 		RequetesRecherche req= new RequetesRecherche();
 		
 		String idUser= (String) request.getAttribute("idUser");
@@ -50,8 +49,6 @@ public class RechAffichageNew extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost affichagenew");
-		
 		RequetesRecherche req= new RequetesRecherche();
 		
 		String idUser= (String) request.getAttribute("idUser");
