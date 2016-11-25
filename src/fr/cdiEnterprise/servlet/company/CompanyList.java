@@ -35,7 +35,7 @@ public class CompanyList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doPost(request, response);
+		System.out.println("--- in the get method----");
 	
 	}
 
