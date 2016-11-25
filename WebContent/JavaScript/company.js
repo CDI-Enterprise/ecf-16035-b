@@ -65,9 +65,10 @@ function verifCompanyCity() {
 
 /**
  * Vérification du code postal : s'il est renseigné et si son format est bien de
- * la forme 5 chiffres de 0 à 9 (avec prise en compte des département corses)
+ * la forme 5 chiffres de 0 à 9 (avec prise en compte des départements corses)
  * 
  * @returns {Boolean}
+ * 
  */
 
 function verifPostalCode() {
@@ -92,11 +93,11 @@ function verifPostalCode() {
 	}
 }
 
-//TODO vérifier méthode
+
 /**
  * Vérifie qu'un langage a bien été renseignée
  * 
- * @returns
+ * @returns boolean
  */
 
 function verifLangage() {
@@ -116,7 +117,7 @@ function verifLangage() {
 /**
  * Vérifie que le secteur a bien été renseigné
  * 
- * @returns
+ * @returns boolean
  */
 function verifSecteur() {
 	// Récupération du secteur renseigné dans le formulaire
@@ -133,9 +134,9 @@ function verifSecteur() {
 }
 
 /**
- * Vérifie que le site web est bien renseigné et est valide
+ * Vérifie que le site web est bien renseigné 
  * 
- * @returns
+ * @returns boolean
  */
 function verifSiteWeb() {
 	// Récupération du site Web renseigné dans le formulaire
@@ -152,15 +153,26 @@ function verifSiteWeb() {
 	}
 }
 
-function selectCompany() {
-	console.log("---- Dans méthode --- ");
-	var selectElmt = document.getElementById("companiesSelec");
-	var company = selectElmt.options[selectElmt.selectedIndex].value;
-	console.log(company);
-	return company;
-}
+///**
+// * Permet de vérifier que le nom de l'entreprise a rechercher est bien renseigné
+// * Utilisé dans la jsp companySearchList
+// * 
+// * @returns company
+// */
+//function selectCompany() {
+//	console.log("---- Dans méthode --- ");
+//	var selectElmt = document.getElementById("companiesSelec");
+//	var company = selectElmt.options[selectElmt.selectedIndex].value;
+//	console.log(company);
+//	return company;
+//}
+
+
 /**
  * Permet de supprimer tous les spanErreurs de la page
+ * @author: Anaïs
+ * @version: 22/11/2016
+ * 
  */
 function deleteAllError() {
 	var link = document.querySelectorAll('.spanErreur');
@@ -192,7 +204,7 @@ function changeElement(element) {
 
 /**
  * Permet d'indiquer les champs manquants à l'utilisateur (coloration de la
- * bordure de l'élément passé en paramètre et le texte à afficher)
+ * bordure de l'élément passé en paramètre) et le texte à afficher
  * 
  * @param idElement
  * @param text
@@ -216,4 +228,4 @@ function messErreur(idElement, text) {
 function reset() {
 	deleteAllError();
 }
-// TODO méthode pour reset le formulaire
+

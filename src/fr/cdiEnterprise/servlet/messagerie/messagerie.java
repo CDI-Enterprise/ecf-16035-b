@@ -49,7 +49,6 @@ public class messagerie extends HttpServlet {
      */
     public messagerie() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -88,7 +87,7 @@ public class messagerie extends HttpServlet {
 		
 		
 		
-//Aiguillage TODO a passé en enum/switch
+//Aiguillage
 
 		if(path.equalsIgnoreCase(MESSAGERIE)){
 			
@@ -161,7 +160,7 @@ public class messagerie extends HttpServlet {
 		final String PATH_MESSAGERIE =  "/jsp/messagerie/messagerie.jsp";
 		final String PATH_UN_BROUILLON = "../../WEB-INF/messagerie/un_brouillon.jsp";
 		
-		String id = request.getParameter("id");
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		MessageDao dao = new MessageDao();
 		Item item = dao.getItemByRef(id, true, false);
@@ -194,17 +193,17 @@ public class messagerie extends HttpServlet {
 		final String PATH_SUPPRESSION_REUSSI = "../../WEB-INF/messagerie/suppression_reussie.jsp";
 		final String PATH_SUPPRESSION_ERREUR = "../../WEB-INF/messagerie/suppression_erreur.jsp";
 		
-		
-		int i= 0;
+		@SuppressWarnings("unused") //utiliser comme un incrementeur
+		int incrementeur = 0;
 		Enumeration<String> parameterName = request.getParameterNames();
-		ArrayList<String> id = new ArrayList<String>();
+		ArrayList<Integer> id = new ArrayList<Integer>();
 		Items items = new Items();
 		Item item = new Item();
 		
 			while(parameterName.hasMoreElements()){
 				
-				id.add(request.getParameter(parameterName.nextElement()));
-				i++;
+				id.add(Integer.parseInt(request.getParameter(parameterName.nextElement())));
+				incrementeur++;
 
 			}
 			
@@ -257,16 +256,35 @@ public class messagerie extends HttpServlet {
 		String object = request.getParameter("objet");
 		String body = request.getParameter("body");
 		LocalDateTime date = LocalDateTime.now();
-		boolean draft = false; //false car non un draft
-		boolean deleted = false; //false car non deleted
 		
-		Item item = new Item(id,sender,receiver,object,body,date,draft,deleted);
-		
-		if(MailException.senderNotEqualsReceiver(item) && MailException.notNull(item)){
+		MessageDao dao = new MessageDao();
 			
 			try {
 				
-				MessageDao.insertItem(item);
+				if(dao.idExist(id)){
+					
+
+					boolean draft = true; //false car non un draft
+					boolean deleted = false; //false car non deleted
+					
+					Item item = new Item(id,sender,receiver,object,body,date,draft,deleted);
+					
+					if(MailException.senderNotEqualsReceiver(item) && MailException.notNull(item) && MailException.notMaxChar(item)){
+						dao.updateDraft(item);
+					}
+					
+				}else{
+					
+					boolean draft = false; //false car non un draft
+					boolean deleted = false; //false car non deleted
+					
+					Item item = new Item(id,sender,receiver,object,body,date,draft,deleted);
+					
+					if(MailException.senderNotEqualsReceiver(item) && MailException.notNull(item) && MailException.notMaxChar(item)){
+						dao.insertItem(item);
+					}
+				}
+				
 				request.setAttribute("url", PATH_ENVOIE_REUSSI);
 				
 				
@@ -288,10 +306,6 @@ public class messagerie extends HttpServlet {
 				// TODO Page Erreur messagerie
 				e.printStackTrace();
 			}
-			
-		}else{
-			// TODO Page Erreur messagerie
-		}
 	}
 
 	/**
@@ -351,7 +365,7 @@ public class messagerie extends HttpServlet {
 		final String PATH_MESSAGERIE =  "/jsp/messagerie/messagerie.jsp";
 		final String PATH_AFFICHAGE = "../../WEB-INF/messagerie/un_message.jsp";
 		
-		String id = request.getParameter("id");
+		int id = Integer.parseInt(request.getParameter("id"));
 		MessageDao dao = new MessageDao();
 		
 		//1 false = draft | 2 false = deleted les deux a false car on est dans la boite de recepetion

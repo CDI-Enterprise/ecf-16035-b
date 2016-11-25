@@ -3,6 +3,7 @@ package fr.cdiEnterprise.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
@@ -57,7 +58,7 @@ public class MessageDao {
 	 * @since 23/11/2016
 	 * @author Aurélien
 	 */
-	public static void insertItem(Item item) throws SQLException {
+	public void insertItem(Item item) throws SQLException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -123,7 +124,7 @@ public class MessageDao {
 	 * @version 1
 	 * @since 21/11/2016
 	 */
-	public Item getItemByRef(String ref,boolean draft,boolean deleted){
+	public Item getItemByRef(int ref,boolean draft,boolean deleted){
 		
 		Connection connection = null;
 		Statement statement = null;
@@ -232,12 +233,19 @@ public class MessageDao {
 			
 
 		String createStatement = null;
-		
+		if(draft){
+			createStatement = String.format(
+					"select %s,%s, %s,%s,%s,%s,%s,%s from %s WHERE %s = '%s' AND %s = '%s' AND %s = '%s'",
+					//
+					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft","deleted", TABLE_NAME, "SENDER",
+					box, "DRAFT", iDraft ,"DELETED", iDeleted);
+		}else{	
 			createStatement = String.format(
 					"select %s,%s, %s,%s,%s,%s,%s,%s from %s WHERE %s = '%s' AND %s = '%s' AND %s = '%s'",
 					//
 					"identity", "sender", "receiver", "subject", "messBody", "timeStamp", "draft","deleted", TABLE_NAME, "RECEIVER",
 					box, "DRAFT", iDraft ,"DELETED", iDeleted);
+		}
 
 			resultSet = statement.executeQuery(createStatement);
 			connection.commit();
@@ -630,11 +638,10 @@ public class MessageDao {
 
 	}
 	/**
-	 * This methode is going to
-	 * @param items
+	 * Cette methode mes a jour les messages qui son supprimer pour passer la colone DELETED de 0 a 1.
+	 * @param items une liste de mail supprimer.
 	 */
 	public void updateDelete(Items items) {
-		
 		
 		Connection connection = null;
 		connection = DBConnection.getConnect();
@@ -672,5 +679,92 @@ public class MessageDao {
 		
 		
 	}
+	
+	/**
+	 * Passe un mail de draft a non draft après son envoie
+	 * @param item
+	 */
+	public void updateDraft(Item item) {
 
+
+		Connection connection = null;
+		connection = DBConnection.getConnect();
+		
+		int ref = 0;
+		String sender = null;
+		String receiver = null;
+		String object = null;
+		String body = null;
+		String date = null;
+		int draft = 0; // 0 for draft
+		int deleted = 0; // 0 pour non deleted 1 pour deleted lors de l'insertion l'email ne peux etre supprimer
+		
+		ref = item.getId();
+		sender = item.getSender();
+		receiver = item.getReceiver();
+		object = item.getObject();
+		body = item.getBody();
+		date = localDateToString(item.getTimeStamp());
+			
+		String sql = "UPDATE MAILBOX SET SENDER = ? , RECEIVER = ? , SUBJECT = ? , MESSBODY  = ? , TIMESTAMP = ? , DRAFT = ? , DELETED = ? where IDENTITY = ?";
+
+			try {
+				
+				PreparedStatement update = connection.prepareStatement(sql);
+				
+				update.setString(1, sender);
+				update.setString(2, receiver);
+				update.setString(3, object);
+				update.setString(4, body);
+				update.setString(5, date);
+				update.setInt(6, draft);
+				update.setInt(7, deleted);
+				update.setInt(8, ref);
+				
+				update.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Page erreur SQL
+				System.err.println("[POST] Erreur lors de la mise a jour du status de draft des mails" + e);
+				e.printStackTrace();
+			}
+			
+		}
+	
+	/**
+	 * Recupere tout les ID des mail et renvoie true si il est deja existant ou false dans le cas contraire
+	 * @param id ID du mail.
+	 * @return 
+	 */
+	public boolean idExist(int id){
+		boolean idExist = true;
+		
+		String sql = "select IDENTITY FROM MAILBOX where IDENTITY = ? ";
+		
+		Connection connection = null;
+		connection = DBConnection.getConnect();
+		PreparedStatement update;
+		ResultSet resultSet = null;
+		
+		try {
+			
+			update = connection.prepareStatement(sql);
+			update.setInt(1, id);
+			resultSet = update.executeQuery();
+			if(resultSet.next()){
+				idExist = true;
+			}else{
+				idExist = false;
+			}
+			
+		} catch (SQLException e) {
+			
+			// TODO Page erreur SQL
+			System.err.println("[QUERRY] Erreur lors de la recuperation des IDs" + e);
+			e.printStackTrace();
+			
+		}
+
+		return idExist;
+	}
 }
