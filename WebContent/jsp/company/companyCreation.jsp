@@ -70,7 +70,7 @@
 					</select> 
 				<br/><br/>
 				<label for="companyProjects">Principaux projets de l'entreprise</label>
-				<textarea type="text" name="companyProjects" tabindex="5" ></textarea> 
+				<textarea name="companyProjects" tabindex="5" ></textarea> 
 				<br/><br/>
 				<label for="companyWebSite">Site Web: </label> 
 				<input type="text" name="companyWebSite" id="companyWebSite" tabindex="6" onchange="changeElement(companyWebSite);"> 
