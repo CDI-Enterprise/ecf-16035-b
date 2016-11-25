@@ -12,6 +12,27 @@
  *  compteLongueur() fait un decompte du nombre de caractere restant pour la taille du corp du mail
  */
 
+function recherche(recherche){
+
+	var search = recherche.value;
+	var ligne = document.getElementsByTagName("tr");
+	var parent = document.getElementById('content');
+	
+	for(var i = 1;i < ligne.length;i++){
+		if(ligne[i].getElementsByTagName('a')[0].innerHTML.trim().startsWith(search)){
+			
+			console.log('je garde');
+			
+		}else{
+			
+			ligne[i].remove();
+			console.log('je supprimer');
+			
+		}
+	}
+	
+}
+
 function supprimeID(){
 	
 	console.log('suppression')
@@ -245,4 +266,36 @@ function compteLongueur(element){
 	var nombreRestant = 4000 - nombreCaracter;
 	document.getElementById('caractereRestant').innerHTML = nombreRestant;
 	
+}
+
+function plusOuMoin(){
+	
+	var max = 1000;
+	var min = 1;
+    var nb = min + (max-min+1) * Math.random();
+    nb = Math.trunc(nb)
+    console.log(nb);
+    var i = 0;
+    var game = true;
+    
+    while(game){
+    	
+    	i++;
+    	var nbUser = prompt("Jeux du plus ou moin", "Entrer un chiffre entre 1 et 1000.");
+    	
+    	if(nbUser == nb){
+    		
+    		game = false;
+    		
+    	}else if(nbUser < nb){
+    		
+    		alert('Plus grand')
+    		
+    	}else if(nbUser > nb){
+    		
+    		alert('Plus petit')
+    	}
+    }
+   alert('GAGNEEEER !!! en : ' + i + " essaie")
+    
 }

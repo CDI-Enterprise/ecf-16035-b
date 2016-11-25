@@ -38,7 +38,7 @@ public class CompanyList extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("--- in the get method----");
-
+		response.sendRedirect(request.getContextPath() + "/jsp/accueil.jsp");
 	}
 
 	/**
