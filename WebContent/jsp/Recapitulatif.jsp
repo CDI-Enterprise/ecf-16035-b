@@ -9,13 +9,9 @@
 </head>
 <%@include file="../WEB-INF/menu.html"%>
 <body>
-<<<<<<< HEAD
 </br>
 </br>
 <p align="center" center><h1>INSCRIPTION REUSSIE</h1></p>
 
-=======
-coucou
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 </body>
 </html>

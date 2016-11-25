@@ -17,12 +17,7 @@ public class TestDaoSouleymane {
 		Inscription inscrit = new Inscription(1,"Formateur", "afpa", "afpa", "afpa@afpa.fr", "afpa", "afpa");
 //					
 		AccesBaseInscrit dao =new AccesBaseInscrit();
-		
-		dao.inscription(inscrit);
-		String reqSql; 
-		reqSql = "delete * from  inscription";
-		
-		
+
 		
 	}
 }

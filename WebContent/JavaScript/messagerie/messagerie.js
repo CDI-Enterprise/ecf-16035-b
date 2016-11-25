@@ -10,6 +10,7 @@
  * selectAll() selectionne toute les checkbox des messages
  * supprimeID() modifie l'url en ajoutant toute les ID lié au checkbox selectionné pour suppression.
  *  compteLongueur() fait un decompte du nombre de caractere restant pour la taille du corp du mail
+ *  recherche() recherche dans la liste des mail l'objet qui correspond a la recherche.
  */
 
 function recherche(recherche){
@@ -17,6 +18,8 @@ function recherche(recherche){
 	var search = recherche.value;
 	var ligne = document.getElementsByTagName("tr");
 	var parent = document.getElementById('content');
+	var x = 0;
+
 	
 	for(var i = 1;i < ligne.length;i++){
 		if(ligne[i].getElementsByTagName('a')[0].innerHTML.trim().startsWith(search)){
@@ -24,10 +27,9 @@ function recherche(recherche){
 			console.log('je garde');
 			
 		}else{
-			
+			//TODO Passer les mail en hidden? oldLigne[x] = 
 			ligne[i].remove();
-			console.log('je supprimer');
-			
+			x++;
 		}
 	}
 	

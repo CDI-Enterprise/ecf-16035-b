@@ -4,6 +4,16 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>Formulaire</title>
 	<link rel="stylesheet" href="../css/inscription.css"/>
+	<script type="text/javascript">
+    function verifier(){
+      var champs = /./
+      if(!champs.test(document.all.nom.value)){
+        alert("nom");
+        document.all.nom.focus();
+        return false;
+      }
+    }
+</script>
 </head>
 <body>
 
@@ -12,7 +22,7 @@
 		<p><h4>Vous pouvez vous incrire en remplissant le formulaire ci-dessous</h4></p>
 	</div>
 	
-	<form method= "post" action="../inscription">
+	<form method= "post" action="" onsubmit= verifier()>
 		
 		<fieldset>
 	    	<legend><h3>Inscription</h3></legend>
@@ -31,7 +41,7 @@
 			    <input type="text" class ="t" name="prenom" placeholder="Votre prénom ici" aria-label="prenom" maxlength="24"></label></p>
 
 			    <p><label>
-			    <input type="text" class ="e" name="email" placeholder="Votre E-mail ici" aria-label="email" maxlength="34"></label></p>
+			    <input type="email" class ="e" name="email" placeholder="Votre E-mail ici" aria-label="email" maxlength="34"></label></p>
 
 			    <p><label>
 			    <input type="password" class ="pwd" name="motDePasse" placeholder="Votre choix de mot de passe" aria-label="passWord" maxlength="24"> </label></p>
@@ -42,7 +52,7 @@
 	    
 	    	<div>	    
 			    <p>
-			    <input type="submit" NAME="nom" id="btn" value="S'inscrire"> 
+			    <input type="submit" NAME="nom" id="btn" value="S'inscrire" onclick= "verifier()"> 
 			    <input type="reset" NAME="nom" id="btn1 value=" Annuler"></p>	  	
 			</div>
 			

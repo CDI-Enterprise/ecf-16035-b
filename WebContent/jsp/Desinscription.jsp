@@ -5,13 +5,27 @@
 <head>
 <link rel="stylesheet" type="text/css" href="../css/Inscription.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<<<<<<< HEAD
 <title>Desinscription</title>
 <%@include file="../WEB-INF/menu.html"%>
-=======
-<<<<<<< HEAD
-<title>Insert title here</title>
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
+<script type="text/javascript">
+function verifier() {      // confère demo proposition de solution javaScript
+	
+	var nomvideEXP = /./
+	var prenomvideEXP = /./
+	
+	if (!nomvideEXP.test(document.all.nom.value)) {
+		alert("Merci de vérifier que le champ nom n'est pas vide");
+		document.all.nom.focus();
+		return false;
+	}
+	if (!prenomvideEXP.test(document.all.prenom.value)) {
+		alert("Merci de vérifier que le champ prenom n'est pas vide");
+		document.all.prenom.focus();
+		return false;
+	}
+	
+}
+</script>
 </head>
 <body>
 	<div class ="b">
@@ -19,7 +33,7 @@
 		<p><h4>Pour vous désinscrire, merci de remplir les champs ci-dessous</h4></p>
 	</div>
 	
-	<form method= "post" action="../desinscription">
+	<form method= "post" onsubmit="return verifier()" action="../desinscription">
 		
 		<fieldset>
 	    	<legend><h3>Desinscription</h3></legend>
@@ -34,7 +48,6 @@
 			    <p><label>
 			    <input type="text" class ="t" name="nom" placeholder="Votre Nom ici" aria-label="nom" maxlength="24"></label></p>
 
-<<<<<<< HEAD
 			    <p><label>
 			    <input type="text" class ="t" name="prenom" placeholder="Votre prénom ici" aria-label="prenom" maxlength="24"></label></p>
 
@@ -50,7 +63,7 @@
 	    
 	    	<div>	    
 			    <p>
-			    <input type="submit" NAME="nom" id="btn" value="Se désinscrire"> 
+			    <input type="submit" NAME="valider" onclick= "return verifier()" id="btn" value="Se désinscrire"> 
 			    <input type="reset" NAME="nom" id="btn1 value=" Annuler"></p>	  	
 			</div>
 			
@@ -60,27 +73,5 @@
 	<div class = "nom">
 			<p> Vous voulez plutôt vous connecter ? <a href="Connexion">Connexion</a></p>
 	</div> 
-=======
-		<p><label>Nom:</label></p>
-		
-		<p> <input type="text" name= "sup" value =""></p>
-=======
-<title>Desinscription</title>
-</head>
-<body>
-	
-		<h1>Desinscription</h1>
-		
-		<form method= "post" action="../desinscription">
-
-		<p><label>Nom:</label></p>
-		
-		<p> <input type="text" name= "sup" value ="nom"></p>
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
-		
-		<p> 
-		<input type="submit" value="Submit"></p>
-		</form>
->>>>>>> branch 'master' of https://github.com/CDI-Enterprise/ecf-16035-b
 </body>
 </html>
