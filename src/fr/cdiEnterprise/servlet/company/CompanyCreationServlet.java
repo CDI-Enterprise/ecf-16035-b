@@ -19,7 +19,7 @@ import fr.cdiEnterprise.service.Regions;
 /**
  * Servlet implementation class CompanyServlet
  */
-@WebServlet(name = "Creation", urlPatterns = { "/action/Creation" })
+@WebServlet(name = "Creation", urlPatterns = { "/action/Creation/*" })
 
 public class CompanyCreationServlet extends HttpServlet {
 	
@@ -38,16 +38,6 @@ public class CompanyCreationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("--- in the doGet method ---");
-		// TODO Auto-generated method stub
-		doPost(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("--- in the doPost method SERVLET CompanyCreation---");
 		try {
 			departments = DataBaseCompany.getDepartmentListData();
 			regions = DataBaseCompany.getRegionsListData();
@@ -61,6 +51,12 @@ public class CompanyCreationServlet extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyCreation.jsp");
 		dispatcher.forward(request, response);
-	}
+		}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("----- in the post method-----");
+	}
 }

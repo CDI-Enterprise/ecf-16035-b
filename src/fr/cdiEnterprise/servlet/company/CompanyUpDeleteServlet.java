@@ -37,16 +37,6 @@ public class CompanyUpDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("---- In the get method ----");
-		doPost(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		System.out.println("--- in the doPost method ---");
 
 		try {
 			companies = DataBaseCompany.getCompaniesData();
@@ -58,4 +48,14 @@ public class CompanyUpDeleteServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/company/companyUpdateDelete.jsp");
 		dispatcher.forward(request, response);
 	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("--- in the doPost method ---");
 }
+
+	}
