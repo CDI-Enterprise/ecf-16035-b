@@ -153,7 +153,7 @@ function controleNouveauMail(){
 	var objet = document.getElementById('objet');
 	var body = document.getElementById('body');
 	
-	if(destination.value.trim().length == 0 ){
+	if(destination.value.trim().length == 0){
 		
 		controleMailBool = false;
 		
@@ -177,6 +177,7 @@ function controleNouveauMail(){
 	}else{
 		
 		var refElement = destination.nextSibling;
+		var parentElement = destination.parentNode;
 		
 		if(refElement.tagName == "SPAN"){
 			
@@ -188,7 +189,7 @@ function controleNouveauMail(){
 		
 	}
 	
-	if(objet.value.trim().length == 0 ){
+	if(objet.value.trim().length == 0){
 		
 		controleMailBool = false;
 		
@@ -229,7 +230,18 @@ function controleNouveauMail(){
 		
 		messageErr = document.createElement('span');
 		messageErr.setAttribute("class","msgErr");
-		textNode = document.createTextNode("Champs Requis");
+		
+		if(body.value.trim().length == 0 ){
+			
+			textNode = document.createTextNode("Champs Requis");
+			
+		}else{
+			
+			textNode = document.createTextNode("Vous avez dépassé le nombre maximum de caractères");
+			
+		}
+		
+		
 		messageErr.appendChild(textNode);
 		
 		parentElement = body.parentNode;
@@ -276,7 +288,7 @@ function plusOuMoin(){
 	var min = 1;
     var nb = min + (max-min+1) * Math.random();
     nb = Math.trunc(nb)
-    console.log(nb);
+    
     var i = 0;
     var game = true;
     

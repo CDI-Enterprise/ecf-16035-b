@@ -11,7 +11,7 @@
 		<input id="objet" type="text" name="objet" placeholder="Objet du mail" />
 		<hr />
 		<span id="caractereRestant" >4000</span>
-		<textarea id="body" name="body" rows="10" cols="10" onkeypress="compteLongueur(this)"></textarea>
+		<textarea id="body" name="body" rows="10" cols="10" onkeyup="compteLongueur(this)" ></textarea>
 		<input type="submit" value="Envoyer">
 		<input type="reset" value="Annuler">
 	</form>

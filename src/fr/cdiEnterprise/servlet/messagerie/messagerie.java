@@ -63,6 +63,8 @@ public class messagerie extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println(request.getRequestURI());
+		
 //Declaration des constante a testé TODO a passé en enum
 		//Dossier
 		final String MESSAGERIE = "/ecf-16035-b/messagerie";
@@ -113,11 +115,11 @@ public class messagerie extends HttpServlet {
 		
 		}else if(path.equalsIgnoreCase(ENVOYER)){
 		
-		constructEnvoyer(request, response);
+		 constructEnvoyer(request, response);
 		
 		}else if(path.equalsIgnoreCase(ARCHIVE)){
 		
-		constructArchive(request, response);
+	 	constructArchive(request, response);
 		
 		}else{
 			
@@ -182,6 +184,7 @@ public class messagerie extends HttpServlet {
 		request.setAttribute("url", PATH_UN_BROUILLON);
 		
 		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
+		
 		try {
 			disp.forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -366,14 +369,18 @@ public class messagerie extends HttpServlet {
 		MpClientV2 mpclient = null;
 		
 		try {
+			
 			mpclient = new MpClientV2(session.getAttribute("login").toString());
+			
 		} catch (SQLException e1) {
+			
 			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
 			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
 			request.setAttribute("Message_Erreur", MESSAGE_ERREUR);
 			RequestDispatcher disp = request.getRequestDispatcher(ERREUR);
 			disp.forward(request, response);
 			e1.printStackTrace();
+			
 		}
 		
 		
@@ -382,7 +389,9 @@ public class messagerie extends HttpServlet {
 	
 		RequestDispatcher disp = request.getRequestDispatcher(PATH_MESSAGERIE);
 		try {
+			
 			disp.forward(request,response);
+			
 		} catch (ServletException | IOException e) {
 			final String MESSAGE_ERREUR = "Un singe a du codé cette partie donc il y a un bug";
 			final String ERREUR = "../../WEB-INF/messagerie/erreur.jsp";
