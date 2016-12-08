@@ -9,7 +9,7 @@
 <div id="content">
 
 <h1>Nouveau Message</h1><hr /><br />
-	<form method="post" action="../../ecf-16035-b/messagerie/nouveau?id=<%= item.getId() %>" onsubmit="return controleNouveauMail()">
+	<form method="post" action="../../ecf-16035-b/messagerie/brouillon?id=<%= item.getId() %>" onsubmit="return controleNouveauMail()">
 		<legend>Boite de destination :</legend>
 		<input id="destination" type="text" name="receiver" placeholder="Destination" value="<%= item.getReceiver() %>" />
 		<legend>Objet du mail : </legend>

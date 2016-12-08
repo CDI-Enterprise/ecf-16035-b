@@ -19,7 +19,7 @@ public class DBConnection {
 
 	// Defines a JDBC driver
 	private final static String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private final static String JUNON_URL = "jdbc:oracle:thin:stag05/stag05pw@junon:1521:AFPA";
+	private final static String JUNON_URL = "jdbc:oracle:thin:cdi_enterprise/stagpw@junon:1521:AFPA";
 //	private static final String NICOLAS_URL ="jdbc:oracle:thin:stag14/stag14pw@localhost:1521:xe"; // a asuga local a la masion
 	
 	// Defines a connection string
